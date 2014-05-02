@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>debugging node</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="icon"       href="../../images/js.png">
+    <link rel="stylesheet" href="remark-custom.css">
+  </head>
+  <body class="dark">
+    <textarea id="source">
+
+class: center, middle
+
+# `work`
+# `in`
+# `progress`
+
+.comment[======================================================================]
+
+---
+
+# debugging node
+
+### tips and tools for debugging your node programs
+
+&nbsp;
+
+Patrick Mueller
+-
+[`@pmuellr`](https://twitter.com/pmuellr)
+-
+[`muellerware.org`](http://muellerware.org)
+
+.smaller[<http://pmuellr.github.io/slides/2014/04-debugging-node>]
+
+.footnote[use cursor keys or touch swipes to scroll]
+
+.comment[======================================================================]
+
+---
+
+layout: true
+
+<div class="page-icon">
+  <img height=24 src="../../images/ibm-8-bar-white-trans-shadow.png">
+  &nbsp;
+  <img height=24 src="../../images/js.png">
+  &nbsp;
+</div>
+
+.comment[======================================================================]
+
+---
+
+## Patrick Mueller
+
+developer advocate at IBM
+
+BlueMix Platform-as-a-Service and node.js
+
+Raleigh, NC
+
+more of my slides: <http://pmuellr.github.io/slides>
+
+---------------------
+
+.smaller[
+<a href="javascript:toggleRatio()">[toggle display ratio]</a>
+]
+
+.comment[======================================================================]
+
+---
+
+## what is BlueMix?
+
+<img src="../../images/bluemix.png" width=256 style="background: #fff; float: right">
+
+Platform-as-a-Service product
+
+Runs node apps! Runs any apps!
+
+Based on the [Cloud Foundry](http://cloudfoundry.org) open source project
+
+For more info: <https://bluemix.net>
+
+.comment[======================================================================]
+
+---
+
+class: center, middle
+
+# how to debug?
+
+.comment[======================================================================]
+
+---
+
+## `alert()`
+
+```js
+> alert("help me")
+ReferenceError: alert is not defined
+    at repl:1:2
+    at REPLServer.self.eval (repl.js:110:21)
+    at Interface.<anonymous> (repl.js:239:12)
+    at Interface.EventEmitter.emit (events.js:95:17)
+    at Interface._onLine (readline.js:202:10)
+    at Interface._line (readline.js:531:8)
+    at Interface._ttyWrite (readline.js:760:14)
+    at ReadStream.onkeypress (readline.js:99:10)
+    at ReadStream.EventEmitter.emit (events.js:98:17)
+    at emitKey (readline.js:1095:12)
+```
+
+.comment[======================================================================]
+
+---
+
+## `console.log()`
+
+```js
+console.log("foo")
+// prints: foo
+
+console.log("foo", "bar")
+// prints: foo bar
+
+console.log("x-%s-x", 1)
+// prints: x-1-x
+
+console.log("%j", {x:1})
+// prints: {"x":1}
+
+console.log(process)
+// prints: {"x":1}
+
+```
+
+.comment[======================================================================]
+
+---
+
+## `console.time()`
+
+```js
+console.time("foo")
+doStuff()
+console.timeEnd("foo")
+
+// prints: foo: 5808ms
+```
+
+---
+
+## `console.trace()`
+
+```js
+console.trace("foo")
+
+// prints
+// Trace: foo
+//     at repl:1:10
+//     at REPLServer.self.eval (repl.js:110:21)
+//     at Interface.<anonymous> (repl.js:239:12)
+//     at Interface.EventEmitter.emit (events.js:95:17)
+//     at Interface._onLine (readline.js:202:10)
+//     at Interface._line (readline.js:531:8)
+//     at Interface._ttyWrite (readline.js:760:14)
+//     at ReadStream.onkeypress (readline.js:99:10)
+//     at ReadStream.EventEmitter.emit (events.js:98:17)
+//     at emitKey (readline.js:1095:12)
+```
+
+.comment[======================================================================]
+
+---
+
+## nicer stack traces
+
+using v8's Error.prepareStackTrace()
+
+    ---------------------------------------------------------
+    error: ReferenceError: description is not defined
+    ---------------------------------------------------------
+    stack:
+       WeinreTargetCommands.coffee  21 - WeinreTargetCommands.registerTarget()
+             messageHandler.coffee  29 - MessageHandler._serviceMethodInvoker()
+             messageHandler.coffee  15 - MessageHandler.handleMessage()
+                    Channel.coffee  74 - Channel.handleMessages()
+         HttpChannelHandler.coffee 102 - handlePost()
+         HttpChannelHandler.coffee  64 - HttpChannelHandler.baseHandle()
+         HttpChannelHandler.coffee  40 - HttpChannelHandler.handle()
+                     weinre.coffee  83 - app.use.express.errorHandler.dumpExceptions()
+                      index.js     272 - callbacks()
+                      index.js     246 - param()
+
+.comment[======================================================================]
+
+---
+
+class: center, middle
+
+# `fin`
+
+
+<!-- ======================================================================= -->
+
+
+    </textarea>
+    <script src="../../remark/0.6.4/remark.min.js"></script>
+    <script src="remark-custom.js"></script>
+  </body>
+</html>

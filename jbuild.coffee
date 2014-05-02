@@ -1,5 +1,9 @@
 # Licensed under the Apache License. See footer for details.
 
+path = require "path"
+
+buildSlides = require "./build-slides"
+
 #-------------------------------------------------------------------------------
 # use this file with jbuild: https://www.npmjs.org/package/jbuild
 # install jbuild with:
@@ -7,163 +11,71 @@
 #    windows:        npm -g install jbuild
 #-------------------------------------------------------------------------------
 
+WatchSpec = "20??/**/slides.md"
+
 #-------------------------------------------------------------------------------
 tasks = defineTasks exports,
-  watch:          "watch for source file changes, then run build"
+  #watch:          "watch for source file changes, then run build"
   build:          "run a build"
-  get_reveal_262: "install reveal.js 2.6.2"
-
-WatchSpec = "lib-src/**/* www-src/**/* tests/**/* vcap-services-local.coffee"
+  tools:          "get the tools"
 
 #-------------------------------------------------------------------------------
 mkdir "-p", "tmp"
 
 #-------------------------------------------------------------------------------
-tasks.get_reveal_262 = ->
-  get_reveal "2.6.2"
+tasks.tools = ->
+  get_reveal_262()
+  # get_remark_064()
 
 #-------------------------------------------------------------------------------
-get_reveal = (version) ->
-  rm "-rf", "bower_components/reveal.js"
-  exec "bower install reveal.js##{version}"
-  cleanDir "reveal.js/#{version}"
-  cp "-R", "bower_components/reveal.js/*", "reveal.js/#{version}"
-
-#-------------------------------------------------------------------------------
-tasks.build = ->
-  mkdir "-p", "tmp"
-
-  log "running build"
-
-  unless test "-d", "node_modules"
-    exec "npm install"
-
-    log ""
-    log "---------------------------------------------------"
-    log "exiting jbuild because of `npm install`, try again!"
-    log "---------------------------------------------------"
-
-    process.exit 1
-
-  #----------------------------------
-  log "- compiling server coffee files"
-
-  cleanDir "lib"
-
-  {code, output} = coffee "--compile --bare --output lib lib-src/*.coffee", silent: true
-  return log "error:\n#{output}" if code
-
-  #----------------------------------
-  log "- building front-end"
-
-  cleanDir "www"
-
-  cp "-R", "www-src/*", "www"
-  copyBowerFiles "www/bower"
-
-  #----------------------------------
-  log " - ang-tangling"
-  cp "package.json", "www/ang"
-  {code, output} = pexec "ang-tangle www/ang www/index.js"
-  return log "error:\n#{output}" if code
-  rm "-rf", "www/ang"
-
-  #----------------------------------
-  log " - browserify'ing"
-
-  modules = "events path util underscore"
-  modules = modules.split " "
-
-  args = modules.map (module) -> "--require #{module}"
-  args.push "--outfile tmp/node-modules.js"
-  args.push "--debug"
-  args.push "--insert-globals"
-
-  {code, output} = browserify args.join " "
-  return log "error:\n#{output}" if code
-
-  {code, output} = pexec "cat-source-map --fixFileNames tmp/node-modules.js www/node-modules.js"
-  return log "error:\n#{output}" if code
+tasks.build = (iFile) ->
+  # buildSlides.main [iFile]
 
 #-------------------------------------------------------------------------------
 tasks.watch = ->
-  watchIter()
 
   watch
     files: WatchSpec.split " "
-    run:   watchIter
+    run:   tasks.build
 
   watchFiles "jbuild.coffee" :->
     log "jbuild file changed; exiting"
     process.exit 0
 
 #-------------------------------------------------------------------------------
-tasks.serve = ->
-  log "running server"
-
-  command = "server --verbose --serve"
-  #command = "lib/db"
-  server.start "tmp/server.pid", "node", command.split " "
-
-#-------------------------------------------------------------------------------
-tasks.test = ->
-  log "running tests"
-
-  tests = "tests/test-*.coffee"
-
-  options =
-    ui:         "bdd"
-    reporter:   "spec"
-    slow:       300
-    compilers:  "coffee:coffee-script"
-    require:    "coffee-script/register"
-
-  options = for key, val of options
-    "--#{key} #{val}"
-
-  options = options.join " "
-
-  mocha "#{options} #{tests}", silent:true, (code, output) ->
-    console.log "test results:\n#{output}"
-
-#-------------------------------------------------------------------------------
-copyBowerFiles = (dir) ->
-
-  bowerConfig = require "./bower-config"
-
-  cleanDir dir
-
-  for name, {version, files} of bowerConfig
-    unless test "-d", "bower_components/#{name}"
-      exec "bower install #{name}##{version}"
-      log ""
-
-  for name, {version, files} of bowerConfig
-    for src, dst of files
-      src = "bower_components/#{name}/#{src}"
-
-      if dst is "."
-        dst = "#{dir}/#{name}"
-      else
-        dst = "#{dir}/#{name}/#{dst}"
-
-      mkdir "-p", dst
-
-      cp "-R", src, dst
-
-#-------------------------------------------------------------------------------
-watchIter = ->
-  log "starting build at #{new Date()}"
-  code = tasks.build()
-  # return if code
-
-  tasks.test()
-  tasks.serve()
-
-#-------------------------------------------------------------------------------
 cleanDir = (dir) ->
   mkdir "-p", dir
   rm "-rf", "#{dir}/*"
+
+#-------------------------------------------------------------------------------
+get_reveal_262 = ->
+  get_reveal "2.6.2"
+
+#-------------------------------------------------------------------------------
+get_reveal = (version) ->
+  log "installing reveal.js #{version}"
+
+  rm "-rf", "bower_components/reveal.js"
+  exec "bower install reveal.js##{version}"
+  cleanDir "reveal.js/#{version}"
+  cp "-R", "bower_components/reveal.js/*", "reveal.js/#{version}"
+
+  console.log ""
+
+#-------------------------------------------------------------------------------
+get_remark_064 = ->
+  get_remark "0.6.4"
+
+#-------------------------------------------------------------------------------
+get_remark = (version) ->
+  log "installing remark #{version}"
+
+  rm "-rf", "bower_components/remark"
+  exec "bower install remark##{version}"
+  cleanDir "remark/#{version}"
+  cp "-R", "bower_components/remark/*", "remark/#{version}"
+
+  console.log ""
 
 #-------------------------------------------------------------------------------
 # Copyright Patrick Mueller 2014
