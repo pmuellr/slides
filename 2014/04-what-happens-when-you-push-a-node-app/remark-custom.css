@@ -25,6 +25,16 @@ body a:visited, body a {
   text-decoration:    none;
 }
 
+#ibm-8-bar-icon {
+  background-image:   url(../../images/ibm-8-bar-white-trans.png);
+  background-size:    cover;
+}
+
+#cloud-foundry-icon {
+  background-image:   url(../../images/cloud-foundry-trans-lite.png);
+  background-size:    cover;
+}
+
 /* printed */
 
 @media print {
@@ -38,6 +48,13 @@ body a:visited, body a {
     color:            #222;
   }
 
+  #ibm-8-bar-icon {
+    background-image: url(../../images/ibm-8-bar-black-trans.png);
+  }
+
+#cloud-foundry-icon {
+  background-image:   url(../../images/cloud-foundry-trans-dark.png);
+}
 }
 
 /* fonts */
