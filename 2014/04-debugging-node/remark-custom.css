@@ -130,6 +130,10 @@ p .comment, .comment {
   left:               12px;
 }
 
+.nav-buttons img {
+  visibility:         hidden;
+}
+
 .bg-white {
   opacity:            0.2;
   background-color:   #FFF;

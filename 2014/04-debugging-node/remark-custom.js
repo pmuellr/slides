@@ -1,24 +1,42 @@
-var savedRatio = localStorage.getItem("remark-ratio") || "4:3"
+var savedRatio      = localStorage.getItem("remark-ratio") || "4:3"
+var savedNavButtons = localStorage.getItem("nav-buttons")  || "hidden"
 
 var slideshow = remark.create({
-// Set the slideshow display ratio
-// Default: '4:3'
-// Alternatives: '16:9', ...
-ratio: savedRatio,
+  // Set the slideshow display ratio
+  // Default: '4:3'
+  // Alternatives: '16:9', ...
+  ratio: savedRatio,
 
-// Navigation options
-navigation: {
-  // Enable or disable navigating using scroll
-  // Default: true
-  // Alternatives: false
-  scroll: false,
+  // Navigation options
+  navigation: {
+    // Enable or disable navigating using scroll
+    // Default: true
+    // Alternatives: false
+    scroll: false,
 
-  // Enable or disable navigation using touch
-  // Default: true
-  // Alternatives: false
-  touch: true
-}})
+    // Enable or disable navigation using touch
+    // Default: true
+    // Alternatives: false
+    touch: true
+  }
+})
 
+//----------------------------------------------------------------------
+function setNavButtons() {
+  var buttons = document.querySelectorAll(".nav-buttons img")
+
+  for (var i=0; i<buttons.length; i++) {
+    var button = buttons[i]
+    button.style.visibility = savedNavButtons
+  }
+}
+
+//----------------------------------------------------------------------
+function toggleNavButtons() {
+  savedNavButtons = (savedNavButtons == "visible") ? "hidden" : "visible"
+  localStorage.setItem("nav-buttons", savedNavButtons)
+  setNavButtons()
+}
 
 //----------------------------------------------------------------------
 function toggleRatio() {
@@ -45,4 +63,5 @@ function installGA() {
 }
 
 //----------------------------------------------------------------------
+setTimeout(setNavButtons, 500)
 setTimeout(installGA, 1000)
