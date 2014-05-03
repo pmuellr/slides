@@ -9,6 +9,21 @@
   <body>
     <textarea id="source">
 
+layout: true
+
+<div class="nav-buttons no-print">
+  <img onclick="javascript:slideshow.gotoNextSlide()"      src="../../glyphicons_free/glyphicons/png/glyphicons_176_forward.png"       title="next"       height=16 class="bg-white">
+  <img onclick="javascript:slideshow.gotoPreviousSlide()"  src="../../glyphicons_free/glyphicons/png/glyphicons_172_rewind.png"        title="previous"   height=16 class="bg-white">
+  <img onclick="javascript:slideshow.gotoFirstSlide()"     src="../../glyphicons_free/glyphicons/png/glyphicons_171_fast_backward.png" title="beginning"  height=16 class="bg-white">
+  <img onclick="javascript:toggleRatio()"                  src="../../glyphicons_free/glyphicons/png/glyphicons_215_resize_full.png"   title="4:3 / 16:9" height=16 class="bg-white">
+  <span class="width:3em">&nbsp;</span>
+  <i>use cursor keys or touch swipes to scroll</i>
+</div>
+
+.comment[======================================================================]
+
+---
+
 # pushing a node app to Cloud Foundry
 
 ### *You won't believe what really happens!*
@@ -27,13 +42,22 @@ IBMer
 .smaller[<http://pmuellr.github.io/slides/2014/04-what-happens-when-you-push-a-node-app>]
 ]
 
-.footnote[use cursor keys or touch swipes to scroll]
+<!--
+x.footnote[use cursor keys or touch swipes to scroll]
+-->
 
 .comment[======================================================================]
 
 ---
 
 layout: true
+
+<div class="nav-buttons no-print">
+  <img onclick="javascript:slideshow.gotoNextSlide()"      src="../../glyphicons_free/glyphicons/png/glyphicons_176_forward.png"       title="next"       height=16 class="bg-white">
+  <img onclick="javascript:slideshow.gotoPreviousSlide()"  src="../../glyphicons_free/glyphicons/png/glyphicons_172_rewind.png"        title="previous"   height=16 class="bg-white">
+  <img onclick="javascript:slideshow.gotoFirstSlide()"     src="../../glyphicons_free/glyphicons/png/glyphicons_171_fast_backward.png" title="beginning"  height=16 class="bg-white">
+  <img onclick="javascript:toggleRatio()"                  src="../../glyphicons_free/glyphicons/png/glyphicons_215_resize_full.png"   title="4:3 / 16:9" height=16 class="bg-white">
+</div>
 
 <div class="page-icon">
   <img height=24 src="../../images/ibm-8-bar-trans.png"  id="ibm-8-bar-icon">
@@ -59,12 +83,6 @@ Raleigh, NC
 
 more of my slides: <http://pmuellr.github.io/slides>
 
----------------------
-
-.smaller[
-<a href="javascript:toggleRatio()">[toggle display ratio]</a>
-]
-
 .comment[======================================================================]
 
 ---
@@ -89,9 +107,11 @@ For more info: <https://bluemix.net>
 
 JS Logo from <https://github.com/voodootikigod/logo.js>
 
-Cloud Foundry icon from somewhere.
-
 Slide framework from <http://remarkjs.com/>
+
+GlyphIcons Free from <http://glyphicons.com/>
+
+Cloud Foundry icon from somewhere.
 
 .comment[======================================================================]
 

@@ -30,6 +30,11 @@ body a:visited, body a {
   background-size:    cover;
 }
 
+#cloud-foundry-icon {
+  background-image:   url(../../images/cloud-foundry-trans-lite.png);
+  background-size:    cover;
+}
+
 /* printed */
 
 @media print {
@@ -43,8 +48,20 @@ body a:visited, body a {
     color:            #222;
   }
 
+  .no-print {
+    display:          none;
+  }
+
+  .nav-buttons {
+    display:          none;
+  }
+
   #ibm-8-bar-icon {
-    background-image:   url(../../images/ibm-8-bar-black-trans.png);
+    background-image: url(../../images/ibm-8-bar-black-trans.png);
+  }
+
+  #cloud-foundry-icon {
+    background-image: url(../../images/cloud-foundry-trans-dark.png);
   }
 }
 
@@ -107,12 +124,21 @@ p .comment, .comment {
   bottom:             12px;
 }
 
+.nav-buttons {
+  position:           absolute;
+  bottom:             16px;
+  left:               12px;
+}
+
+.bg-white {
+  opacity:            0.2;
+  background-color:   #FFF;
+  padding:            0.25em;
+}
+
 .page-icon {
   position:           absolute;
   top:                12px;
   right:              12px;
 }
 
-.no-print {
-  display:            none;
-}
