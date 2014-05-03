@@ -134,6 +134,7 @@ p .comment, .comment {
   opacity:            0.2;
   background-color:   #FFF;
   padding:            0.25em;
+  border-radius:      0.30em;
 }
 
 .page-icon {
