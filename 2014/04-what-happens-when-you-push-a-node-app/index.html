@@ -9,21 +9,6 @@
   <body>
     <textarea id="source">
 
-layout: true
-
-<div class="nav-buttons no-print">
-  <img onclick="javascript:slideshow.gotoNextSlide()"      src="../../glyphicons_free/glyphicons/png/glyphicons_176_forward.png"       title="next"       height=16 class="bg-white">
-  <img onclick="javascript:slideshow.gotoPreviousSlide()"  src="../../glyphicons_free/glyphicons/png/glyphicons_172_rewind.png"        title="previous"   height=16 class="bg-white">
-  <img onclick="javascript:slideshow.gotoFirstSlide()"     src="../../glyphicons_free/glyphicons/png/glyphicons_171_fast_backward.png" title="beginning"  height=16 class="bg-white">
-  <img onclick="javascript:toggleRatio()"                  src="../../glyphicons_free/glyphicons/png/glyphicons_215_resize_full.png"   title="4:3 / 16:9" height=16 class="bg-white">
-  <span class="width:3em">&nbsp;</span>
-  <i>use cursor keys or touch swipes to scroll</i>
-</div>
-
-.comment[======================================================================]
-
----
-
 # pushing a node app to Cloud Foundry
 
 ### *You won't believe what really happens!*
@@ -47,13 +32,6 @@ IBMer
 ---
 
 layout: true
-
-<div class="nav-buttons no-print">
-  <img onclick="javascript:slideshow.gotoNextSlide()"      src="../../glyphicons_free/glyphicons/png/glyphicons_176_forward.png"       title="next"       height=16 class="bg-white">
-  <img onclick="javascript:slideshow.gotoPreviousSlide()"  src="../../glyphicons_free/glyphicons/png/glyphicons_172_rewind.png"        title="previous"   height=16 class="bg-white">
-  <img onclick="javascript:slideshow.gotoFirstSlide()"     src="../../glyphicons_free/glyphicons/png/glyphicons_171_fast_backward.png" title="beginning"  height=16 class="bg-white">
-  <img onclick="javascript:toggleRatio()"                  src="../../glyphicons_free/glyphicons/png/glyphicons_215_resize_full.png"   title="4:3 / 16:9" height=16 class="bg-white">
-</div>
 
 <div class="page-icon">
   <img height=24 src="../../images/ibm-8-bar-trans.png"  id="ibm-8-bar-icon">
@@ -79,9 +57,21 @@ Raleigh, NC
 
 more of my slides: <http://pmuellr.github.io/slides>
 
-<button onclick="javascript:toggleRatio()">toggle 4:3 / 16:9</button>
-
-<button onclick="javascript:toggleNavButtons()">toggle navigation buttons</button>
+<div class="no-print">
+<hr>
+<table>
+<tr><td>
+&nbsp;display ratio:&nbsp;
+<td>
+<input id="button-display-ratio-4"  type="radio" name="display-ratio" value="4:3">  4:3
+&nbsp;&nbsp;
+<input id="button-display-ratio-16" type="radio" name="display-ratio" value="16:9"> 16:9
+<tr><td>
+&nbsp;clicker mode:&nbsp;
+<td>
+<input id="button-clicker" type="checkbox" value="toggle">
+</table>
+</div>
 
 .comment[======================================================================]
 
@@ -556,6 +546,7 @@ class: center, middle
 
     </textarea>
     <script src="../../remark/0.6.4/remark.min.js"></script>
+    <script src="../../lib/jquery/2.1.1/jquery.min.js"></script>
     <script src="remark-custom.js"></script>
   </body>
 </html>
