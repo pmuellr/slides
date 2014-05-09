@@ -1,9 +1,10 @@
 {
 	"private":			true,
-  "name":         "slides",
+  "name":         "snippets",
   "version":      "0.0.0",
-  "description":  "slides",
+  "description":  "snippets",
   "license":      "Apache-2.0",
   "devDependencies": {
+  	"long-stack-traces": "0.1.x"
   }
 }
