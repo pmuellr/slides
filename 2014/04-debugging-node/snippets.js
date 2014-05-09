@@ -1,0 +1,7 @@
+Snippets = {
+    "alert.js": "alert(\"help me\")\n\n// prints:\n//\n// ReferenceError: alert is not defined\n//     at Object.<anonymous> (alert.js:1:63)\n//     at Module._compile (module.js:456:26)\n//     ...\n",
+    "console_log.js": "console.log(\"foo\")\n// prints: foo\n\nconsole.log(\"foo\", \"bar\")\n// prints: foo bar\n\nconsole.log(\"a-%s-b\", 1)\n// prints: a-1-b\n\nconsole.log(\"a-%s-b %j\", 1, {x:1})\n// prints: a-1-b {\"x\":1}\n\nconsole.log(process)\n// prints: { title: 'node', ...many lines... }",
+    "console_time.js": "function doStuff() {\n  // expensive thing here\n}\n\nconsole.time(\"foo\")\ndoStuff()\nconsole.timeEnd(\"foo\")\n\n// prints: foo: 1121ms\n",
+    "console_trace.js": "function a() { b() }\nfunction b() { c() }\nfunction c() { console.trace(\"foo\") }\n\na()\n\n// prints\n//\n// Trace: foo\n//     at c (<program>:3:24)\n//     at b (<program>:2:16)\n//     at a (<program>:1:78)\n//     at ...",
+    "v8_prepareStackTrace.js": "Error.prepareStackTrace = function(error, structuredStackTrace) {\n\t// ... lots of goopy code ...\n\treturn stackTraceLineString\n}\n\nfunction a() { b() }\nfunction b() { c() }\nfunction c() { throw new Error(\"foo blatz\") }\n\ntry { a() } catch(err) { console.log(err.stack) }\n// prints:\n// Error: foo blatz\n//    v8_prepareStackTrace.js  14 - c()\n//    v8_prepareStackTrace.js  13 - b()\n//    v8_prepareStackTrace.js  12 - a()\n"
+}

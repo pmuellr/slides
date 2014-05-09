@@ -38,7 +38,7 @@ IBMer
 ]]
 
 .no-print.smaller[.smaller[
-[{pdf}](index.pdf)
+<!-- [{pdf}](index.pdf) -->
 ]]
 
 .comment[======================================================================]
@@ -118,7 +118,7 @@ GlyphIcons Free from <http://glyphicons.com/>
 
 class: center, middle
 
-# how to debug?
+# adding diagnostics as code
 
 .comment[======================================================================]
 
@@ -127,14 +127,7 @@ class: center, middle
 ## `alert()`
 
 ```js
-alert("help me")
-
-// prints:
-//
-// ReferenceError: alert is not defined
-//     at Object.<anonymous> (alert.js:1:63)
-//     at Module._compile (module.js:456:26)
-//     ...
+//!snippet: alert.js
 ```
 
 .comment[======================================================================]
@@ -144,17 +137,7 @@ alert("help me")
 ## `console.log()`
 
 ```js
-console.log("foo")
-// prints: foo
-
-console.log("foo", "bar")
-//! prints: foo bar
-
-console.log("a-%s-b-%j-c", 1, {x:1})
-//! prints: a-1-b-{"x":1}-c
-
-console.log(process)
-//! prints: { title: 'node', ...many lines... }
+//!snippet: console_log.js
 ```
 
 .comment[======================================================================]
@@ -164,11 +147,7 @@ console.log(process)
 ## `console.time()`
 
 ```js
-console.time("foo")
-doStuff()
-console.timeEnd("foo")
-
-// prints: foo: 5808ms
+//!snippet: console_time.js
 ```
 
 ---
@@ -176,44 +155,72 @@ console.timeEnd("foo")
 ## `console.trace()`
 
 ```js
-console.trace("foo")
-
-// prints
-// Trace: foo
-//     at repl:1:10
-//     at REPLServer.self.eval (repl.js:110:21)
-//     at Interface.<anonymous> (repl.js:239:12)
-//     at Interface.EventEmitter.emit (events.js:95:17)
-//     at Interface._onLine (readline.js:202:10)
-//     at Interface._line (readline.js:531:8)
-//     at Interface._ttyWrite (readline.js:760:14)
-//     at ReadStream.onkeypress (readline.js:99:10)
-//     at ReadStream.EventEmitter.emit (events.js:98:17)
-//     at emitKey (readline.js:1095:12)
+//!snippet: console_trace.js
 ```
 
 .comment[======================================================================]
 
 ---
 
-## nicer stack traces
+## `Error.prepareStackTrace()`
 
-using v8's Error.prepareStackTrace()
+```js
+//!snippet: v8_prepareStackTrace.js
+```
 
-    ---------------------------------------------------------
-    error: ReferenceError: description is not defined
-    ---------------------------------------------------------
-    stack:
-       WeinreTargetCommands.coffee  21 - WeinreTargetCommands.registerTarget()
-             messageHandler.coffee  29 - MessageHandler._serviceMethodInvoker()
-             messageHandler.coffee  15 - MessageHandler.handleMessage()
-                    Channel.coffee  74 - Channel.handleMessages()
-         HttpChannelHandler.coffee 102 - handlePost()
-         HttpChannelHandler.coffee  64 - HttpChannelHandler.baseHandle()
-         HttpChannelHandler.coffee  40 - HttpChannelHandler.handle()
-                     weinre.coffee  83 - app.use.express.errorHandler.dumpExceptions()
-                      index.js     272 - callbacks()
-                      index.js     246 - param()
+.comment[======================================================================]
+
+---
+
+## `Error.prepareStackTrace()`
+
+before
+
+```
+Error: foo blatz
+    at c (/fully/qualified/path/name/here/v8_prepareStackTrace.js:18:22)
+    at b (/fully/qualified/path/name/here/v8_prepareStackTrace.js:17:16)
+    at a (/fully/qualified/path/name/here/v8_prepareStackTrace.js:16:16)
+    at Object.<anonymous> (/fully/qualified/path/name/here/v8_prepareStackTrace.js:4:7)
+    ... many more lines ...
+```
+
+after
+
+```
+Error: foo blatz
+   v8_prepareStackTrace.js  14 - c()
+   v8_prepareStackTrace.js  13 - b()
+   v8_prepareStackTrace.js  12 - a()
+```
+
+.comment[======================================================================]
+
+---
+
+## `Error.prepareStackTrace()`
+
+see also:
+
+* .smaller[<https://code.google.com/p/v8/wiki/JavaScriptStackTraceApi>]
+
+* .smaller[.smaller[<https://mail.mozilla.org/pipermail/es-discuss/2014-March/036764.html>]]
+
+.comment[======================================================================]
+
+---
+
+.comment[======================================================================]
+
+---
+
+.comment[======================================================================]
+
+---
+
+.comment[======================================================================]
+
+---
 
 .comment[======================================================================]
 
@@ -230,6 +237,7 @@ class: center, middle
     </textarea>
     <script src="../../remark/0.6.4/remark.min.js"></script>
     <script src="../../lib/jquery/2.1.1/jquery.min.js"></script>
+    <script src="snippets.js"></script>
     <script src="remark-custom.js"></script>
   </body>
 </html>

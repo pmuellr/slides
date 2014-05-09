@@ -2,6 +2,9 @@ var SlidesRatio   = localStorage.getItem("remark-ratio")   || "4:3"
 var SlidesClicker = "off"
 
 //----------------------------------------------------------------------
+replaceSnippets()
+
+//----------------------------------------------------------------------
 var slideshow = remark.create({
   // Set the slideshow display ratio
   // Default: '4:3'
@@ -21,6 +24,36 @@ var slideshow = remark.create({
     touch: true
   }
 })
+
+//----------------------------------------------------------------------
+function replaceSnippets() {
+  var $slides = $($("textarea#source")[0])
+  var source  = $slides.html()
+
+  var iLines = source.split("\n")
+  var oLines = []
+
+  for (var i=0; i<iLines.length; i++) {
+    var line  = iLines[i]
+    var match = line.match(/^\/\/!snippet:\s+(.*)$/)
+
+    if (!match) {
+      oLines.push(line)
+      continue
+    }
+
+    var snippetName = match[1]
+    var replacement = Snippets[snippetName]
+
+    if (!replacement) replacement = "// unable to find snippet: " + snippetName
+
+    oLines.push(replacement)
+  }
+
+  source = oLines.join("\n")
+
+  $slides.html(source)
+}
 
 //----------------------------------------------------------------------
 function toggleDisplayRatio() {
