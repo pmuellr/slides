@@ -1,0 +1,10 @@
+{
+  "name":         "slides",
+  "version":      "0.0.0",
+  "description":  "slides at http://pmuellr.github.io/slides/",
+  "license":      "Apache 2",
+  "repository":   { "type":"git", "url":"git://github.com/pmuellr/slides.git" },
+  "homepage":     "https://github.com/pmuellr/slides",
+  "devDependencies": {
+  }
+}

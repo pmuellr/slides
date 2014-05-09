@@ -1,11 +1,12 @@
-var savedRatio      = localStorage.getItem("remark-ratio") || "4:3"
-var savedNavButtons = localStorage.getItem("nav-buttons")  || "hidden"
+var SlidesRatio   = localStorage.getItem("remark-ratio")   || "4:3"
+var SlidesClicker = "off"
 
+//----------------------------------------------------------------------
 var slideshow = remark.create({
   // Set the slideshow display ratio
   // Default: '4:3'
   // Alternatives: '16:9', ...
-  ratio: savedRatio,
+  ratio: SlidesRatio,
 
   // Navigation options
   navigation: {
@@ -22,33 +23,85 @@ var slideshow = remark.create({
 })
 
 //----------------------------------------------------------------------
-function setNavButtons() {
-  var buttons = document.querySelectorAll(".nav-buttons img")
+function toggleDisplayRatio() {
+  SlidesRatio = (SlidesRatio == "4:3") ? "16:9" : "4:3"
 
-  for (var i=0; i<buttons.length; i++) {
-    var button = buttons[i]
-    button.style.visibility = savedNavButtons
-  }
+  localStorage.setItem("remark-ratio", SlidesRatio)
+
+  window.location.reload()
 }
 
 //----------------------------------------------------------------------
-function toggleNavButtons() {
-  savedNavButtons = (savedNavButtons == "visible") ? "hidden" : "visible"
-  localStorage.setItem("nav-buttons", savedNavButtons)
-  setNavButtons()
+function initDisplayRatio() {
+  var button1 = $("#button-display-ratio-4")
+  var button2 = $("#button-display-ratio-16")
+
+  button1.attr("checked", SlidesRatio == "4:3")
+  button2.attr("checked", SlidesRatio == "16:9")
+
+  button1.change(function () { toggleDisplayRatio() })
+  button2.change(function () { toggleDisplayRatio() })
+}
+
+var bodyContainers = [
+  "remark-container",
+  "remark-slides-area",
+  "remark-slide-container",
+  "remark-slide-scaler",
+  "remark-slide",
+  "remark-slide-content"
+]
+
+//----------------------------------------------------------------------
+function isClickableEvent(e) {
+  if (SlidesClicker != "on") return false
+
+  var inBodyContainer = false
+  var target = $(e.target)
+
+  for (var i=0; i<bodyContainers.length; i++) {
+    if (target.hasClass(bodyContainers[i])) {
+      return true
+    }
+  }
+
+  return false
 }
 
 //----------------------------------------------------------------------
-function toggleRatio() {
-  if (savedRatio == "4:3") {
-    savedRatio = "16:9"
-  }
-  else {
-    savedRatio = "4:3"
-  }
+function onMouseDown(e) {
+  if (!isClickableEvent(e)) return
 
-  localStorage.setItem("remark-ratio", savedRatio)
-  location.reload()
+  e.preventDefault()
+
+  if (e.button === 0) slideshow.gotoNextSlide()
+  if (e.button === 2) slideshow.gotoPreviousSlide()
+}
+
+//----------------------------------------------------------------------
+function onContextMenu(e) {
+  if (!isClickableEvent(e)) return
+
+  e.preventDefault()
+}
+
+//----------------------------------------------------------------------
+function toggleClickerMode() {
+  var button = $("#button-clicker")
+
+  SlidesClicker = (SlidesClicker == "on") ? "off" : "on"
+
+  button.attr("checked", SlidesClicker == "on")
+}
+
+//----------------------------------------------------------------------
+function initClickerMode() {
+  var button = $("#button-clicker")
+
+  button.click(toggleClickerMode)
+
+  window.addEventListener("mousedown",   onMouseDown,   false)
+  window.addEventListener("contextmenu", onContextMenu, false)
 }
 
 //----------------------------------------------------------------------
@@ -63,5 +116,7 @@ function installGA() {
 }
 
 //----------------------------------------------------------------------
-setTimeout(setNavButtons, 500)
+setTimeout(initDisplayRatio, 500)
+setTimeout(initClickerMode,  500)
+
 setTimeout(installGA, 1000)

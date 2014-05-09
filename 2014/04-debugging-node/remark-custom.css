@@ -48,6 +48,10 @@ body a:visited, body a {
     color:            #222;
   }
 
+  body a:visited, body a {
+    color:              #55F;
+  }
+
   .no-print {
     display:          none;
   }

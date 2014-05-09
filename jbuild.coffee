@@ -2,8 +2,6 @@
 
 path = require "path"
 
-buildSlides = require "./build-slides"
-
 #-------------------------------------------------------------------------------
 # use this file with jbuild: https://www.npmjs.org/package/jbuild
 # install jbuild with:
@@ -11,45 +9,60 @@ buildSlides = require "./build-slides"
 #    windows:        npm -g install jbuild
 #-------------------------------------------------------------------------------
 
-WatchSpec = "20??/**/slides.md"
-
 #-------------------------------------------------------------------------------
 tasks = defineTasks exports,
-  #watch:          "watch for source file changes, then run build"
-  build:          "run a build"
-  tools:          "get the tools"
+  tools:  "get the tools"
 
 #-------------------------------------------------------------------------------
 mkdir "-p", "tmp"
 
 #-------------------------------------------------------------------------------
 tasks.tools = ->
-  get_reveal_262()
-  # get_remark_064()
+  get_jquery "2.1.1"
+  get_remark "0.6.4"
+  get_remark "0.6.5"
+  get_glyphicons()
 
 #-------------------------------------------------------------------------------
-tasks.build = (iFile) ->
-  # buildSlides.main [iFile]
+get_glyphicons = ->
+  log "installing glyphicons free"
+
+  exec "curl -o tmp/gif.zip http://glyphicons.com/files/glyphicons_free.zip"
+  rm "-rf", "glyphicons_free"
+  exec "unzip -q tmp/gif.zip"
+
+  files = ls "-R", "glyphicons_free"
+  files = files.filter (file) -> file.match /\.png$/
+  files = files.map (file) ->
+    "<img src='#{file}' title='#{path.basename file}'>"
+
+  prefix = "<style> img { padding: 5;} </style>"
+
+  output = prefix + "\n" + (files.join "\n")
+
+  output.to "glyphicons_free/preview.html"
+
+  console.log ""
 
 #-------------------------------------------------------------------------------
-tasks.watch = ->
+get_jquery = (version) ->
+  log "installing jquery #{version}"
 
-  watch
-    files: WatchSpec.split " "
-    run:   tasks.build
+  rm "-rf", "bower_components/jquery"
+  exec "bower install jquery##{version}"
+  cleanDir "lib/jquery/#{version}"
+  cp "-R", "bower_components/jquery/dist/*", "lib/jquery/#{version}"
 
-  watchFiles "jbuild.coffee" :->
-    log "jbuild file changed; exiting"
-    process.exit 0
-
-#-------------------------------------------------------------------------------
-cleanDir = (dir) ->
-  mkdir "-p", dir
-  rm "-rf", "#{dir}/*"
+  console.log ""
 
 #-------------------------------------------------------------------------------
-get_reveal_262 = ->
-  get_reveal "2.6.2"
+get_remark = (version) ->
+  log "installing remark #{version}"
+
+  cleanDir "remark/#{version}"
+  exec "curl -o remark/#{version}/remark.min.js http://gnab.github.io/remark/downloads/remark-#{version}.min.js"
+
+  console.log ""
 
 #-------------------------------------------------------------------------------
 get_reveal = (version) ->
@@ -63,19 +76,9 @@ get_reveal = (version) ->
   console.log ""
 
 #-------------------------------------------------------------------------------
-get_remark_064 = ->
-  get_remark "0.6.4"
-
-#-------------------------------------------------------------------------------
-get_remark = (version) ->
-  log "installing remark #{version}"
-
-  rm "-rf", "bower_components/remark"
-  exec "bower install remark##{version}"
-  cleanDir "remark/#{version}"
-  cp "-R", "bower_components/remark/*", "remark/#{version}"
-
-  console.log ""
+cleanDir = (dir) ->
+  mkdir "-p", dir
+  rm "-rf", "#{dir}/*"
 
 #-------------------------------------------------------------------------------
 # Copyright Patrick Mueller 2014
