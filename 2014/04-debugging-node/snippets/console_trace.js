@@ -4,8 +4,6 @@ function c() { console.trace("foo") }
 
 a()
 
-// prints
-//
 // Trace: foo
 //     at c (<program>:3:24)
 //     at b (<program>:2:16)

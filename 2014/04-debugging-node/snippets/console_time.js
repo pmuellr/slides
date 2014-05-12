@@ -2,10 +2,9 @@ console.time("foo")
 doStuff()
 console.timeEnd("foo")
 
-// prints: foo: 1121ms
-//!hide
-
 function doStuff() {
+	// takes a long time
+//!hide
 	var LOOPS = 1000
 
 	for (var i=0; i<LOOPS; i++) {
@@ -15,4 +14,7 @@ function doStuff() {
 			}
 		}
 	}
+//!show
 }
+
+// prints: foo: 1121ms

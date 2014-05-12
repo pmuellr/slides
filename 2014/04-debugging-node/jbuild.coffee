@@ -14,7 +14,7 @@ tasks = defineTasks exports,
   build:  "build the slides"
   watch:  "watch for source changes, run build"
 
-WatchSpec = "snippets snippets/**/*.js"
+WatchSpec = "snippets snippets/**/*.js shell.html slides.md"
 
 #-------------------------------------------------------------------------------
 mkdir "-p", "tmp"
@@ -34,7 +34,9 @@ buildIndex = ->
   shell = cat "shell.html"
   index = shell.replace "%slides.md%", slides
 
+  chmod "+w", "index.html" if test "-f", "index.html"
   index.to "index.html"
+  chmod "-w", "index.html"
 
 #-------------------------------------------------------------------------------
 normalizeSlides = (slides) ->
@@ -65,7 +67,10 @@ buildSnippets = ->
 
   snippets = JSON.stringify(sObject, null, 4)
   snippets = "Snippets = #{snippets}"
+
+  chmod "+w", "snippets.js" if test "-f", "snippets.js"
   snippets.to "snippets.js"
+  chmod "-w", "snippets.js"
 
   index.push "</ul>"
   index = index.join "\n"

@@ -1,22 +1,17 @@
+
+try { a() } catch(err) { console.log(err.stack) }
 function a() { b() }
 function b() { c() }
 function c() { throw new Error("foo blatz") }
 
-Error.prepareStackTrace = function(error, structuredStackTrace) {
-	// ... lots of goopy code ...
-//!hide
-	var stackTraceLineString = v8PrepareStackTrace(error, structuredStackTrace)
-//!show
-	return stackTraceLineString
-}
-
-try { a() } catch(err) { console.log(err.stack) }
-
-// prints:
 // Error: foo blatz
-//    v8_prepareStackTrace.js  14 - c()
-//    v8_prepareStackTrace.js  13 - b()
-//    v8_prepareStackTrace.js  12 - a()
+//     at c (/Users/pmuellr/Projects/slides/2014/04-debugging-node/snippets/v8_prepareStackTrace-before.js:5:22)
+//     at b (/Users/pmuellr/Projects/slides/2014/04-debugging-node/snippets/v8_prepareStackTrace-before.js:4:16)
+//     at a (/Users/pmuellr/Projects/slides/2014/04-debugging-node/snippets/v8_prepareStackTrace-before.js:3:16)
+//     at Object.<anonymous> (/Users/pmuellr/Projects/slides/2014/04-debugging-node/snippets/v8_prepareStackTrace-before.js:2:7)
+//     at Module._compile (module.js:456:26)
+//     at Object.Module._extensions..js (module.js:474:10)
+//     ...
 //!hide
 
 function alignLeft(string, length) {
@@ -33,7 +28,7 @@ function alignRight(string, length) {
   return string;
 }
 
-function v8PrepareStackTrace(error, structuredStackTrace) {
+function _v8PrepareStackTrace(error, structuredStackTrace) {
   var callSite, file, func, funcName, line, longestFile, longestLine, result, _i, _j, _len, _len1;
   result = [];
   result.push(error);
