@@ -22,6 +22,30 @@ mkdir "-p", "tmp"
 #-------------------------------------------------------------------------------
 tasks.build = ->
   buildSnippets()
+  buildIndex()
+
+#-------------------------------------------------------------------------------
+buildIndex = ->
+  log "building index.html from shell.html and slides.md"
+
+  slides = cat "slides.md"
+  slides = normalizeSlides slides
+
+  shell = cat "shell.html"
+  index = shell.replace "%slides.md%", slides
+
+  index.to "index.html"
+
+#-------------------------------------------------------------------------------
+normalizeSlides = (slides) ->
+  lines = slides.split /\n/
+
+  lines = lines.map (line) ->
+    return line if line.length < 4
+    return line unless line.match /----*/
+    return "---"
+
+  return lines.join "\n"
 
 #-------------------------------------------------------------------------------
 buildSnippets = ->

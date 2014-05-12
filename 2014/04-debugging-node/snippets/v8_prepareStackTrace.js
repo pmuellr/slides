@@ -1,10 +1,7 @@
-//!hide
-// https://code.google.com/p/v8/wiki/JavaScriptStackTraceApi
-//
-try { a() } catch(err) { console.log(err.stack) }
-console.log("-----------------------------------------")
+function a() { b() }
+function b() { c() }
+function c() { throw new Error("foo blatz") }
 
-//!show
 Error.prepareStackTrace = function(error, structuredStackTrace) {
 	// ... lots of goopy code ...
 //!hide
@@ -13,18 +10,15 @@ Error.prepareStackTrace = function(error, structuredStackTrace) {
 	return stackTraceLineString
 }
 
-function a() { b() }
-function b() { c() }
-function c() { throw new Error("foo blatz") }
-
 try { a() } catch(err) { console.log(err.stack) }
+
 // prints:
 // Error: foo blatz
 //    v8_prepareStackTrace.js  14 - c()
 //    v8_prepareStackTrace.js  13 - b()
 //    v8_prepareStackTrace.js  12 - a()
-
 //!hide
+
 function alignLeft(string, length) {
   while (string.length < length) {
     string = "" + string + " ";

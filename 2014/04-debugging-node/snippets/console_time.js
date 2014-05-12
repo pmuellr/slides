@@ -1,8 +1,13 @@
+console.time("foo")
+doStuff()
+console.timeEnd("foo")
+
+// prints: foo: 1121ms
 //!hide
-LOOPS = 1000
-//!show
+
 function doStuff() {
-//!hide
+	var LOOPS = 1000
+
 	for (var i=0; i<LOOPS; i++) {
 		for (var j=0; j<LOOPS; j++) {
 			for (var k=0; k<LOOPS; k++) {
@@ -10,13 +15,4 @@ function doStuff() {
 			}
 		}
 	}
-//!show
-  // expensive thing here
 }
-
-//!show
-console.time("foo")
-doStuff()
-console.timeEnd("foo")
-
-// prints: foo: 1121ms

@@ -1,21 +1,10 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>debugging node</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <link rel="icon"       href="../../images/js.png">
-    <link rel="stylesheet" href="remark-custom.css">
-  </head>
-  <body>
-    <textarea id="source" cols="100" rows="40">
-
 class: center, middle
 
 # `work`
 # `in`
 # `progress`
 
----
+--------------------------------------------------------------------------------
 
 # debugging node
 
@@ -39,7 +28,7 @@ IBMer
 <!-- [{pdf}](index.pdf) -->
 ]]
 
----
+--------------------------------------------------------------------------------
 
 layout: true
 
@@ -50,7 +39,7 @@ layout: true
   &nbsp;
 </div>
 
----
+--------------------------------------------------------------------------------
 
 ## Patrick Mueller
 
@@ -78,7 +67,7 @@ more of my slides: <http://pmuellr.github.io/slides>
 </table>
 </div>
 
----
+--------------------------------------------------------------------------------
 
 ## what is BlueMix?
 
@@ -92,7 +81,7 @@ Based on the [Cloud Foundry](http://cloudfoundry.org) open source project
 
 For more info: <https://bluemix.net>
 
----
+--------------------------------------------------------------------------------
 
 ## attribution
 
@@ -102,7 +91,7 @@ Slide framework from <http://remarkjs.com/>
 
 GlyphIcons Free from <http://glyphicons.com/>
 
----
+--------------------------------------------------------------------------------
 
 class: center, middle
 
@@ -110,7 +99,7 @@ class: center, middle
 
 (snippets available at [./snippets](snippets/index.html))
 
----
+--------------------------------------------------------------------------------
 
 ## `alert()`
 
@@ -118,7 +107,7 @@ class: center, middle
 //!snippet: alert.js
 ```
 
----
+--------------------------------------------------------------------------------
 
 ## `console.log()`
 
@@ -126,7 +115,7 @@ class: center, middle
 //!snippet: console_log.js
 ```
 
----
+--------------------------------------------------------------------------------
 
 ## `console.time()`
 
@@ -134,7 +123,7 @@ class: center, middle
 //!snippet: console_time.js
 ```
 
----
+--------------------------------------------------------------------------------
 
 ## `console.trace()`
 
@@ -142,11 +131,11 @@ class: center, middle
 //!snippet: console_trace.js
 ```
 
----
+--------------------------------------------------------------------------------
 
 ## winston
 
----
+--------------------------------------------------------------------------------
 
 ## `Error.prepareStackTrace()`
 
@@ -154,7 +143,7 @@ class: center, middle
 //!snippet: v8_prepareStackTrace.js
 ```
 
----
+--------------------------------------------------------------------------------
 
 ## `Error.prepareStackTrace()`
 
@@ -178,7 +167,7 @@ Error: foo blatz
    v8_prepareStackTrace.js  12 - a()
 ```
 
----
+--------------------------------------------------------------------------------
 
 ## npm long-stack-traces
 
@@ -186,7 +175,7 @@ Error: foo blatz
 //!snippet: long-stack-traces.js
 ```
 
----
+--------------------------------------------------------------------------------
 
 ## `Error.prepareStackTrace()`
 
@@ -196,46 +185,37 @@ see also:
 
 * .smaller[.smaller[<https://mail.mozilla.org/pipermail/es-discuss/2014-March/036764.html>]]
 
----
+--------------------------------------------------------------------------------
 
 ## Q longtraces
 
----
+--------------------------------------------------------------------------------
 
 ## node-inspector
 
----
+--------------------------------------------------------------------------------
 
 ## theseus
 
----
+--------------------------------------------------------------------------------
 
 ## nodprof
 
----
+--------------------------------------------------------------------------------
 
 ## testing
 
 * mocha
 * jasmine
 
----
+--------------------------------------------------------------------------------
 
 ## hooking functions
 
 https://www.npmjs.org/package/hooker
 
----
+--------------------------------------------------------------------------------
 
 class: center, middle
 
 # `fin`
-
-
-    </textarea>
-    <script src="../../remark/0.6.4/remark.min.js"></script>
-    <script src="../../lib/jquery/2.1.1/jquery.min.js"></script>
-    <script src="snippets.js"></script>
-    <script src="remark-custom.js"></script>
-  </body>
-</html>
