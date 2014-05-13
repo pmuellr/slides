@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>debugging node snippets</title>
+    <link rel="icon"       href="../../images/js.png">
+    <link rel="stylesheet" href="highlightjs-styles.css">
+    <style>
+      body {
+        background-color:       #DDD;
+      }
+
+      .indent {
+        margin-left:            2em;
+      }
+
+      .smaller {
+        font-size:              80%;
+      }
+
+      pre {
+        margin-left:            2em;
+        margin-right:           2em;
+        padding:                1em;
+        background-color:       #EEE;
+        border:                 thin solid black;
+        border-radius:          1em;
+      }
+    </style>
+  </head>
+  <body>
+
+<!-- ================================== -->
+<hr>
+<h2>alert.js<h2>
+<div class='indent smaller'><a href='snippets/alert.js'>link</a></div>
+<pre><code>alert(<span class="hljs-string">"help me"</span>)
+
+<span class="hljs-comment">// prints:</span>
+<span class="hljs-comment">//</span>
+<span class="hljs-comment">// ReferenceError: alert is not defined</span>
+<span class="hljs-comment">//     at Object.&lt;anonymous&gt; (alert.js:1:63)</span>
+<span class="hljs-comment">//     at Module._compile (module.js:456:26)</span>
+<span class="hljs-comment">//     ...</span>
+</code></pre>
+
+<!-- ================================== -->
+<hr>
+<h2>console_log.js<h2>
+<div class='indent smaller'><a href='snippets/console_log.js'>link</a></div>
+<pre><code>console.log(<span class="hljs-string">"foo"</span>)
+<span class="hljs-comment">// prints: foo</span>
+
+console.log(<span class="hljs-string">"foo"</span>, <span class="hljs-string">"bar"</span>)
+<span class="hljs-comment">// prints: foo bar</span>
+
+console.log(<span class="hljs-string">"a-%s-b"</span>, <span class="hljs-number">1</span>)
+<span class="hljs-comment">// prints: a-1-b</span>
+
+console.log(<span class="hljs-string">"a-%s-b %j"</span>, <span class="hljs-number">1</span>, {x:<span class="hljs-number">1</span>})
+<span class="hljs-comment">// prints: a-1-b {"x":1}</span>
+
+console.log(process)
+<span class="hljs-comment">// prints: { title: 'node', ...many lines... }</span></code></pre>
+
+<!-- ================================== -->
+<hr>
+<h2>console_time.js<h2>
+<div class='indent smaller'><a href='snippets/console_time.js'>link</a></div>
+<pre><code>console.time(<span class="hljs-string">"foo"</span>)
+doStuff()
+console.timeEnd(<span class="hljs-string">"foo"</span>)
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">doStuff</span><span class="hljs-params">()</span> {</span>
+	<span class="hljs-comment">// takes a long time</span>
+<span class="hljs-comment">//!hide</span>
+	<span class="hljs-keyword">var</span> LOOPS = <span class="hljs-number">1000</span>
+
+	<span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> i=<span class="hljs-number">0</span>; i&lt;LOOPS; i++) {
+		<span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> j=<span class="hljs-number">0</span>; j&lt;LOOPS; j++) {
+			<span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> k=<span class="hljs-number">0</span>; k&lt;LOOPS; k++) {
+				<span class="hljs-keyword">var</span> x = i * j * k
+			}
+		}
+	}
+<span class="hljs-comment">//!show</span>
+}
+
+<span class="hljs-comment">// prints: foo: 1121ms</span></code></pre>
+
+<!-- ================================== -->
+<hr>
+<h2>console_trace.js<h2>
+<div class='indent smaller'><a href='snippets/console_trace.js'>link</a></div>
+<pre><code><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">a</span><span class="hljs-params">()</span> {</span> b() }
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">b</span><span class="hljs-params">()</span> {</span> c() }
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">c</span><span class="hljs-params">()</span> {</span> console.trace(<span class="hljs-string">"foo"</span>) }
+
+a()
+
+<span class="hljs-comment">// Trace: foo</span>
+<span class="hljs-comment">//     at c (&lt;program&gt;:3:24)</span>
+<span class="hljs-comment">//     at b (&lt;program&gt;:2:16)</span>
+<span class="hljs-comment">//     at a (&lt;program&gt;:1:78)</span>
+<span class="hljs-comment">//     at ...</span></code></pre>
+
+<!-- ================================== -->
+<hr>
+<h2>debugger.js<h2>
+<div class='indent smaller'><a href='snippets/debugger.js'>link</a></div>
+<pre><code><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">a</span><span class="hljs-params">()</span> {</span>
+	<span class="hljs-keyword">var</span> x = <span class="hljs-number">1</span>
+	<span class="hljs-keyword">var</span> y = <span class="hljs-number">2</span>
+	debugger
+	console.log(x + <span class="hljs-string">" + "</span> + y + <span class="hljs-string">" = "</span> + (x+y))
+}
+
+setTimeout(a, <span class="hljs-number">1000</span>)</code></pre>
+
+<!-- ================================== -->
+<hr>
+<h2>hooker.js<h2>
+<div class='indent smaller'><a href='snippets/hooker.js'>link</a></div>
+<pre><code><span class="hljs-keyword">var</span> hooker = <span class="hljs-built_in">require</span>(<span class="hljs-string">"hooker"</span>)
+
+hooker.hook(<span class="hljs-built_in">Math</span>, <span class="hljs-built_in">Object</span>.getOwnPropertyNames(<span class="hljs-built_in">Math</span>), {
+	passName: <span class="hljs-literal">true</span>,
+	pre: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(name)</span> {</span>
+		<span class="hljs-keyword">var</span> args = [].slice.call(<span class="hljs-built_in">arguments</span>,<span class="hljs-number">1</span>).join(<span class="hljs-string">", "</span>)
+		console.log(<span class="hljs-string">"Math."</span> + name + <span class="hljs-string">"("</span> + args + <span class="hljs-string">") called"</span>)
+	},
+	post: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(result, name)</span> {</span>
+		console.log(<span class="hljs-string">"Math."</span> + name + <span class="hljs-string">"() returned: "</span> + result)
+	}
+})
+
+<span class="hljs-built_in">Math</span>.max(<span class="hljs-number">5</span>, <span class="hljs-number">6</span>, <span class="hljs-number">7</span>)
+<span class="hljs-built_in">Math</span>.sqrt(<span class="hljs-number">2</span>)
+</code></pre>
+
+<!-- ================================== -->
+<hr>
+<h2>long-stack-traces-after.js<h2>
+<div class='indent smaller'><a href='snippets/long-stack-traces-after.js'>link</a></div>
+<pre><code><span class="hljs-built_in">require</span>(<span class="hljs-string">"long-stack-traces"</span>)
+a()
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">a</span><span class="hljs-params">()</span> {</span> setTimeout(b, <span class="hljs-number">100</span>) }
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">b</span><span class="hljs-params">()</span> {</span> setTimeout(c, <span class="hljs-number">100</span>) }
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">c</span><span class="hljs-params">()</span> {</span> <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">"foo"</span>) }
+
+<span class="hljs-comment">// Uncaught Error: foo</span>
+<span class="hljs-comment">//     at [object Object].c (/path/to/long-stack-traces.js:7:22)</span>
+<span class="hljs-comment">//     at Timer.listOnTimeout [as ontimeout] (timers.js:110:15)</span>
+<span class="hljs-comment">// ----------------------------------------</span>
+<span class="hljs-comment">//     at Object.setTimeout</span>
+<span class="hljs-comment">//     at [object Object].b (/path/to/long-stack-traces.js:5:16)</span>
+<span class="hljs-comment">//     at Timer.listOnTimeout [as ontimeout] (timers.js:110:15)</span>
+<span class="hljs-comment">// ----------------------------------------</span>
+<span class="hljs-comment">//     at Object.setTimeout</span>
+<span class="hljs-comment">//     at a (/path/to/long-stack-traces.js:3:16)</span>
+<span class="hljs-comment">//     ...</span></code></pre>
+
+<!-- ================================== -->
+<hr>
+<h2>long-stack-traces-before.js<h2>
+<div class='indent smaller'><a href='snippets/long-stack-traces-before.js'>link</a></div>
+<pre><code>
+a()
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">a</span><span class="hljs-params">()</span> {</span> setTimeout(b, <span class="hljs-number">100</span>) }
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">b</span><span class="hljs-params">()</span> {</span> setTimeout(c, <span class="hljs-number">100</span>) }
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">c</span><span class="hljs-params">()</span> {</span> <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">"foo"</span>) }
+
+<span class="hljs-comment">// Error: foo</span>
+<span class="hljs-comment">//     at c [as _onTimeout] (/path/to/snippets/long-stack-traces-before.js:6:22)</span>
+<span class="hljs-comment">//     at Timer.listOnTimeout [as ontimeout] (timers.js:110:15)</span></code></pre>
+
+<!-- ================================== -->
+<hr>
+<h2>node-12-tracing.js<h2>
+<div class='indent smaller'><a href='snippets/node-12-tracing.js'>link</a></div>
+<pre><code><span class="hljs-keyword">var</span> fs      = <span class="hljs-built_in">require</span>(<span class="hljs-string">"fs"</span>)
+<span class="hljs-keyword">var</span> tracing = <span class="hljs-built_in">require</span>(<span class="hljs-string">"tracing"</span>)
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getHandler</span><span class="hljs-params">(name)</span> {</span> <span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(context)</span>{</span>
+	fs.writeSync(<span class="hljs-number">1</span>, name + context + <span class="hljs-string">"\n"</span>)
+}}
+
+<span class="hljs-keyword">var</span> handler = {
+	before: getHandler(<span class="hljs-string">"before: "</span>),
+	after:  getHandler(<span class="hljs-string">"after:  "</span>)
+}
+
+<span class="hljs-keyword">var</span> tracer = tracing.createAsyncListener(handler)
+tracing.addAsyncListener(tracer)
+
+setInterval(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>}, <span class="hljs-number">1000</span>)</code></pre>
+
+<!-- ================================== -->
+<hr>
+<h2>q-longStack-after.js<h2>
+<div class='indent smaller'><a href='snippets/q-longStack-after.js'>link</a></div>
+<pre><code><span class="hljs-keyword">var</span> Q = <span class="hljs-built_in">require</span>(<span class="hljs-string">"q"</span>)
+Q.longStackSupport = <span class="hljs-literal">true</span>
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">a</span><span class="hljs-params">()</span> {</span> Q.delay(<span class="hljs-number">100</span>).done(b) }
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">b</span><span class="hljs-params">()</span> {</span> <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">"foo"</span>) }
+
+a()
+
+<span class="hljs-comment">// Error: foo</span>
+<span class="hljs-comment">//     at b (/path/to/snippets/q-longStack-after.js:5:22)</span>
+<span class="hljs-comment">// From previous event:</span>
+<span class="hljs-comment">//     at a (/path/to/snippets/q-longStack-after.js:4:29)</span>
+<span class="hljs-comment">//     at Object.&lt;anonymous&gt; (/path/to/snippets/q-longStack-after.js:7:1)</span></code></pre>
+
+<!-- ================================== -->
+<hr>
+<h2>q-longStack-before.js<h2>
+<div class='indent smaller'><a href='snippets/q-longStack-before.js'>link</a></div>
+<pre><code><span class="hljs-keyword">var</span> Q = <span class="hljs-built_in">require</span>(<span class="hljs-string">"q"</span>)
+
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">a</span><span class="hljs-params">()</span> {</span> Q.delay(<span class="hljs-number">100</span>).done(b) }
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">b</span><span class="hljs-params">()</span> {</span> <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">"foo"</span>) }
+
+a()
+
+<span class="hljs-comment">// Error: foo</span>
+<span class="hljs-comment">//     at b (/path/to/snippets/q-longStack-before.js:5:22)</span>
+<span class="hljs-comment">//     at _fulfilled (/path/to/snippets/node_modules/q/q.js:787:54)</span>
+<span class="hljs-comment">//     at self.promiseDispatch.done (/path/to/snippets/node_modules/q/q.js:816:30)</span>
+<span class="hljs-comment">//     at Promise.promise.promiseDispatch (/path/to/snippets/node_modules/q/q.js:749:13)</span>
+<span class="hljs-comment">//     at /path/to</span></code></pre>
+
+<!-- ================================== -->
+<hr>
+<h2>repl.js<h2>
+<div class='indent smaller'><a href='snippets/repl.js'>link</a></div>
+<pre><code><span class="hljs-keyword">var</span> repl = <span class="hljs-built_in">require</span>(<span class="hljs-string">"repl"</span>)
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">a</span><span class="hljs-params">(i)</span> {</span>
+	<span class="hljs-keyword">var</span> context = repl.start(<span class="hljs-string">"repl&gt; "</span>).context
+	context.pi  = <span class="hljs-number">3.14</span>
+	context.arg = i
+}
+
+a(<span class="hljs-number">3</span>)
+
+<span class="hljs-comment">// repl&gt; pi</span>
+<span class="hljs-comment">// 3.14</span>
+<span class="hljs-comment">// repl&gt; arg</span>
+<span class="hljs-comment">// 3</span>
+<span class="hljs-comment">// repl&gt;</span></code></pre>
+
+<!-- ================================== -->
+<hr>
+<h2>testing.js<h2>
+<div class='indent smaller'><a href='snippets/testing.js'>link</a></div>
+<pre><code>#!<span class="hljs-regexp">/usr/</span>bin/env node node_modules/.bin/mocha testing.js
+
+<span class="hljs-keyword">var</span> assert = <span class="hljs-built_in">require</span>(<span class="hljs-string">"assert"</span>)
+
+describe(<span class="hljs-string">"Array"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
+  describe(<span class="hljs-string">"#indexOf()"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
+    it(<span class="hljs-string">"should return -1 when the value is not present"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
+      assert.equal(-<span class="hljs-number">1</span>, [<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>].indexOf(<span class="hljs-number">1</span>));
+    })
+  })
+})
+
+<span class="hljs-comment">//  0 passing (3ms)</span>
+<span class="hljs-comment">//  1 failing</span>
+<span class="hljs-comment">//</span>
+<span class="hljs-comment">//  1) Array #indexOf() should return -1 when the value is not present:</span>
+<span class="hljs-comment">//     AssertionError: -1 == 0</span>
+<span class="hljs-comment">//      at Context.&lt;anonymous&gt; (path/to/testing.js:7:14)</span>
+<span class="hljs-comment">//      ...</span></code></pre>
+
+<!-- ================================== -->
+<hr>
+<h2>v8_normalStackTrace.js<h2>
+<div class='indent smaller'><a href='snippets/v8_normalStackTrace.js'>link</a></div>
+<pre><code><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">a</span><span class="hljs-params">()</span> {</span> b() }
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">b</span><span class="hljs-params">()</span> {</span> c() }
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">c</span><span class="hljs-params">()</span> {</span> <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">"foo blatz"</span>) }
+
+<span class="hljs-keyword">try</span> { a() } <span class="hljs-keyword">catch</span>(err) { console.log(err.stack) }
+<span class="hljs-comment">// prints:</span>
+<span class="hljs-comment">// Error: foo blatz</span>
+<span class="hljs-comment">//    v8_prepareStackTrace.js  14 - c()</span>
+<span class="hljs-comment">//    v8_prepareStackTrace.js  13 - b()</span>
+<span class="hljs-comment">//    v8_prepareStackTrace.js  12 - a()</span>
+</code></pre>
+
+<!-- ================================== -->
+<hr>
+<h2>v8_prepareStackTrace-after.js<h2>
+<div class='indent smaller'><a href='snippets/v8_prepareStackTrace-after.js'>link</a></div>
+<pre><code><span class="hljs-comment">//!hide</span>
+<span class="hljs-comment">/*
+//!show
+Error.prepareStackTrace = function(err, stackTrace) { ... }
+//!hide
+*/</span>
+<span class="hljs-built_in">Error</span>.prepareStackTrace = v8PrepareStackTrace
+<span class="hljs-comment">//!show</span>
+<span class="hljs-keyword">try</span> { a() } <span class="hljs-keyword">catch</span>(err) { console.log(err.stack) }
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">a</span><span class="hljs-params">()</span> {</span> b() }
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">b</span><span class="hljs-params">()</span> {</span> c() }
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">c</span><span class="hljs-params">()</span> {</span> <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">"foo blatz"</span>) }
+
+<span class="hljs-comment">// Error: foo blatz</span>
+<span class="hljs-comment">//    v8_prepareStackTrace-after.js  13 - c()</span>
+<span class="hljs-comment">//    v8_prepareStackTrace-after.js  12 - b()</span>
+<span class="hljs-comment">//    v8_prepareStackTrace-after.js  11 - a()</span>
+<span class="hljs-comment">//!hide</span>
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">alignLeft</span><span class="hljs-params">(string, length)</span> {</span>
+  <span class="hljs-keyword">while</span> (string.length &lt; length) {
+    string = <span class="hljs-string">""</span> + string + <span class="hljs-string">" "</span>;
+  }
+  <span class="hljs-keyword">return</span> string;
+}
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">alignRight</span><span class="hljs-params">(string, length)</span> {</span>
+  <span class="hljs-keyword">while</span> (string.length &lt; length) {
+    string = <span class="hljs-string">" "</span> + string;
+  }
+  <span class="hljs-keyword">return</span> string;
+}
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">v8PrepareStackTrace</span><span class="hljs-params">(error, structuredStackTrace)</span> {</span>
+  <span class="hljs-keyword">var</span> callSite, file, func, funcName, line, longestFile, longestLine, result, _i, _j, _len, _len1;
+  result = [];
+  result.push(error);
+  longestFile = <span class="hljs-number">0</span>;
+  longestLine = <span class="hljs-number">0</span>;
+  <span class="hljs-keyword">for</span> (_i = <span class="hljs-number">0</span>, _len = structuredStackTrace.length; _i &lt; _len; _i++) {
+    callSite = structuredStackTrace[_i];
+    file = callSite.getFileName();
+    line = callSite.getLineNumber();
+    file = file.replace(<span class="hljs-regexp">/.*\//</span>, <span class="hljs-string">''</span>);
+    line = <span class="hljs-string">""</span> + line;
+    <span class="hljs-keyword">if</span> (file.length &gt; longestFile) {
+      longestFile = file.length;
+    }
+    <span class="hljs-keyword">if</span> (line.length &gt; longestLine) {
+      longestLine = line.length;
+    }
+  }
+  <span class="hljs-keyword">for</span> (_j = <span class="hljs-number">0</span>, _len1 = structuredStackTrace.length; _j &lt; _len1; _j++) {
+    callSite = structuredStackTrace[_j];
+    func = callSite.getFunction();
+    file = callSite.getFileName();
+    line = callSite.getLineNumber();
+    file = file.replace(<span class="hljs-regexp">/.*\//</span>, <span class="hljs-string">''</span>);
+    line = <span class="hljs-string">""</span> + line;
+    file = alignRight(file, longestFile);
+    line = alignRight(line, longestLine);
+    funcName = func.displayName || func.name || callSite.getFunctionName();
+    <span class="hljs-keyword">if</span> (funcName === <span class="hljs-string">"Module._compile"</span>) {
+      result.pop();
+      <span class="hljs-keyword">break</span>;
+    }
+    result.push(<span class="hljs-string">"   "</span> + file + <span class="hljs-string">" "</span> + line + <span class="hljs-string">" - "</span> + funcName + <span class="hljs-string">"()"</span>);
+  }
+  <span class="hljs-keyword">return</span> result.join(<span class="hljs-string">"\n"</span>);
+}
+</code></pre>
+
+<!-- ================================== -->
+<hr>
+<h2>v8_prepareStackTrace-before.js<h2>
+<div class='indent smaller'><a href='snippets/v8_prepareStackTrace-before.js'>link</a></div>
+<pre><code>
+<span class="hljs-keyword">try</span> { a() } <span class="hljs-keyword">catch</span>(err) { console.log(err.stack) }
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">a</span><span class="hljs-params">()</span> {</span> b() }
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">b</span><span class="hljs-params">()</span> {</span> c() }
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">c</span><span class="hljs-params">()</span> {</span> <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">"foo blatz"</span>) }
+
+<span class="hljs-comment">// Error: foo blatz</span>
+<span class="hljs-comment">//     at c (/path/to/snippets/v8_prepareStackTrace-before.js:5:22)</span>
+<span class="hljs-comment">//     at b (/path/to/snippets/v8_prepareStackTrace-before.js:4:16)</span>
+<span class="hljs-comment">//     at a (/path/to/snippets/v8_prepareStackTrace-before.js:3:16)</span>
+<span class="hljs-comment">//     at Object.&lt;anonymous&gt; (/path/to/snippets/v8_prepareStackTrace-before.js:2:7)</span>
+<span class="hljs-comment">//     at Module._compile (module.js:456:26)</span>
+<span class="hljs-comment">//     at Object.Module._extensions..js (module.js:474:10)</span>
+<span class="hljs-comment">//     ...</span>
+<span class="hljs-comment">//!hide</span>
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">alignLeft</span><span class="hljs-params">(string, length)</span> {</span>
+  <span class="hljs-keyword">while</span> (string.length &lt; length) {
+    string = <span class="hljs-string">""</span> + string + <span class="hljs-string">" "</span>;
+  }
+  <span class="hljs-keyword">return</span> string;
+}
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">alignRight</span><span class="hljs-params">(string, length)</span> {</span>
+  <span class="hljs-keyword">while</span> (string.length &lt; length) {
+    string = <span class="hljs-string">" "</span> + string;
+  }
+  <span class="hljs-keyword">return</span> string;
+}
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_v8PrepareStackTrace</span><span class="hljs-params">(error, structuredStackTrace)</span> {</span>
+  <span class="hljs-keyword">var</span> callSite, file, func, funcName, line, longestFile, longestLine, result, _i, _j, _len, _len1;
+  result = [];
+  result.push(error);
+  longestFile = <span class="hljs-number">0</span>;
+  longestLine = <span class="hljs-number">0</span>;
+  <span class="hljs-keyword">for</span> (_i = <span class="hljs-number">0</span>, _len = structuredStackTrace.length; _i &lt; _len; _i++) {
+    callSite = structuredStackTrace[_i];
+    file = callSite.getFileName();
+    line = callSite.getLineNumber();
+    file = file.replace(<span class="hljs-regexp">/.*\//</span>, <span class="hljs-string">''</span>);
+    line = <span class="hljs-string">""</span> + line;
+    <span class="hljs-keyword">if</span> (file.length &gt; longestFile) {
+      longestFile = file.length;
+    }
+    <span class="hljs-keyword">if</span> (line.length &gt; longestLine) {
+      longestLine = line.length;
+    }
+  }
+  <span class="hljs-keyword">for</span> (_j = <span class="hljs-number">0</span>, _len1 = structuredStackTrace.length; _j &lt; _len1; _j++) {
+    callSite = structuredStackTrace[_j];
+    func = callSite.getFunction();
+    file = callSite.getFileName();
+    line = callSite.getLineNumber();
+    file = file.replace(<span class="hljs-regexp">/.*\//</span>, <span class="hljs-string">''</span>);
+    line = <span class="hljs-string">""</span> + line;
+    file = alignRight(file, longestFile);
+    line = alignRight(line, longestLine);
+    funcName = func.displayName || func.name || callSite.getFunctionName();
+    <span class="hljs-keyword">if</span> (funcName === <span class="hljs-string">"Module._compile"</span>) {
+      result.pop();
+      <span class="hljs-keyword">break</span>;
+    }
+    result.push(<span class="hljs-string">"   "</span> + file + <span class="hljs-string">" "</span> + line + <span class="hljs-string">" - "</span> + funcName + <span class="hljs-string">"()"</span>);
+  }
+  <span class="hljs-keyword">return</span> result.join(<span class="hljs-string">"\n"</span>);
+}
+</code></pre>
+
+<!-- ================================== -->
+<hr>
+<h2>winston.js<h2>
+<div class='indent smaller'><a href='snippets/winston.js'>link</a></div>
+<pre><code><span class="hljs-keyword">var</span> winston = <span class="hljs-built_in">require</span>(<span class="hljs-string">"winston"</span>)
+
+winston.remove(winston.transports.Console)
+winston.add(winston.transports.Console, { level:<span class="hljs-string">"warn"</span> })
+winston.add(winston.transports.File, { filename: <span class="hljs-string">"x.log"</span> })
+
+winston.info(<span class="hljs-string">"info message"</span>)
+winston.warn(<span class="hljs-string">"warning message"</span>)
+winston.error(<span class="hljs-string">"error message"</span>)
+
+<span class="hljs-comment">// prints:</span>
+<span class="hljs-comment">// warn: warning message</span>
+<span class="hljs-comment">// error: error message</span></code></pre>
+
+
+    <script src="../../lib/jquery/2.1.1/jquery.min.js"></script>
+  </body>
+</html>

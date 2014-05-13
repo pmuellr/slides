@@ -1,6 +1,7 @@
 # Licensed under the Apache License. See footer for details.
 
 path = require "path"
+hljs = require "./snippets/node_modules/highlight.js"
 
 #-------------------------------------------------------------------------------
 # use this file with jbuild: https://www.npmjs.org/package/jbuild
@@ -14,7 +15,7 @@ tasks = defineTasks exports,
   build:  "build the slides"
   watch:  "watch for source changes, run build"
 
-WatchSpec = "snippets snippets/**/*.js shell.html slides.md"
+WatchSpec = "shell.html slides.md snippets/ snippets/*.js snippets-shell.html"
 
 #-------------------------------------------------------------------------------
 mkdir "-p", "tmp"
@@ -44,7 +45,7 @@ normalizeSlides = (slides) ->
 
   lines = lines.map (line) ->
     return line if line.length < 4
-    return line unless line.match /----*/
+    return line unless line.match /(----*)|(====*)/
     return "---"
 
   return lines.join "\n"
@@ -54,16 +55,22 @@ buildSnippets = ->
   snippets = ls "snippets/*.js"
 
   sObject = {}
-  index = []
-  index.push "<!-- generated on #{new Date()} -->"
-  index.push "<h1>snippets</h1>"
-  index.push "<ul>"
+  sOutput = []
 
   for snippet in snippets
     baseName = path.basename snippet
-    sObject[baseName] = processSnippet cat snippet
+    source = cat snippet
+    sObject[baseName] = processSnippet source
 
-    index.push "<li><a href='#{baseName}'>#{baseName}</a>"
+    highlighted = hljs.highlight("js", source).value
+    sOutput.push "<!-- ================================== -->"
+    sOutput.push "<hr>"
+    sOutput.push "<h2>#{baseName}<h2>"
+    sOutput.push "<div class='indent smaller'><a href='snippets/#{baseName}'>link</a></div>"
+    sOutput.push "<pre><code>#{highlighted}</code></pre>"
+    sOutput.push ""
+
+  sOutput = sOutput.join "\n"
 
   snippets = JSON.stringify(sObject, null, 4)
   snippets = "Snippets = #{snippets}"
@@ -72,9 +79,11 @@ buildSnippets = ->
   snippets.to "snippets.js"
   chmod "-w", "snippets.js"
 
-  index.push "</ul>"
-  index = index.join "\n"
-  index.to "snippets/index.html"
+  chmod "+w", "snippets.html" if test "-f", "snippets.html"
+  snippetsHtml = cat "snippets-shell.html"
+  snippetsHtml = snippetsHtml.replace "%snippets%", sOutput
+  snippetsHtml.to "snippets.html"
+  chmod "-w", "snippets.html"
 
 #-------------------------------------------------------------------------------
 processSnippet = (source) ->

@@ -93,9 +93,17 @@ GlyphIcons Free from <http://glyphicons.com/>
 
 class: center, middle
 
-# diagnostics as code
+# snippets
 
-(snippets available at [./snippets](snippets/index.html))
+available at [./snippets.html](snippets.html)
+
+
+
+================================================================================
+
+class: center, middle
+
+# logging
 
 --------------------------------------------------------------------------------
 
@@ -131,6 +139,22 @@ class: center, middle
 
 --------------------------------------------------------------------------------
 
+## npm `winston`
+
+```js
+//!snippet: winston.js
+```
+
+
+
+================================================================================
+
+class: center, middle
+
+# error handling
+
+--------------------------------------------------------------------------------
+
 ### `Error.prepareStackTrace()` - before
 
 ```js
@@ -144,6 +168,16 @@ class: center, middle
 ```js
 //!snippet: v8_prepareStackTrace-after.js
 ```
+
+--------------------------------------------------------------------------------
+
+## `Error.prepareStackTrace()`
+
+see also:
+
+* .smaller[<https://code.google.com/p/v8/wiki/JavaScriptStackTraceApi>]
+
+* .smaller[.smaller[<https://mail.mozilla.org/pipermail/es-discuss/2014-March/036764.html>]]
 
 --------------------------------------------------------------------------------
 
@@ -163,16 +197,6 @@ class: center, middle
 
 --------------------------------------------------------------------------------
 
-## `Error.prepareStackTrace()`
-
-see also:
-
-* .smaller[<https://code.google.com/p/v8/wiki/JavaScriptStackTraceApi>]
-
-* .smaller[.smaller[<https://mail.mozilla.org/pipermail/es-discuss/2014-March/036764.html>]]
-
---------------------------------------------------------------------------------
-
 ### npm `Q.longStackSupport` - before
 
 ```js
@@ -187,21 +211,13 @@ see also:
 //!snippet: q-longStack-after.js
 ```
 
---------------------------------------------------------------------------------
 
-## builtin module `repl`
 
-```js
-//!snippet: repl.js
-```
+================================================================================
 
---------------------------------------------------------------------------------
+class: center, middle
 
-## npm `winston`
-
-```js
-//!snippet: winston.js
-```
+# testing
 
 --------------------------------------------------------------------------------
 
@@ -219,6 +235,57 @@ see also:
 
 * jasmine - <http://jasmine.github.io>
 
+
+
+================================================================================
+
+class: center, middle
+
+# etc
+
+--------------------------------------------------------------------------------
+
+## builtin module `repl`
+
+```js
+//!snippet: repl.js
+```
+
+--------------------------------------------------------------------------------
+
+## builtin debugger
+
+```js
+//!snippet: debugger.js
+```
+
+--------------------------------------------------------------------------------
+
+## builtin debugger
+
+```js
+// node debug debugger.js
+// < debugger listening on port 5858
+// ...
+// debug> watch("x")
+// debug> next
+// break in debugger.js:3
+// Watchers:
+//   0: x = "<error>"
+//
+//   1 function a() {
+//   2 	debugger
+//   3 	x = 1
+//   4 	y = 2
+// debug> next
+// break in debugger.js:4
+// Watchers:
+//   0: x = 1
+//   ... lines ...
+// debug> cont
+// < 1 + 2 = 3
+```
+
 --------------------------------------------------------------------------------
 
 ## npm `hooker`
@@ -227,12 +294,91 @@ see also:
 //!snippet: hooker.js
 ```
 
+--------------------------------------------------------------------------------
+
+## npm `hooker`
+
+```js
+// prints:
+//
+// Math.max(5, 6, 7) called
+// Math.max() returned: 7
+// Math.sqrt(2) called
+// Math.sqrt() returned: 1.4142135623730951
+```
+
+also provides
+
+* filtering arguments
+* overriding results
+* https://github.com/cowboy/javascript-hooker
+
+--------------------------------------------------------------------------------
+
+## node 0.12 module `tracing`
+
+```js
+//!snippet: node-12-tracing.js
+```
+
+--------------------------------------------------------------------------------
+
+## node 0.12 module `tracing`
+
+```js
+// prints:
+//
+// before: [object Timer]
+// before: [object Object]
+// after:  [object Object]
+// after:  [object Timer]
+// before: [object Timer]
+// before: [object Object]
+// after:  [object Object]
+// after:  [object Timer]
+...
+```
+
+--------------------------------------------------------------------------------
+
+## node 0.12 module `tracing`
+
+* <http://nodejs.org/dist/v0.11.13/docs/api/tracing.html>
+
+* allows userdata to be associated with a handler
+
+* has event emitter `v8` which emits GC information
+
+
+
+================================================================================
+
+class: center, middle
+
+# tools
 
 --------------------------------------------------------------------------------
 
 ## node-inspector
 
+* reuses the user interface from Chrome Dev Tools
+* set breakpoints
+* watch expressions
+* <https://github.com/node-inspector/node-inspector>
+
+```
+sudo npm -g install node-inspector
+...
+node-debug program.js
+```
+
 --------------------------------------------------------------------------------
+
+<img src="images/node-inspector.png" width="100%">
+
+--------------------------------------------------------------------------------
+
+
 
 ## theseus
 
@@ -240,7 +386,26 @@ see also:
 
 ## nodprof
 
+```
+nodprof --serve --port 8081&
+open http://localhost:8081
+...
+nodprof `which npm` info grunt
+```
+
+sample: http://muellerware.org/nodprof-static/
+
+for more info:
+
+* <https://github.com/pmuellr/nodprof>
+* .smaller[.smaller[<https://code.google.com/p/v8/source/browse/trunk/include/v8-profiler.h>]]
+* other profilers
+
 --------------------------------------------------------------------------------
+
+<img src="images/nodprof.png" width="100%">
+
+================================================================================
 
 class: center, middle
 

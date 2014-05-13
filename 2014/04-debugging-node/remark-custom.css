@@ -71,6 +71,10 @@ body a:visited, body a {
 
 /* fonts */
 
+.remark-slide-content {
+  background-repeat: no-repeat;
+}
+
 .remark-container {
   font-size:          150%;
   font-family:        'Baskerville', 'Times';
