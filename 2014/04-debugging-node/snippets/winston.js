@@ -2,9 +2,7 @@ var winston = require("winston")
 
 winston.remove(winston.transports.Console)
 winston.add(winston.transports.Console, { level:"warn" })
-winston.add(winston.transports.File, {
-	filename: "somefile.log" }
-)
+winston.add(winston.transports.File, { filename: "x.log" })
 
 winston.info("info message")
 winston.warn("warning message")

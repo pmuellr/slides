@@ -131,14 +131,6 @@ class: center, middle
 
 --------------------------------------------------------------------------------
 
-## npm `winston`
-
-```js
-//!snippet: winston.js
-```
-
---------------------------------------------------------------------------------
-
 ### `Error.prepareStackTrace()` - before
 
 ```js
@@ -181,7 +173,7 @@ see also:
 
 --------------------------------------------------------------------------------
 
-### npm `Q` - longStackSupport - before
+### npm `Q.longStackSupport` - before
 
 ```js
 //!snippet: q-longStack-before.js
@@ -189,7 +181,7 @@ see also:
 
 --------------------------------------------------------------------------------
 
-### npm `Q` - longStackSupport - after
+### npm `Q.longStackSupport` - after
 
 ```js
 //!snippet: q-longStack-after.js
@@ -205,13 +197,26 @@ see also:
 
 --------------------------------------------------------------------------------
 
+## npm `winston`
+
+```js
+//!snippet: winston.js
+```
+
+--------------------------------------------------------------------------------
+
 ## testing
 
 ```js
 //!snippet: testing.js
 ```
 
+--------------------------------------------------------------------------------
+
+## testing
+
 * mocha - <http://visionmedia.github.io/mocha/>
+
 * jasmine - <http://jasmine.github.io>
 
 --------------------------------------------------------------------------------

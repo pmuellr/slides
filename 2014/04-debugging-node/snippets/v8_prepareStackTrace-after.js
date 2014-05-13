@@ -4,7 +4,6 @@
 Error.prepareStackTrace = function(err, stackTrace) { ... }
 //!hide
 */
-//!hide
 Error.prepareStackTrace = v8PrepareStackTrace
 //!show
 try { a() } catch(err) { console.log(err.stack) }
