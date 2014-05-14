@@ -107,12 +107,25 @@ a()
 
 <!-- ================================== -->
 <hr>
+<h2>debug.js<h2>
+<div class='indent smaller'><a href='snippets/debug.js'>link</a></div>
+<pre><code><span class="hljs-keyword">var</span> debugA = <span class="hljs-built_in">require</span>(<span class="hljs-string">"debug"</span>)(<span class="hljs-string">"thing-A"</span>)
+<span class="hljs-keyword">var</span> debugB = <span class="hljs-built_in">require</span>(<span class="hljs-string">"debug"</span>)(<span class="hljs-string">"thing-B"</span>)
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">a</span><span class="hljs-params">()</span> {</span> debugA(<span class="hljs-string">"thrashing"</span>) }
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">b</span><span class="hljs-params">()</span> {</span> debugB(<span class="hljs-string">"churning"</span>) }
+
+setInterval(a, <span class="hljs-number">500</span>)
+setInterval(b, <span class="hljs-number">333</span>)</code></pre>
+
+<!-- ================================== -->
+<hr>
 <h2>debugger.js<h2>
 <div class='indent smaller'><a href='snippets/debugger.js'>link</a></div>
 <pre><code><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">a</span><span class="hljs-params">()</span> {</span>
+	debugger
 	<span class="hljs-keyword">var</span> x = <span class="hljs-number">1</span>
 	<span class="hljs-keyword">var</span> y = <span class="hljs-number">2</span>
-	debugger
 	console.log(x + <span class="hljs-string">" + "</span> + y + <span class="hljs-string">" = "</span> + (x+y))
 }
 
@@ -200,6 +213,28 @@ setInterval(<span class="hljs-function"><span class="hljs-keyword">function</spa
 
 <!-- ================================== -->
 <hr>
+<h2>process-events.js<h2>
+<div class='indent smaller'><a href='snippets/process-events.js'>link</a></div>
+<pre><code>process.on(<span class="hljs-string">"exit"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(code)</span> {</span>
+	console.log(<span class="hljs-string">"exiting with code: "</span> + code)
+})
+
+process.on(<span class="hljs-string">"uncaughtException"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(err)</span> {</span>
+	console.log(<span class="hljs-string">"uncaught exception: "</span> + err)
+})
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">a</span><span class="hljs-params">()</span> {</span> <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">"die die die"</span>) }
+
+a()
+
+<span class="hljs-comment">// prints:</span>
+<span class="hljs-comment">//</span>
+<span class="hljs-comment">// uncaught exception: Error: die die die</span>
+<span class="hljs-comment">// exiting with code: 0</span>
+</code></pre>
+
+<!-- ================================== -->
+<hr>
 <h2>q-longStack-after.js<h2>
 <div class='indent smaller'><a href='snippets/q-longStack-after.js'>link</a></div>
 <pre><code><span class="hljs-keyword">var</span> Q = <span class="hljs-built_in">require</span>(<span class="hljs-string">"q"</span>)
@@ -278,22 +313,6 @@ describe(<span class="hljs-string">"Array"</span>, <span class="hljs-function"><
 <span class="hljs-comment">//     AssertionError: -1 == 0</span>
 <span class="hljs-comment">//      at Context.&lt;anonymous&gt; (path/to/testing.js:7:14)</span>
 <span class="hljs-comment">//      ...</span></code></pre>
-
-<!-- ================================== -->
-<hr>
-<h2>v8_normalStackTrace.js<h2>
-<div class='indent smaller'><a href='snippets/v8_normalStackTrace.js'>link</a></div>
-<pre><code><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">a</span><span class="hljs-params">()</span> {</span> b() }
-<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">b</span><span class="hljs-params">()</span> {</span> c() }
-<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">c</span><span class="hljs-params">()</span> {</span> <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">"foo blatz"</span>) }
-
-<span class="hljs-keyword">try</span> { a() } <span class="hljs-keyword">catch</span>(err) { console.log(err.stack) }
-<span class="hljs-comment">// prints:</span>
-<span class="hljs-comment">// Error: foo blatz</span>
-<span class="hljs-comment">//    v8_prepareStackTrace.js  14 - c()</span>
-<span class="hljs-comment">//    v8_prepareStackTrace.js  13 - b()</span>
-<span class="hljs-comment">//    v8_prepareStackTrace.js  12 - a()</span>
-</code></pre>
 
 <!-- ================================== -->
 <hr>

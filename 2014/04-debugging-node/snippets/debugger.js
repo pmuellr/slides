@@ -1,7 +1,7 @@
 function a() {
+	debugger
 	var x = 1
 	var y = 2
-	debugger
 	console.log(x + " + " + y + " = " + (x+y))
 }
 

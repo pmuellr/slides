@@ -9,14 +9,6 @@
   <body>
     <textarea id="source" cols="100" rows="40">
 
-class: center, middle
-
-# `work`
-# `in`
-# `progress`
-
----
-
 # debugging node
 
 ### tips and tools for debugging your node programs
@@ -60,19 +52,31 @@ Raleigh, NC
 
 more of my slides: <http://pmuellr.github.io/slides>
 
+<style>
+#display-ratio-value, #clicker-value {
+	padding-right: 	1em;
+	text-align:			right;
+}
+</style>
+
 <div class="no-print">
 <hr>
-<table>
-<tr><td>
-&nbsp;display ratio:&nbsp;
-<td>
-<input id="button-display-ratio-4"  type="radio" name="display-ratio" value="4:3">  4:3
-&nbsp;&nbsp;
-<input id="button-display-ratio-16" type="radio" name="display-ratio" value="16:9"> 16:9
-<tr><td>
-&nbsp;clicker mode:&nbsp;
-<td>
-<input id="button-clicker" type="checkbox" value="toggle">
+<table id="config-table" cellspacing=0 cellpadding=3>
+
+<tr>
+<td>display ratio:
+<td id="display-ratio-value">
+<td><span style="width:20em">&nbsp;</span>
+<td><button id="button-display-ratio-4">set to 4:3</button>
+<td><button id="button-display-ratio-16">set to 16:9</button>
+
+<tr>
+<td>clicker mode:
+<td id="clicker-value">
+<td><span style="width:20em">&nbsp;</span>
+<td><button id="button-clicker-on">set on</button>
+<td><button id="button-clicker-off">set off</button>
+
 </table>
 </div>
 
@@ -80,15 +84,17 @@ more of my slides: <http://pmuellr.github.io/slides>
 
 ## what is BlueMix?
 
-<img src="../../images/bluemix.png" width=256 style="background: #fff; float: right">
+<img src="../../images/bluemix.png" width=256 style="float: right">
 
-Platform-as-a-Service product
-
-Runs node apps! Runs any apps!
+Platform-as-a-Service product.  Runs node apps! Runs any apps!
 
 Based on the [Cloud Foundry](http://cloudfoundry.org) open source project
 
 For more info: <https://bluemix.net>
+
+For more info on node on BlueMix:
+
+> <http://node-stuff.ng.bluemix.net>
 
 ---
 
@@ -106,7 +112,9 @@ class: center, middle
 
 # snippets
 
-available at [./snippets.html](snippets.html)
+code included in these slides available as stand-alone files
+
+see [./snippets.html](snippets.html)
 
 
 
@@ -150,6 +158,25 @@ class: center, middle
 
 ---
 
+## npm `debug`
+
+```js
+//!snippet: debug.js
+```
+
+<pre><code>&gt; DEBUG=* node debug.js
+<span style="color:#0A0">thing-B</span> churning <span style="color:#0A0">+0ms</span>
+<span style="color:#00A">thing-A</span> thrashing <span style="color:#00A">+0ms</span>
+<span style="color:#0A0">thing-B</span> churning <span style="color:#0A0">+339ms</span>
+<span style="color:#00A">thing-A</span> thrashing <span style="color:#00A">+501ms</span>
+<span style="color:#0A0">thing-B</span> churning <span style="color:#0A0">+333ms</span>
+<span style="color:#0A0">thing-B</span> churning <span style="color:#0A0">+334ms</span>
+<span style="color:#00A">thing-A</span> thrashing <span style="color:#00A">+502ms</span>
+...
+</code></pre>
+
+---
+
 ## npm `winston`
 
 ```js
@@ -163,6 +190,14 @@ class: center, middle
 class: center, middle
 
 # error handling
+
+---
+
+## builtin `process` events
+
+```js
+//!snippet: process-events.js
+```
 
 ---
 
@@ -274,28 +309,47 @@ class: center, middle
 
 ## builtin debugger
 
-```js
-// node debug debugger.js
-// < debugger listening on port 5858
-// ...
-// debug> watch("x")
-// debug> next
-// break in debugger.js:3
-// Watchers:
-//   0: x = "<error>"
-//
-//   1 function a() {
-//   2 	debugger
-//   3 	x = 1
-//   4 	y = 2
-// debug> next
-// break in debugger.js:4
-// Watchers:
-//   0: x = 1
-//   ... lines ...
-// debug> cont
-// < 1 + 2 = 3
-```
+<table>
+<tr>
+<td valign="top" width="50%">
+
+<pre><code style="font-size:60%">&gt; node debug debugger.js
+&lt; debugger listening on port 5858
+connecting... ok
+...
+debug&gt; <span style="color:#00A;">watch("x")</span>
+debug&gt; <span style="color:#00A;">cont</span>
+break in debugger.js:2
+Watchers:
+  0: x = undefined
+
+  1 function a() {
+  2 	<span style="color:#0A0">debugger</span>
+  3 	var x = 1
+  4 	var y = 2
+debug&gt; <span style="color:#00A;">next</span>
+</code></pre>
+
+<td valign="top" width="50%">
+
+<pre><code style="font-size:60%">...
+debug&gt; <span style="color:#00A;">next</span>
+break in debugger.js:4
+Watchers:
+  0: x = 1
+
+  2 	debugger
+  3 	var x = 1
+  4 	<span style="color:#0A0">var</span> y = 2
+  5 	console.log(x + " + " ...
+  6 }
+debug&gt; <span style="color:#00A;">cont</span>
+&lt; 1 + 2 = 3
+program terminated
+debug&gt;
+</code></pre>
+
+</table>
 
 ---
 
@@ -350,6 +404,10 @@ also provides
 ...
 ```
 
+spartan!
+
+lots of low hanging fruit to pick!
+
 ---
 
 ## node 0.12 module `tracing`
@@ -389,9 +447,44 @@ node-debug program.js
 
 ---
 
+## IDEs
 
+* Eclipse - .smaller[<https://github.com/joyent/node/wiki/using-eclipse-as-node-applications-debugger>]
 
-## theseus
+* WebStorm - <http://www.jetbrains.com/webstorm/>
+
+* Cloud9 IDE - <https://c9.io/>
+
+---
+
+## newrelic
+
+* framework specific timing for:
+  * express, connect, hapi, restify
+  * mongodb, redis, mysql, memcached
+  * add your own: .smaller[<https://docs.newrelic.com/docs/nodejs/nodejs-agent-api>]
+
+* unhandled exceptions
+
+---
+
+## newrelic
+
+* get account key from newrelic
+* `npm install newrelic`
+* `cp node_modules/newrelic/newrelic.js .`
+* `edit newrelic.js`, add account key
+* add `require('newrelic')` to start of your app
+* start app
+* watch monitoring dashboard at newrelic
+
+more info: <https://docs.newrelic.com/docs/nodejs/>
+
+movie: .smaller[<https://www.youtube.com/watch?v=EA5yVDVr3K0>]
+
+---
+
+<img src="images/newrelic.png" width="100%">
 
 ---
 

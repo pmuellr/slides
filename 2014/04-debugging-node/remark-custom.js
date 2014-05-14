@@ -1,5 +1,13 @@
+//----------------------------------------------------------------------
+// clicker mode thanks to Raymond Camden:
+//    http://www.raymondcamden.com/index.cfm/2012/10/20/Adding-mouse-click-navigation-to-revealjs
+//----------------------------------------------------------------------
+
 var SlidesRatio   = localStorage.getItem("remark-ratio")   || "4:3"
-var SlidesClicker = "off"
+var SlidesClicker = localStorage.getItem("remark-clicker") || "off"
+
+var SlidesRatioDisplay = null
+var SlidesRatioClicker = null
 
 //----------------------------------------------------------------------
 replaceSnippets()
@@ -56,8 +64,11 @@ function replaceSnippets() {
 }
 
 //----------------------------------------------------------------------
-function toggleDisplayRatio() {
-  SlidesRatio = (SlidesRatio == "4:3") ? "16:9" : "4:3"
+function setDisplayRatio(size) {
+  if (-1 == ["4:3", "16:9"].indexOf(size)) size = "4:3"
+    if (SlidesRatio == size) return
+
+  SlidesRatio = size
 
   localStorage.setItem("remark-ratio", SlidesRatio)
 
@@ -66,16 +77,13 @@ function toggleDisplayRatio() {
 
 //----------------------------------------------------------------------
 function initDisplayRatio() {
-  var button1 = $("#button-display-ratio-4")
-  var button2 = $("#button-display-ratio-16")
+  SlidesRatioDisplay.text(SlidesRatio)
 
-  button1.attr("checked", SlidesRatio == "4:3")
-  button2.attr("checked", SlidesRatio == "16:9")
-
-  button1.change(function () { toggleDisplayRatio() })
-  button2.change(function () { toggleDisplayRatio() })
+  $("#button-display-ratio-4" ).click(function() { setDisplayRatio("4:3")  })
+  $("#button-display-ratio-16").click(function() { setDisplayRatio("16:9") })
 }
 
+//----------------------------------------------------------------------
 var bodyContainers = [
   "remark-container",
   "remark-slides-area",
@@ -119,19 +127,22 @@ function onContextMenu(e) {
 }
 
 //----------------------------------------------------------------------
-function toggleClickerMode() {
-  var button = $("#button-clicker")
+function setClickerMode(value) {
+  if (SlidesClicker == value) return
 
-  SlidesClicker = (SlidesClicker == "on") ? "off" : "on"
+  SlidesClicker = value
 
-  button.attr("checked", SlidesClicker == "on")
+  SlidesRatioClicker.text(SlidesClicker)
+
+  localStorage.setItem("remark-clicker", SlidesClicker)
 }
 
 //----------------------------------------------------------------------
 function initClickerMode() {
-  var button = $("#button-clicker")
+  SlidesRatioClicker.text(SlidesClicker)
 
-  button.click(toggleClickerMode)
+  $("#button-clicker-on" ).click(function() { setClickerMode("on")  })
+  $("#button-clicker-off").click(function() { setClickerMode("off") })
 
   window.addEventListener("mousedown",   onMouseDown,   false)
   window.addEventListener("contextmenu", onContextMenu, false)
@@ -149,7 +160,15 @@ function installGA() {
 }
 
 //----------------------------------------------------------------------
-setTimeout(initDisplayRatio, 500)
-setTimeout(initClickerMode,  500)
+function init() {
+  SlidesRatioDisplay = $("#display-ratio-value")
+  SlidesRatioClicker = $("#clicker-value")
 
-setTimeout(installGA, 1000)
+  initDisplayRatio()
+  initClickerMode()
+
+  setTimeout(installGA, 1000)
+}
+
+//----------------------------------------------------------------------
+$(init)
