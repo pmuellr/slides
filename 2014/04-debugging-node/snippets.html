@@ -137,14 +137,17 @@ setTimeout(a, <span class="hljs-number">1000</span>)</code></pre>
 <div class='indent smaller'><a href='snippets/hooker.js'>link</a></div>
 <pre><code><span class="hljs-keyword">var</span> hooker = <span class="hljs-built_in">require</span>(<span class="hljs-string">"hooker"</span>)
 
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">log</span><span class="hljs-params">(prefix, name, value)</span> {</span>
+	console.log(<span class="hljs-string">"%s Math.%s: %j"</span>, prefix, name, value)
+}
+
 hooker.hook(<span class="hljs-built_in">Math</span>, <span class="hljs-built_in">Object</span>.getOwnPropertyNames(<span class="hljs-built_in">Math</span>), {
 	passName: <span class="hljs-literal">true</span>,
-	pre: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(name)</span> {</span>
-		<span class="hljs-keyword">var</span> args = [].slice.call(<span class="hljs-built_in">arguments</span>,<span class="hljs-number">1</span>).join(<span class="hljs-string">", "</span>)
-		console.log(<span class="hljs-string">"Math."</span> + name + <span class="hljs-string">"("</span> + args + <span class="hljs-string">") called"</span>)
+	pre: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(name)</span> {</span>
+		log(<span class="hljs-string">"-&gt;"</span>, name, [].slice.call(<span class="hljs-built_in">arguments</span>,<span class="hljs-number">1</span>))
 	},
-	post: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(result, name)</span> {</span>
-		console.log(<span class="hljs-string">"Math."</span> + name + <span class="hljs-string">"() returned: "</span> + result)
+	post: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(result, name)</span> {</span>
+		log(<span class="hljs-string">"&lt;-"</span>, name, result)
 	}
 })
 

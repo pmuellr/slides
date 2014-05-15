@@ -384,13 +384,12 @@ debug&gt;
 
 ## npm `hooker`
 
-```js
-// prints:
-//
-// Math.max(5, 6, 7) called
-// Math.max() returned: 7
-// Math.sqrt(2) called
-// Math.sqrt() returned: 1.4142135623730951
+prints:
+```
+-> Math.max: [5,6,7]
+<- Math.max: 7
+-> Math.sqrt: [2]
+<- Math.sqrt: 1.4142135623730951
 ```
 
 also provides
@@ -462,9 +461,14 @@ sudo npm -g install node-inspector
 node-debug program.js
 ```
 
+just for fun, try
+```
+node-debug `which node-debug`
+```
+
 --------------------------------------------------------------------------------
 
-<img src="images/node-inspector.png" width="100%">
+<img class="bordered" src="images/node-inspector.png" width="100%">
 
 --------------------------------------------------------------------------------
 
@@ -507,7 +511,7 @@ movie: .smaller[<https://www.youtube.com/watch?v=EA5yVDVr3K0>]
 
 --------------------------------------------------------------------------------
 
-<img src="images/newrelic.png" width="100%">
+<img class="bordered" src="images/newrelic.png" width="100%">
 
 --------------------------------------------------------------------------------
 
@@ -530,7 +534,7 @@ for more info:
 
 --------------------------------------------------------------------------------
 
-<img src="images/nodprof.png" width="100%">
+<img class="bordered" src="images/nodprof.png" width="100%">
 
 ================================================================================
 

@@ -156,3 +156,6 @@ p .comment, .comment {
   right:              12px;
 }
 
+.bordered {
+  border:            solid thin black;
+}
