@@ -252,7 +252,7 @@ see also:
 
 class: center, middle
 
-# testing
+# early warning systems
 
 --------------------------------------------------------------------------------
 
@@ -270,6 +270,38 @@ class: center, middle
 
 * jasmine - <http://jasmine.github.io>
 
+--------------------------------------------------------------------------------
+
+## linting
+
+<pre><code>&gt; <span style="color:#00A;">jshint snippets/*.js</span>
+snippets/alert.js: line 1, col 17, Missing semicolon.
+
+snippets/console_log.js: line 1, col 19, Missing semicolon.
+snippets/console_log.js: line 4, col 26, Missing semicolon.
+snippets/console_log.js: line 7, col 25, Missing semicolon.
+snippets/console_log.js: line 10, col 35, Missing semicolon.
+snippets/console_log.js: line 13, col 21, Missing semicolon.
+
+snippets/console_time.js: line 1, col 20, Missing semicolon.
+snippets/console_time.js: line 2, col 10, Missing semicolon.
+snippets/console_time.js: line 3, col 23, Missing semicolon.
+snippets/console_time.js: line 8, col 21, Missing semicolon.
+snippets/console_time.js: line 13, col 34, Missing semicolon.
+
+snippets/console_trace.js: line 1, col 19, Missing semicolon.
+snippets/console_trace.js: line 2, col 19, Missing semicolon.
+
+... repeats ad nauseum ...
+</code></pre>
+
+--------------------------------------------------------------------------------
+
+## linting
+
+* jshint - <http://jshint.com/>
+
+* jslint - <http://jslint.com/>
 
 
 ================================================================================
@@ -454,6 +486,8 @@ node-debug program.js
   * add your own: .smaller[<https://docs.newrelic.com/docs/nodejs/nodejs-agent-api>]
 
 * unhandled exceptions
+
+* works locally and on a server
 
 --------------------------------------------------------------------------------
 
