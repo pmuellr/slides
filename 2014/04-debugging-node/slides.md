@@ -14,6 +14,8 @@ IBMer
 
 .smaller[.smaller[
 <http://pmuellr.github.io/slides/2014/04-debugging-node>
+
+<http://pmuellr.github.io/slides/2014/04-debugging-node/snippets.html> (code snippets)
 ]]
 
 .no-print.smaller[.smaller[
@@ -85,25 +87,16 @@ For more info on node on BlueMix:
 
 > <http://node-stuff.ng.bluemix.net>
 
---------------------------------------------------------------------------------
 
-## attribution
 
-JS Logo from <https://github.com/voodootikigod/logo.js>
-
-Slide framework from <http://remarkjs.com/>
-
-GlyphIcons Free from <http://glyphicons.com/>
-
---------------------------------------------------------------------------------
+================================================================================
 
 class: center, middle
 
-# snippets
+## The most effective debugging tool is still careful thought, coupled with judiciously placed print statements.
 
-code included in these slides available as stand-alone files
 
-see [./snippets.html](snippets.html)
+-- Brian Kernighan, "Unix for Beginners" (1979)
 
 
 
