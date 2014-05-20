@@ -249,6 +249,14 @@ class: center, middle
 
 --------------------------------------------------------------------------------
 
+class: center, middle
+
+## If debugging is the process of removing bugs, then programming must be the process of putting them in.
+
+### -- Edsger W. Dijkstra
+
+--------------------------------------------------------------------------------
+
 ## testing
 
 ```js
@@ -417,9 +425,9 @@ also provides
 ...
 ```
 
-spartan!
+the bad: spartan!
 
-lots of low hanging fruit to pick!
+the good: spartan! lots of low hanging fruit to pick!
 
 --------------------------------------------------------------------------------
 
