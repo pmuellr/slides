@@ -149,6 +149,31 @@ function initClickerMode() {
 }
 
 //----------------------------------------------------------------------
+var NavShown = true
+
+function initNavHelp() {
+  // $(".navHelp").
+  $(".button-1st").click( function() { slideshow.gotoFirstSlide()    })
+  $(".button-prev").click(function() { slideshow.gotoPreviousSlide() })
+  $(".button-next").click(function() { slideshow.gotoNextSlide()     })
+
+  $("body").keypress(function(e) {
+    var key  = e.keyCode || e.charCode || e.which
+    var char = String.fromCharCode(key)
+    if ("n" != char) return
+
+    if (NavShown) {
+      NavShown = false
+      $(".navHelp").hide()
+    }
+    else {
+      NavShown = true
+      $(".navHelp").show()
+    }
+  })
+}
+
+//----------------------------------------------------------------------
 function installGA() {
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -166,6 +191,7 @@ function init() {
 
   initDisplayRatio()
   initClickerMode()
+  initNavHelp()
 
   setTimeout(installGA, 1000)
 }

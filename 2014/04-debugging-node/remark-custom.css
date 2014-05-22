@@ -56,10 +56,6 @@ body a:visited, body a {
     display:          none;
   }
 
-  .nav-buttons {
-    display:          none;
-  }
-
   #ibm-8-bar-icon {
     background-image: url(../../images/ibm-8-bar-black-trans.png);
   }
@@ -126,21 +122,18 @@ p .comment, .comment {
   font-size:          80%;
 }
 
-.footnote {
-  font-size:          80%;
-  font-style:         italic;
-  position:           absolute;
+.navHelp {
+  font-size:          50%;
   bottom:             12px;
-}
-
-.nav-buttons {
   position:           absolute;
-  bottom:             16px;
-  left:               12px;
+  left:               20px;
 }
 
-.nav-buttons img {
-  visibility:         hidden;
+.navHelp img {
+  background-color:   #666;
+  padding:            0.25em;
+  margin:             0 0.25em;
+  border-radius:      0.4em
 }
 
 .bg-white {

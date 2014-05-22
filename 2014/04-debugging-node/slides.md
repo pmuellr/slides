@@ -18,9 +18,11 @@ IBMer
 <http://pmuellr.github.io/slides/2014/04-debugging-node/snippets.html> (code snippets)
 ]]
 
-.no-print.smaller[.smaller[
-<!-- [{pdf}](index.pdf) -->
-]]
+<div class="navHelp" title="you can also use the cursor keys to navigate, n to toggle legend">
+  <img class="button-1st"  src="../../glyphicons_free/glyphicons/png/glyphicons_171_fast_backward.png">
+  <img class="button-prev" src="../../glyphicons_free/glyphicons/png/glyphicons_172_rewind.png">
+  <img class="button-next" src="../../glyphicons_free/glyphicons/png/glyphicons_176_forward.png">
+</div>
 
 --------------------------------------------------------------------------------
 
@@ -31,6 +33,14 @@ layout: true
   &nbsp;
   <img height=24 src="../../images/js.png">
   &nbsp;
+</div>
+
+{{content}}
+
+<div class="navHelp" title="you can also use the cursor keys to navigate, n to toggle legend">
+  <img class="button-1st"  src="../../glyphicons_free/glyphicons/png/glyphicons_171_fast_backward.png">
+  <img class="button-prev" src="../../glyphicons_free/glyphicons/png/glyphicons_172_rewind.png">
+  <img class="button-next" src="../../glyphicons_free/glyphicons/png/glyphicons_176_forward.png">
 </div>
 
 --------------------------------------------------------------------------------
