@@ -122,25 +122,34 @@ p .comment, .comment {
   font-size:          80%;
 }
 
-.navHelp {
+.toolBar {
   font-size:          50%;
   bottom:             12px;
   position:           absolute;
   left:               20px;
 }
 
-.navHelp img {
+.toolBar div {
+  display:            inline-block;
+}
+
+.toolBar img {
   background-color:   #666;
   padding:            0.25em;
   margin:             0 0.25em;
   border-radius:      0.4em
 }
 
-.bg-white {
-  opacity:            0.2;
-  background-color:   #FFF;
-  padding:            0.25em;
-  border-radius:      0.30em;
+.controlPanel {
+  visibility:         hidden;
+}
+
+.controlPanel img.off {
+  background-color:   #F77;
+}
+
+.controlPanel img.on {
+  background-color:   #7F7;
 }
 
 .page-icon {

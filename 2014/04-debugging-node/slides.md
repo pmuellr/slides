@@ -18,10 +18,17 @@ IBMer
 <http://pmuellr.github.io/slides/2014/04-debugging-node/snippets.html> (code snippets)
 ]]
 
-<div class="navHelp" title="you can also use the cursor keys to navigate, n to toggle legend">
-  <img class="button-1st"  src="../../glyphicons_free/glyphicons/png/glyphicons_171_fast_backward.png">
-  <img class="button-prev" src="../../glyphicons_free/glyphicons/png/glyphicons_172_rewind.png">
-  <img class="button-next" src="../../glyphicons_free/glyphicons/png/glyphicons_176_forward.png">
+<div class="toolBar">
+  <div class="navHelp" title="use the cursor keys to navigate, 'n' to toggle nav buttons, 's' to toggle control panel">
+    <img class="button-1st"  height=16 src="../../glyphicons_free/glyphicons/png/glyphicons_171_fast_backward.png">
+    <img class="button-prev" height=16 src="../../glyphicons_free/glyphicons/png/glyphicons_172_rewind.png">
+    <img class="button-next" height=16 src="../../glyphicons_free/glyphicons/png/glyphicons_176_forward.png">
+  </div>
+  <div>&nbsp;&nbsp;</div>
+  <div class="controlPanel" title="'s' to toggle control panel">
+    <img class="button-clicker" height=16 src="../../glyphicons_free/glyphicons/png/glyphicons_046_router.png">
+    <img class="button-hd"      height=16 src="../../glyphicons_free/glyphicons/png/glyphicons_391_video_hd.png">
+  </div>
 </div>
 
 --------------------------------------------------------------------------------
@@ -29,7 +36,7 @@ IBMer
 layout: true
 
 <div class="page-icon">
-  <img id="ibm-8-bar-icon" height=24 src="../../images/ibm-8-bar-trans.png">
+  <img height=24 src="../../images/ibm-8-bar-trans.png" id="ibm-8-bar-icon">
   &nbsp;
   <img height=24 src="../../images/js.png">
   &nbsp;
@@ -37,49 +44,32 @@ layout: true
 
 {{content}}
 
-<div class="navHelp" title="you can also use the cursor keys to navigate, n to toggle legend">
-  <img class="button-1st"  src="../../glyphicons_free/glyphicons/png/glyphicons_171_fast_backward.png">
-  <img class="button-prev" src="../../glyphicons_free/glyphicons/png/glyphicons_172_rewind.png">
-  <img class="button-next" src="../../glyphicons_free/glyphicons/png/glyphicons_176_forward.png">
+<div class="toolBar">
+  <div class="navHelp" title="use the cursor keys to navigate, 'n' to toggle nav buttons, 's' to toggle control panel">
+    <img class="button-1st"  height=16 src="../../glyphicons_free/glyphicons/png/glyphicons_171_fast_backward.png">
+    <img class="button-prev" height=16 src="../../glyphicons_free/glyphicons/png/glyphicons_172_rewind.png">
+    <img class="button-next" height=16 src="../../glyphicons_free/glyphicons/png/glyphicons_176_forward.png">
+  </div>
+  <div>&nbsp;&nbsp;</div>
+  <div class="controlPanel" title="'s' to toggle control panel">
+    <img class="button-clicker" height=16 src="../../glyphicons_free/glyphicons/png/glyphicons_046_router.png">
+    <img class="button-hd"      height=16 src="../../glyphicons_free/glyphicons/png/glyphicons_391_video_hd.png">
+  </div>
 </div>
 
 --------------------------------------------------------------------------------
 
 ## Patrick Mueller
 
-developer advocate at IBM
+developer advocate at IBM for
+[node.js](http://nodejs.org)
+and
+[BlueMix](https://bluemix.net)
 
 Raleigh, NC
 
 more of my slides: <http://pmuellr.github.io/slides>
 
-<style>
-#display-ratio-value, #clicker-value {
-	padding-right: 	1em;
-	text-align:			right;
-}
-</style>
-
-<div class="no-print">
-<hr>
-<table id="config-table" cellspacing=0 cellpadding=3>
-
-<tr>
-<td>display ratio:
-<td id="display-ratio-value">
-<td><span style="width:20em">&nbsp;</span>
-<td><button id="button-display-ratio-4">set to 4:3</button>
-<td><button id="button-display-ratio-16">set to 16:9</button>
-
-<tr>
-<td>clicker mode:
-<td id="clicker-value">
-<td><span style="width:20em">&nbsp;</span>
-<td><button id="button-clicker-on">set on</button>
-<td><button id="button-clicker-off">set off</button>
-
-</table>
-</div>
 
 --------------------------------------------------------------------------------
 
