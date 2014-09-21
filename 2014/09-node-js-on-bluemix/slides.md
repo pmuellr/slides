@@ -143,6 +143,18 @@ hello, world!
 <i>press Ctrl+C twice to exit</i>
 </code></pre>
 
+--------------------------------------------------------------------------------
+
+## clone/deploy hello world
+
+<a href="https://hub.jazz.net/project/pmuellr/bluemix-hello-node">
+hub.jazz.net/project/pmuellr/bluemix-hello-node
+</a>
+
+* now change the `onRequest()` function to return something different
+  from `Hello World`
+
+
 ================================================================================
 
 class: center, middle
