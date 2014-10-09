@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>node.js on bluemix snippets</title>
+    <link rel="icon"       href="../../images/js.png">
+    <link rel="stylesheet" href="highlightjs-styles.css">
+    <style>
+      body {
+        background-color:       #DDD;
+      }
+
+      .indent {
+        margin-left:            2em;
+      }
+
+      .smaller {
+        font-size:              80%;
+      }
+
+      pre {
+        margin-left:            2em;
+        margin-right:           2em;
+        padding:                1em;
+        background-color:       #EEE;
+        border:                 thin solid black;
+        border-radius:          1em;
+      }
+    </style>
+  </head>
+  <body>
+
+<!-- ================================== -->
+<hr>
+<h2>client.js<h2>
+<div class='indent smaller'><a href='snippets/client.js'>link</a></div>
+<pre><code><span class="hljs-keyword">var</span> source = <span class="hljs-keyword">new</span> EventSource(<span class="hljs-string">"http://localhost:3000"</span>)
+
+source.addEventListener(<span class="hljs-string">"message"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(event)</span> {</span>
+  console.log(<span class="hljs-string">"the server sent: '"</span> + event.data + <span class="hljs-string">"'"</span>)
+})
+</code></pre>
+
+<!-- ================================== -->
+<hr>
+<h2>server.js<h2>
+<div class='indent smaller'><a href='snippets/server.js'>link</a></div>
+<pre><code><span class="hljs-keyword">var</span> http = <span class="hljs-built_in">require</span>(<span class="hljs-string">"http"</span>)
+
+http.createServer(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(request, response)</span> {</span>
+  response.writeHead(<span class="hljs-number">200</span>, {
+    <span class="hljs-string">"Content-Type"</span>:                <span class="hljs-string">"text/event-stream"</span>,
+    <span class="hljs-string">"Access-Control-Allow-Origin"</span>: <span class="hljs-string">"*"</span>
+  })
+  setInterval(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>sendMessage(response)}, <span class="hljs-number">1000</span>)
+}).listen(<span class="hljs-number">3000</span>)
+
+console.log(<span class="hljs-string">"server running at http://localhost:3000"</span>)
+
+<span class="hljs-comment">//--------------------------------------------------------</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">sendMessage</span><span class="hljs-params">(response)</span> {</span>
+  response.write(<span class="hljs-string">"data: the time is "</span> + <span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span> + <span class="hljs-string">"\n\n"</span>)
+}
+</code></pre>
+
+
+    <script src="../../lib/jquery/2.1.1/jquery.min.js"></script>
+  </body>
+</html>
