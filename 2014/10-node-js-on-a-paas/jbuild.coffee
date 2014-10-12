@@ -15,7 +15,7 @@ tasks = defineTasks exports,
   build:  "build the slides"
   watch:  "watch for source changes, run build"
 
-WatchSpec = "shell.html slides.md snippets/ snippets/*.js snippets-shell.html"
+WatchSpec = "shell.html slides.md snippets/ snippets/**/* snippets-shell.html"
 
 #-------------------------------------------------------------------------------
 mkdir "-p", "tmp"

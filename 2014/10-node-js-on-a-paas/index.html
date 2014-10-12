@@ -87,7 +87,125 @@ layout: true
   * [Nodejitsu](https://www.nodejitsu.com/)
   * [Cloud Foundry](http://cloudfoundry.org/index.html)
   * [OpenShift](https://developers.openshift.com/)
-  * many more!
+  * [many](http://seroter.wordpress.com/2013/07/29/where-the-heck-do-i-host-my-node-js-app/)
+    [more!](https://github.com/joyent/node/wiki/node-hosting#managed)
+
+---
+
+### PaaS fundamentals
+
+* you provide the application
+
+* OS provided for you (Linux)
+
+* configure:
+  * hosted services
+  * number of instances running
+  * RAM per instance
+  * ephemeral disk per instance
+  * ...
+
+---
+
+### PaaS usage scenarios
+
+* special focus on web servers, typically with:
+
+  * HTTPS support
+  * custom domains
+  * WebSocket support
+
+* or anything - arbitrary compute
+
+
+---
+
+### let's deploy an app to Cloud Foundry
+
+```
+$ git clone https://hub.jazz.net/git/pmuellr/bluemix-hello-node
+$ cd bluemix-hello-node
+$ cf push
+
+Using manifest file .../manifest.yml
+...
+Installing IBM SDK for Node.js from admin cache
+...
+Installing dependencies
+...
+Uploading droplet (8.0M)
+...
+App started
+...
+urls: bluemix-hello-node-pjm.mybluemix.net
+
+$
+```
+
+---
+
+### dunno
+
+---
+
+### dunno
+
+---
+
+### dunno
+
+---
+
+# the wonky
+
+### and how to de-wonk-ify
+
+---
+
+### debugging
+
+node-inspector difficult to run
+
+* wants two ports open
+* PaaS typically provides one
+
+&#x279C;
+
+use a proxy splitter
+
+* [cf-node-debug](https://www.npmjs.org/package/cf-node-debug)
+
+---
+
+### diagnosing startup problems
+
+* app runs fine on your laptop
+* fails when run on PaaS
+
+&#x279C;
+
+* most errors here are in startup
+* add LOTS of logging / run in verbose mode
+
+---
+
+### private packages
+
+if the PaaS runs `npm install` for you, how do can you access private packages
+
+&#x279C;
+
+* manage them separately from the rest of your packages
+* see [pmuellr/bluemix-private-packages](https://github.com/pmuellr/bluemix-private-packages)
+  for an example project structure
+
+---
+
+### dunno
+
+---
+
+### dunno
 
 
 ---

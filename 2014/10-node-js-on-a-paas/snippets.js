@@ -1,4 +1,1 @@
-Snippets = {
-    "client.js": "var source = new EventSource(\"http://localhost:3000\")\n\nsource.addEventListener(\"message\", function(event) {\n  console.log(\"the server sent: '\" + event.data + \"'\")\n})\n",
-    "server.js": "var http = require(\"http\")\n\nhttp.createServer(function (request, response) {\n  response.writeHead(200, {\n    \"Content-Type\":                \"text/event-stream\",\n    \"Access-Control-Allow-Origin\": \"*\"\n  })\n  setInterval(function(){sendMessage(response)}, 1000)\n}).listen(3000)\n\nconsole.log(\"server running at http://localhost:3000\")\n\n//--------------------------------------------------------\nfunction sendMessage(response) {\n  response.write(\"data: the time is \" + new Date + \"\\n\\n\")\n}\n"
-}
+Snippets = {}
