@@ -68,10 +68,9 @@ layout: true
 
 * you know what node.js is
 
-* what is a PaaS?
+* PaaS &#x279C; Platform as a Service
 
-* Platform as a Service
-
+* examples:
   * [Heroku](https://www.heroku.com/home)
   * [Nodejitsu](https://www.nodejitsu.com/)
   * [Cloud Foundry](http://cloudfoundry.org/index.html)
@@ -92,7 +91,6 @@ layout: true
   * number of instances running
   * RAM per instance
   * ephemeral disk per instance
-  * ...
 
 --------------------------------------------------------------------------------
 
@@ -100,12 +98,12 @@ layout: true
 
 * special focus on web servers, typically with:
 
+  * one open HTTP port open when app starts
   * HTTPS support
   * custom domains
   * WebSocket support
 
 * or anything - arbitrary compute
-
 
 --------------------------------------------------------------------------------
 
@@ -133,21 +131,42 @@ $
 
 --------------------------------------------------------------------------------
 
-### dunno
+### using hosted services
+
+* add service to your account via:
+  * command-line tool
+  * web dashboard
+
+* services exposed to app via environment variables
 
 --------------------------------------------------------------------------------
 
-### dunno
+### scaling
 
 --------------------------------------------------------------------------------
 
-### dunno
+### auto-scaling
+
 
 ================================================================================
+
+class: center, middle
 
 # the wonky
 
 ### and how to de-wonk-ify
+
+--------------------------------------------------------------------------------
+
+### core issues
+
+* can't configure base operating system
+
+* often no ssh
+
+* stdout/err via syslog
+
+* ephemeral file system
 
 --------------------------------------------------------------------------------
 
@@ -163,6 +182,14 @@ node-inspector difficult to run
 use a proxy splitter
 
 * [cf-node-debug](https://www.npmjs.org/package/cf-node-debug)
+
+
+--------------------------------------------------------------------------------
+
+### other diagnostic tools
+
+* https://devcenter.heroku.com/articles/strongloop
+* New Relic
 
 --------------------------------------------------------------------------------
 
@@ -190,12 +217,50 @@ if the PaaS runs `npm install` for you, how do can you access private packages
 
 --------------------------------------------------------------------------------
 
-### dunno
+### logging
+
+* typically get last XX lines of your stdout/err
+* but easy hook-ups to logging services:
+  * [Loggly]()
+  * [PaperTrails]()
+  * [splunk>storm]()
 
 --------------------------------------------------------------------------------
 
-### dunno
+### dependency versions
 
+```js
+//!snippet: wildcard-dependency.js
+```
+
+What's wrong with this `package.json` file?
+
+
+--------------------------------------------------------------------------------
+
+### dependency versions
+
+```js
+//!snippet: wildcard-dependency.js
+```
+
+Guess what happened the day
+[express 4.0 was released](https://github.com/strongloop/express/blob/master/History.md#400--2014-04-09)?
+
+* removed from express:
+  * properties on `express`, `req`, `res`
+  * all bundled middleware except static
+
+--------------------------------------------------------------------------------
+
+### dependency versions
+
+Lesson: lock down your dependencies
+
+do one of these:
+
+* version your node_modules
+* use [npm shrinkwrap](https://www.npmjs.org/doc/cli/npm-shrinkwrap.html)
 
 ================================================================================
 
