@@ -64,7 +64,7 @@ layout: true
 
 --------------------------------------------------------------------------------
 
-### wat
+### wat - node.js on a PaaS
 
 * you know what node.js is
 
@@ -107,13 +107,50 @@ layout: true
 
 --------------------------------------------------------------------------------
 
+### PaaS app development methodology
+
+The Twelve Factor App - http://12factor.net/
+
+*patterns for building apps on the cloud*
+
+<table width="100%">
+<tr><td>1. Codebase                 <td>7. Port binding
+<tr><td>2. Dependencies             <td>8. Concurrency
+<tr><td>3. Config                   <td>9. Disposability
+<tr><td>4. Backing Services         <td>10. Dev/prod parity
+<tr><td>5. Build, release, run      <td>11. Logs
+<tr><td>6. Processes                <td>12. Admin processes
+</table>
+
+--------------------------------------------------------------------------------
+
+### PaaS app development methodology
+
+* **Codebase** - One codebase tracked in revision control, many deploys
+* **Dependencies** - Explicitly declare and isolate dependencies
+* **Config** - Store config in the environment
+* **Backing Services** - Treat backing services as attached resources
+* **Build, release, run** - Strictly separate build and run stages
+* **Processes** - Execute the app as one or more stateless processes
+
+--------------------------------------------------------------------------------
+
+### PaaS app development methodology
+
+* **Port binding** - Export services via port binding
+* **Concurrency** - Scale out via the process model
+* **Disposability** - Maximize robustness with fast startup and graceful shutdown
+* **Dev/prod parity** - Keep development, staging, and production as similar as possible
+* **Logs** - Treat logs as event streams
+* **Admin processes** - Run admin/management tasks as one-off processes
+
+--------------------------------------------------------------------------------
+
 ### let's deploy an app to Cloud Foundry
 
-```
-$ git clone https://hub.jazz.net/git/pmuellr/bluemix-hello-node
-$ cd bluemix-hello-node
-$ cf push
-
+<pre><code>$ <span style="color:#090">git clone https://github.com/pmuellr/cf-node-hello.git</span>
+$ <span style="color:#090">cd cf-node-hello</span>
+$ <span style="color:#090">cf push</span>
 Using manifest file .../manifest.yml
 ...
 Installing IBM SDK for Node.js from admin cache
@@ -124,24 +161,138 @@ Uploading droplet (8.0M)
 ...
 App started
 ...
-urls: bluemix-hello-node-pjm.mybluemix.net
+urls: cf-node-hello-pjm.mybluemix.net
+$ <span style="color:#090">curl https://cf-node-hello-pjm.mybluemix.net</span>
+Hello World
+</code></pre>
 
-$
+--------------------------------------------------------------------------------
+
+### PaaS tools
+
+* web dashboard
+
+* command-line tooling
+  * Heroku toolbelt - [`heroku`](https://toolbelt.heroku.com/)
+  * Cloud Foundry - [`cf`](http://docs.cloudfoundry.org/devguide/installcf/)
+
+* typically will be using both web and cli
+
+--------------------------------------------------------------------------------
+
+### adapting your app
+
+* configuration provided via environment variables
+
+* `process.env` is your new best friend
+
+* using Heroku's MongoLab add-on service:
+
+```
+process.env.PORT         // port to bind server to
+
+process.env.MONGOLAB_URL // MongoLab db URL
+   // mongodb://[user]:[pass]@[host]:[port]/[path]
+```
+
+--------------------------------------------------------------------------------
+
+### adapting your app - Cloud Foundry
+
+* `PORT` - env var set to port to bind server to
+
+* `VCAP_SERVICES` - JSON string containing structured service info
+
+* `VCAP_APPLICATION` - JSON string containing other environmental info
+  * url(s) to server
+  * ip address of server
+  * start time
+  * etc
+
+--------------------------------------------------------------------------------
+
+### adapting your app - Cloud Foundry
+
+VCAP_SERVICES will look like this, but with even more data:
+
+```js
+{
+  "mongodb-2.2": [
+    {
+      "name": "mongodb",
+      "label": "mongodb-2.2",
+      "credentials": {
+          "url": "mongodb://..."
+      }
+    }
+  ]
+}
+```
+
+--------------------------------------------------------------------------------
+
+### adapting your app - Cloud Foundry
+
+use the [cfenv package](https://www.npmjs.org/package/cfenv) to programmatically
+introspect over `VCAP_SERVICES` and `VCAP_APPLICATION`
+
+instead of:
+
+```js
+services = JSON.parse(process.env.VCAP_SERVICES)
+mongoURL = services["mongodb-2.2"][0].credentials.url
+```
+
+use this:
+
+```js
+cfenv = require("cfenv")
+appEnv = cfenv.getAppEnv()
+mongoURL = appEnv.getServiceURL("mongodb")
 ```
 
 --------------------------------------------------------------------------------
 
 ### using hosted services
 
-* add service to your account via:
+* add service to your app via:
   * command-line tool
   * web dashboard
+  * roll your own access any 3rd service however you can
 
 * services exposed to app via environment variables
+  * Heroku's `MONGOLAB_URL` env var
+  * inside of Cloud Foundry's `VCAP_SERVICES` env var
+
+--------------------------------------------------------------------------------
+
+### using hosted services
+
+Heroku:
+
+<pre><code>$ <span style="color:#090">heroku addons:add mongolab</span>
+</code></pre>
+
+Cloud Foundry:
+
+<pre><code>$ <span style="color:#090">cf create-service mongolab sandbox my-mongo-db
+</code></pre>
 
 --------------------------------------------------------------------------------
 
 ### scaling
+
+By default, PaaS will run one instance of your app.  Want more?
+
+Heroku:
+
+<pre><code>$ <span style="color:#090">heroku ps:scale web=42</span>
+</code></pre>
+
+Cloud Foundry:
+
+<pre><code>$ <span style="color:#090">cf scale my-app -i 42
+</code></pre>
 
 --------------------------------------------------------------------------------
 
