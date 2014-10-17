@@ -5,6 +5,9 @@
   "description":  "snippets",
   "license":    	"Apache-2.0",
   "devDependencies": {
+    "highlight.js":       "8.0.x"
+  },
+  "notDependencies": {
     "debug":              "0.8.x",
     "highlight.js":       "8.0.x",
     "hooker":             "0.2.x",

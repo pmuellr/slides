@@ -264,6 +264,31 @@ mongoURL = appEnv.getServiceURL("mongodb")
 
 ---
 
+### domains
+
+* typically PaaS provides you a free domain for your apps:
+  * <code>foo.<span style="color:#090">herokuapp.com</span></code>
+  * <code>bar.<span style="color:#090">mybluemix.net</span></code>
+  * <code>yow.<span style="color:#090">cfapps.io</span></code>
+
+* host names must be unique across free domain!
+
+* custom domains usually supported
+
+---
+
+### https support
+
+* most PaaS's provide SSL termination
+
+* allows you to support http and https traffic with just an http server
+
+* or do you want https all the way to your server?
+
+* https support for custom domains not simple; upload certs, etc
+
+---
+
 ### using hosted services
 
 * add service to your app via:
@@ -307,7 +332,15 @@ Cloud Foundry:
 
 ---
 
-### auto-scaling
+### scaling
+
+if you want to scale: servers must be stateless
+
+* no caching mutable data
+
+sometimes you want to scale **down**
+
+* don't count on no sticky sessions
 
 
 ---
@@ -337,12 +370,12 @@ class: center, middle
 node-inspector difficult to run
 
 * wants two ports open
-* PaaS typically provides one
+* PaaS typically provides only one
 
 &#x279C;
 
 use a proxy splitter
-
+* run two servers, split traffic by URL
 * [cf-node-debug](https://www.npmjs.org/package/cf-node-debug)
 
 
@@ -350,8 +383,15 @@ use a proxy splitter
 
 ### other diagnostic tools
 
-* https://devcenter.heroku.com/articles/strongloop
-* New Relic
+* [New Relic](http://newrelic.com/)
+  * get account, apply light config
+  * instrument via `require("newrelic")`
+
+* [StrongLoop](https://devcenter.heroku.com/articles/strongloop)
+  * requires new tooling
+
+* PaaS-specific
+  * [Bluemix Monitoring and Analytics](https://www.ng.bluemix.net/docs/#services/monana/index.html#gettingstartedtemplate)
 
 ---
 
@@ -381,11 +421,15 @@ if the PaaS runs `npm install` for you, how do can you access private packages
 
 ### logging
 
-* typically get last XX lines of your stdout/err
+* typically only get last XX lines of your stdout/err
+
 * but easy hook-ups to logging services:
-  * [Loggly]()
-  * [PaperTrails]()
-  * [splunk>storm]()
+  * [Loggly](https://www.loggly.com/)
+  * [PaperTrail](https://papertrailapp.com/)
+  * [splunk>storm](https://www.splunkstorm.com/)
+  * [SumoLogic](http://www.sumologic.com/)
+  * [Logentries](https://logentries.com/)
+  * roll your own syslog support
 
 ---
 
@@ -422,6 +466,7 @@ Lesson: lock down your dependencies
 do one of these:
 
 * version your node_modules
+
 * use [npm shrinkwrap](https://www.npmjs.org/doc/cli/npm-shrinkwrap.html)
 
 ---
