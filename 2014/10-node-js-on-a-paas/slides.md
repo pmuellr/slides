@@ -109,45 +109,6 @@ web server running on the "cloud" (public internet)
 
 --------------------------------------------------------------------------------
 
-### PaaS app development methodology
-
-The Twelve Factor App - http://12factor.net/
-
-*patterns for building apps on the cloud*
-
-<table width="100%">
-<tr><td>1. Codebase                 <td>7. Port binding
-<tr><td>2. Dependencies             <td>8. Concurrency
-<tr><td>3. Config                   <td>9. Disposability
-<tr><td>4. Backing Services         <td>10. Dev/prod parity
-<tr><td>5. Build, release, run      <td>11. Logs
-<tr><td>6. Processes                <td>12. Admin processes
-</table>
-
---------------------------------------------------------------------------------
-
-### PaaS app development methodology
-
-* **Codebase** - One codebase tracked in revision control, many deploys
-* **Dependencies** - Explicitly declare and isolate dependencies
-* **Config** - Store config in the environment
-* **Backing Services** - Treat backing services as attached resources
-* **Build, release, run** - Strictly separate build and run stages
-* **Processes** - Execute the app as one or more stateless processes
-
---------------------------------------------------------------------------------
-
-### PaaS app development methodology
-
-* **Port binding** - Export services via port binding
-* **Concurrency** - Scale out via the process model
-* **Disposability** - Maximize robustness with fast startup and graceful shutdown
-* **Dev/prod parity** - Keep development, staging, and production as similar as possible
-* **Logs** - Treat logs as event streams
-* **Admin processes** - Run admin/management tasks as one-off processes
-
---------------------------------------------------------------------------------
-
 ### let's deploy an app to Cloud Foundry
 
 <pre><code>$ <span class="hilite">git clone https://github.com/pmuellr/cf-node-hello.git</span>
@@ -193,6 +154,45 @@ Hello World
 
 * for Heroku and Cloud Foundry, the build is scripted with a
   "buildpack"; you can also write your own
+
+--------------------------------------------------------------------------------
+
+### PaaS app development methodology
+
+The Twelve Factor App - http://12factor.net/
+
+*patterns for building apps on the cloud*
+
+<table width="100%">
+<tr><td>1. Codebase                 <td>7. Port binding
+<tr><td>2. Dependencies             <td>8. Concurrency
+<tr><td>3. Config                   <td>9. Disposability
+<tr><td>4. Backing Services         <td>10. Dev/prod parity
+<tr><td>5. Build, release, run      <td>11. Logs
+<tr><td>6. Processes                <td>12. Admin processes
+</table>
+
+--------------------------------------------------------------------------------
+
+### PaaS app development methodology
+
+* **Codebase** - One codebase tracked in revision control, many deploys
+* **Dependencies** - Explicitly declare and isolate dependencies
+* **Config** - Store config in the environment
+* **Backing Services** - Treat backing services as attached resources
+* **Build, release, run** - Strictly separate build and run stages
+* **Processes** - Execute the app as one or more stateless processes
+
+--------------------------------------------------------------------------------
+
+### PaaS app development methodology
+
+* **Port binding** - Export services via port binding
+* **Concurrency** - Scale out via the process model
+* **Disposability** - Maximize robustness with fast startup and graceful shutdown
+* **Dev/prod parity** - Keep development, staging, and production as similar as possible
+* **Logs** - Treat logs as event streams
+* **Admin processes** - Run admin/management tasks as one-off processes
 
 --------------------------------------------------------------------------------
 
@@ -374,7 +374,7 @@ if you want to scale, servers must be stateless
 
 ### the awesome: summary
 
-* no special "cloud libraries" for your app to use
+* no special "cloud libraries" **required** for your app
 
 * quick deploy of applications to the cloud
 
@@ -403,7 +403,7 @@ class: center, middle
 * stdout/err via syslog
 
 * ephemeral file system
-  * database all the things
+  * `=>` database all the things
 
 --------------------------------------------------------------------------------
 
@@ -411,13 +411,13 @@ class: center, middle
 
 node-inspector difficult to run
 
-* wants two ports open
-* PaaS typically provides only one
+* wants two ports open (app and debug)
+* PaaS typically only allows one
 
 `=>`
 
 use a proxy splitter
-* run two servers, split traffic by URL
+* run two servers, split traffic with proxy by URL
 * [cf-node-debug](https://www.npmjs.org/package/cf-node-debug)
 
 
@@ -425,13 +425,15 @@ use a proxy splitter
 
 ### other diagnostic tools
 
+* remember: no `ssh` to run diagnostic tools
+
+`=>`
+
 * [New Relic](http://newrelic.com/)
   * get account, apply light config
   * instrument via `require("newrelic")`
-
 * [StrongLoop](https://devcenter.heroku.com/articles/strongloop)
   * requires StrongLoop's tooling
-
 * PaaS-specific
   * [Bluemix Monitoring and Analytics](https://www.ng.bluemix.net/docs/#services/monana/index.html#gettingstartedtemplate)
 
@@ -445,6 +447,7 @@ use a proxy splitter
 `=>`
 
 * most errors here are in startup
+  * initializing databases, services, etc
 * at startup:
   * add LOTS of logging
   * add LOTS of error checking
@@ -510,7 +513,7 @@ Lesson: lock down your dependencies
 
 do one of these:
 
-* version/put your node_modules
+* version your node_modules with your app
 
 * use fixed major/minor version specs: eg, `"3.4.x"`
 
