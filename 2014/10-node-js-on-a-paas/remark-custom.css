@@ -20,6 +20,10 @@ pre {
   background:         #DDD;
 }
 
+code .hilite {
+  color:              #090;
+}
+
 body a:visited, body a {
   color:              #99F;
   text-decoration:    none;

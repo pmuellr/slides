@@ -18,7 +18,7 @@ developer advocate for IBM's [Bluemix](http://bluemix.net) PaaS
 <http://pmuellr.github.io/slides/> (all slides)
 ]]
 
-<div class="toolBar">
+<div class="toolBar no-print">
   <div class="navHelp" title="use the cursor keys to navigate, 'n' to toggle nav buttons, 's' to toggle control panel">
     <img class="button-1st"  height=16 src="../../glyphicons_free/glyphicons/png/glyphicons_171_fast_backward.png">
     <img class="button-prev" height=16 src="../../glyphicons_free/glyphicons/png/glyphicons_172_rewind.png">
@@ -49,7 +49,7 @@ layout: true
 
 {{content}}
 
-<div class="toolBar">
+<div class="toolBar no-print">
   <div class="navHelp" title="use the cursor keys to navigate, 'n' to toggle nav buttons, 's' to toggle control panel">
     <img class="button-1st"  height=16 src="../../glyphicons_free/glyphicons/png/glyphicons_171_fast_backward.png">
     <img class="button-prev" height=16 src="../../glyphicons_free/glyphicons/png/glyphicons_172_rewind.png">
@@ -68,7 +68,7 @@ layout: true
 
 * you know what node.js is
 
-* PaaS &#x279C; Platform as a Service
+* PaaS `==` Platform as a Service
 
 * examples:
   * [Heroku](https://www.heroku.com/home)
@@ -82,15 +82,17 @@ layout: true
 
 ### PaaS fundamentals
 
-* you provide the application
-
 * OS provided for you (Linux)
-
+* you provide the application (web server)
 * configure:
-  * hosted services
   * number of instances running
   * RAM per instance
   * ephemeral disk per instance
+* run a few commands
+
+voila!
+
+web server running on the "cloud" (public internet)
 
 --------------------------------------------------------------------------------
 
@@ -100,7 +102,7 @@ layout: true
 
   * one open HTTP port open when app starts
   * HTTPS support
-  * custom domains
+  * free domain, or use your own custom domain
   * WebSocket support
 
 * or anything - arbitrary compute
@@ -148,9 +150,9 @@ The Twelve Factor App - http://12factor.net/
 
 ### let's deploy an app to Cloud Foundry
 
-<pre><code>$ <span style="color:#090">git clone https://github.com/pmuellr/cf-node-hello.git</span>
-$ <span style="color:#090">cd cf-node-hello</span>
-$ <span style="color:#090">cf push</span>
+<pre><code>$ <span class="hilite">git clone https://github.com/pmuellr/cf-node-hello.git</span>
+$ <span class="hilite">cd cf-node-hello</span>
+$ <span class="hilite">cf push</span>
 Using manifest file .../manifest.yml
 ...
 Installing IBM SDK for Node.js from admin cache
@@ -162,9 +164,35 @@ Uploading droplet (8.0M)
 App started
 ...
 urls: cf-node-hello-pjm.mybluemix.net
-$ <span style="color:#090">curl https://cf-node-hello-pjm.mybluemix.net</span>
+$ <span class="hilite">curl https://cf-node-hello-pjm.mybluemix.net</span>
 Hello World
 </code></pre>
+
+--------------------------------------------------------------------------------
+
+### what just happened?
+
+* `cf push` uploaded your application files to a staging server
+
+* staging server got node binaries, package dependencies, packaged into archive
+
+* vm allocated to run the app, archive downloaded, expanded, started
+
+* web server now running on the internet
+
+--------------------------------------------------------------------------------
+
+### how the staging server "builds" an app
+
+* driven from `package.json`
+
+* get node executable from `engines.node`
+  * `{ "engines" : { "node" : "0.10.x" } }`
+
+* `npm install` will be run to obtain packages
+
+* for Heroku and Cloud Foundry, the build is scripted with a
+  "buildpack"; you can also write your own
 
 --------------------------------------------------------------------------------
 
@@ -180,17 +208,83 @@ Hello World
 
 --------------------------------------------------------------------------------
 
+### domains
+
+* typically PaaS provides you a free domain for your apps:
+  * <code>foo.<span class="hilite">herokuapp.com</span></code>
+  * <code>bar.<span class="hilite">mybluemix.net</span></code>
+  * <code>yow.<span class="hilite">cfapps.io</span></code>
+
+* host names must be unique across free domain!
+
+* custom domains usually supported
+
+--------------------------------------------------------------------------------
+
+### https support
+
+* most PaaS's provide SSL termination
+
+* allows you to support http and https traffic with just an http server
+
+* or do you want https all the way to your server?
+
+* https support for custom domains not simple; upload certs, etc
+
+--------------------------------------------------------------------------------
+
+### using hosted services
+
+Instead of running your own database, queueing server, etc,
+you'll be using hosted services, like:
+
+* MongoLab
+* Cloudant
+* Redis Cloud
+
+Some PaaS's co-locate hosted services in same datacenter to
+reduce latency.
+
+--------------------------------------------------------------------------------
+
+### using hosted services
+
+* add service to your app via:
+  * command-line tool
+  * web dashboard
+  * roll your own access any 3rd service however you can
+
+* services exposed to app via environment variables
+  * Heroku's `MONGOLAB_URL` env var
+  * inside of Cloud Foundry's `VCAP_SERVICES` env var
+
+--------------------------------------------------------------------------------
+
+### using hosted services
+
+Heroku:
+
+<pre><code>$ <span class="hilite">heroku addons:add mongolab</span>
+</code></pre>
+
+Cloud Foundry:
+
+<pre><code>$ <span class="hilite">cf create-service mongolab sandbox my-mongo-db
+</code></pre>
+
+--------------------------------------------------------------------------------
+
 ### adapting your app
 
 * configuration provided via environment variables
 
 * `process.env` is your new best friend
 
+* `process.env.PORT` - env var set to the port to bind server
+
 * using Heroku's MongoLab add-on service:
 
 ```
-process.env.PORT         // port to bind server to
-
 process.env.MONGOLAB_URL // MongoLab db URL
    // mongodb://[user]:[pass]@[host]:[port]/[path]
 ```
@@ -198,8 +292,6 @@ process.env.MONGOLAB_URL // MongoLab db URL
 --------------------------------------------------------------------------------
 
 ### adapting your app - Cloud Foundry
-
-* `PORT` - env var set to port to bind server to
 
 * `VCAP_SERVICES` - JSON string containing structured service info
 
@@ -253,84 +345,44 @@ mongoURL = appEnv.getServiceURL("mongodb")
 
 --------------------------------------------------------------------------------
 
-### domains
-
-* typically PaaS provides you a free domain for your apps:
-  * <code>foo.<span style="color:#090">herokuapp.com</span></code>
-  * <code>bar.<span style="color:#090">mybluemix.net</span></code>
-  * <code>yow.<span style="color:#090">cfapps.io</span></code>
-
-* host names must be unique across free domain!
-
-* custom domains usually supported
-
---------------------------------------------------------------------------------
-
-### https support
-
-* most PaaS's provide SSL termination
-
-* allows you to support http and https traffic with just an http server
-
-* or do you want https all the way to your server?
-
-* https support for custom domains not simple; upload certs, etc
-
---------------------------------------------------------------------------------
-
-### using hosted services
-
-* add service to your app via:
-  * command-line tool
-  * web dashboard
-  * roll your own access any 3rd service however you can
-
-* services exposed to app via environment variables
-  * Heroku's `MONGOLAB_URL` env var
-  * inside of Cloud Foundry's `VCAP_SERVICES` env var
-
---------------------------------------------------------------------------------
-
-### using hosted services
-
-Heroku:
-
-<pre><code>$ <span style="color:#090">heroku addons:add mongolab</span>
-</code></pre>
-
-Cloud Foundry:
-
-<pre><code>$ <span style="color:#090">cf create-service mongolab sandbox my-mongo-db
-</code></pre>
-
---------------------------------------------------------------------------------
-
 ### scaling
 
 By default, PaaS will run one instance of your app.  Want more?
 
 Heroku:
 
-<pre><code>$ <span style="color:#090">heroku ps:scale web=42</span>
+<pre><code>$ <span class="hilite">heroku ps:scale web=42</span>
 </code></pre>
 
 Cloud Foundry:
 
-<pre><code>$ <span style="color:#090">cf scale my-app -i 42
+<pre><code>$ <span class="hilite">cf scale my-app -i 42
 </code></pre>
 
 --------------------------------------------------------------------------------
 
 ### scaling
 
-if you want to scale: servers must be stateless
+if you want to scale, servers must be stateless
 
 * no caching mutable data
 
-sometimes you want to scale **down**
+* sometimes you want to scale **down**, so be prepared for servers to end
+  * no long running, non-atomic transactions
 
-* don't count on no sticky sessions
+--------------------------------------------------------------------------------
 
+### the awesome: summary
+
+* no special "cloud libraries" for your app to use
+
+* quick deploy of applications to the cloud
+
+* don't need to worry about installing operating systems
+
+* don't need to worry about installing services
+
+* easy to scale up/down
 
 ================================================================================
 
@@ -351,6 +403,7 @@ class: center, middle
 * stdout/err via syslog
 
 * ephemeral file system
+  * database all the things
 
 --------------------------------------------------------------------------------
 
@@ -361,7 +414,7 @@ node-inspector difficult to run
 * wants two ports open
 * PaaS typically provides only one
 
-&#x279C;
+`=>`
 
 use a proxy splitter
 * run two servers, split traffic by URL
@@ -377,7 +430,7 @@ use a proxy splitter
   * instrument via `require("newrelic")`
 
 * [StrongLoop](https://devcenter.heroku.com/articles/strongloop)
-  * requires new tooling
+  * requires StrongLoop's tooling
 
 * PaaS-specific
   * [Bluemix Monitoring and Analytics](https://www.ng.bluemix.net/docs/#services/monana/index.html#gettingstartedtemplate)
@@ -389,10 +442,12 @@ use a proxy splitter
 * app runs fine on your laptop
 * fails when run on PaaS
 
-&#x279C;
+`=>`
 
 * most errors here are in startup
-* add LOTS of logging / run in verbose mode
+* at startup:
+  * add LOTS of logging
+  * add LOTS of error checking
 
 --------------------------------------------------------------------------------
 
@@ -400,11 +455,12 @@ use a proxy splitter
 
 if the PaaS runs `npm install` for you, how do can you access private packages
 
-&#x279C;
+`=>`
 
 * manage them separately from the rest of your packages
-* see [pmuellr/bluemix-private-packages](https://github.com/pmuellr/bluemix-private-packages)
-  for an example project structure
+  * see [pmuellr/bluemix-private-packages](https://github.com/pmuellr/bluemix-private-packages)
+    for an example project structure
+* arrange to use a private package manager (npm in the future)
 
 --------------------------------------------------------------------------------
 
@@ -454,7 +510,9 @@ Lesson: lock down your dependencies
 
 do one of these:
 
-* version your node_modules
+* version/put your node_modules
+
+* use fixed major/minor version specs: eg, `"3.4.x"`
 
 * use [npm shrinkwrap](https://www.npmjs.org/doc/cli/npm-shrinkwrap.html)
 
