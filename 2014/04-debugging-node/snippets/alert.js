@@ -1,5 +1,7 @@
 alert("help me")
 
+// DOESN'T WORK IN NODE!!
+//
 // prints:
 //
 // ReferenceError: alert is not defined

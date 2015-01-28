@@ -37,6 +37,8 @@
 <div class='indent smaller'><a href='snippets/alert.js'>link</a></div>
 <pre><code>alert(<span class="hljs-string">"help me"</span>)
 
+<span class="hljs-comment">// DOESN'T WORK IN NODE!!</span>
+<span class="hljs-comment">//</span>
 <span class="hljs-comment">// prints:</span>
 <span class="hljs-comment">//</span>
 <span class="hljs-comment">// ReferenceError: alert is not defined</span>
@@ -55,6 +57,9 @@
 console.log(<span class="hljs-string">"foo"</span>, <span class="hljs-string">"bar"</span>)
 <span class="hljs-comment">// prints: foo bar</span>
 
+console.log({x:<span class="hljs-number">1</span>, y:<span class="hljs-number">2</span>})
+<span class="hljs-comment">// prints: { x: 1, y: 2 }</span>
+
 console.log(<span class="hljs-string">"a-%s-b"</span>, <span class="hljs-number">1</span>)
 <span class="hljs-comment">// prints: a-1-b</span>
 
@@ -62,7 +67,8 @@ console.log(<span class="hljs-string">"a-%s-b %j"</span>, <span class="hljs-numb
 <span class="hljs-comment">// prints: a-1-b {"x":1}</span>
 
 console.log(process)
-<span class="hljs-comment">// prints: { title: 'node', ...many lines... }</span></code></pre>
+<span class="hljs-comment">// prints: { title: 'node', ...many lines... }</span>
+</code></pre>
 
 <!-- ================================== -->
 <hr>
@@ -223,7 +229,7 @@ setInterval(<span class="hljs-function"><span class="hljs-keyword">function</spa
 })
 
 process.on(<span class="hljs-string">"uncaughtException"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(err)</span> {</span>
-	console.log(<span class="hljs-string">"uncaught exception: "</span> + err)
+	console.log(<span class="hljs-string">"uncaught exception: "</span> + err.stack)
 })
 
 <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">a</span><span class="hljs-params">()</span> {</span> <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">"die die die"</span>) }
@@ -233,6 +239,9 @@ a()
 <span class="hljs-comment">// prints:</span>
 <span class="hljs-comment">//</span>
 <span class="hljs-comment">// uncaught exception: Error: die die die</span>
+<span class="hljs-comment">//    at a (/path/to/process-events.js:9:22)</span>
+<span class="hljs-comment">//    at Object.&lt;anonymous&gt; (/path/to/process-events.js:11:1)</span>
+<span class="hljs-comment">//    ... more stack trace lines</span>
 <span class="hljs-comment">// exiting with code: 0</span>
 </code></pre>
 

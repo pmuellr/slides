@@ -85,7 +85,7 @@ For more info: <https://bluemix.net>
 
 For more info on node on BlueMix:
 
-> <http://node-stuff.ng.bluemix.net>
+> <http://node-stuff.mybluemix.net>
 
 
 
@@ -203,9 +203,9 @@ class: center, middle
 
 see also:
 
-* .smaller[<https://code.google.com/p/v8/wiki/JavaScriptStackTraceApi>]
+* <https://code.google.com/p/v8/wiki/JavaScriptStackTraceApi>
 
-* .smaller[.smaller[<https://mail.mozilla.org/pipermail/es-discuss/2014-March/036764.html>]]
+* <https://mail.mozilla.org/pipermail/es-discuss/2014-March/036764.html>
 
 --------------------------------------------------------------------------------
 
@@ -475,9 +475,9 @@ node-debug `which node-debug`
 
 ## IDEs
 
-* Eclipse Orion - .smaller[<https://wiki.eclipse.org/Orion/Node/Getting_started>]
+* Eclipse Orion - <https://wiki.eclipse.org/Orion/Node/Getting_started>
 
-* Eclipse - .smaller[<https://github.com/joyent/node/wiki/using-eclipse-as-node-applications-debugger>]
+* Eclipse - <https://github.com/joyent/node/wiki/using-eclipse-as-node-applications-debugger>
 
 * WebStorm - <http://www.jetbrains.com/webstorm/>
 
@@ -491,7 +491,7 @@ node-debug `which node-debug`
 * framework specific timing for:
   * express, connect, hapi, restify
   * mongodb, redis, mysql, memcached
-  * add your own: .smaller[<https://docs.newrelic.com/docs/nodejs/nodejs-agent-api>]
+  * add your own: <https://docs.newrelic.com/docs/nodejs/nodejs-agent-api>
 
 * unhandled exceptions
 
@@ -511,7 +511,7 @@ node-debug `which node-debug`
 
 more info: <https://docs.newrelic.com/docs/nodejs/>
 
-movie: .smaller[<https://www.youtube.com/watch?v=EA5yVDVr3K0>]
+movie: <https://www.youtube.com/watch?v=EA5yVDVr3K0>
 
 --------------------------------------------------------------------------------
 
@@ -533,7 +533,7 @@ sample: http://muellerware.org/nodprof-static/
 for more info:
 
 * <https://github.com/pmuellr/nodprof>
-* .smaller[.smaller[<https://code.google.com/p/v8/source/browse/trunk/include/v8-profiler.h>]]
+* <https://code.google.com/p/v8/source/browse/trunk/include/v8-profiler.h>
 * other profilers
 
 --------------------------------------------------------------------------------
