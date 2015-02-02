@@ -87,9 +87,24 @@ layout: true
 * [Bluemix console](https://console.ng.bluemix.net)
 * [Bluemix documentation](https://www.ng.bluemix.net/docs/)
 * [Eclipse tools for Bluemix](https://www.ng.bluemix.net/docs/#manageapps/eclipsetools/eclipsetools.html#eclipsetools)
+
+Bluemix Answers
+* <a class="smaller" href="https://developer.ibm.com/answers/smartspace/bluemix/">https://developer.ibm.com/answers/smartspace/bluemix/</a>
+* open to the public
+* thousands of questions already asked and answered
+* please ask any questions here, but no IBM Confidential or IBM internal
+  questions
+
+--------------------------------------------------------------------------------
+
+### articles / movies
+
 * [Getting Started with IBM Bluemix and DevOps Services using Java](https://hub.jazz.net/tutorials/jazzeditorjava/)
+
 * [Developing IBM Bluemix applications in Java with Eclipse and DevOps Services](https://hub.jazz.net/tutorials/jazzrtc/)
+
 * [Work locally with IBM DevOps Services projects and Git source control](http://www.ibm.com/developerworks/library/d-bluemix-javadevops/index.html)
+
 * [Video: Develop and manage Java Apps with IBM Bluemix and DevOps Services](http://www.ibm.com/developerworks/library/d-bluemix-javadevops/index.html)
 
 --------------------------------------------------------------------------------
@@ -330,38 +345,125 @@ class: center, middle
 
 # overview of Watson services
 
-
 --------------------------------------------------------------------------------
 
 ### Watson - Concept Expansion
+
+[Maps euphemisms or colloquial terms to more commonly understood phrases](
+  http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/concept-expansion.html)
+
+* input: starting point word, a few terms that are examples of that word, and a
+data set to analyze
+
+* output: a ranked list of terms with contextually similarity to the starting word
+
+* data sets:
+  periodically updated random tweets,
+  Medical transcript samples from MTSamples
 
 --------------------------------------------------------------------------------
 
 ### Watson - Language Identification
 
+[Identifies the language in which text is written](
+  http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/language-identification.html)
+
+* supports:  <span class="smaller"><span class="smaller">
+  Arabic; Chinese (Simplified); Chinese (Traditional); Cyrillic;
+  Danish; Dutch; English; Farsi; Finnish; French; German; Greek; Hebrew;
+  Hindi; Icelandic; Italian; Japanese; Korean; Norwegian (Bokmal);
+  Norwegian (Nynorsk); Portuguese; Spanish; Swedish; Turkish; Urdu.
+  </span></span>
+
+* input: text
+* output: 5-letter ISO language code; eg, "`en-US`"
+
 --------------------------------------------------------------------------------
 
 ### Watson - Machine Translation
+
+[Translate text from one language to another](
+  http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/machine-translation.html)
+
+* supports: English, Brazilian Portuguese, Spanish, French and Arabic
+
+* input: text to be translated
+
+* output: translated text
 
 --------------------------------------------------------------------------------
 
 ### Watson - Message Resonance
 
+[Communicate with people with a style and words that suits them](
+  http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/message-resonance.html)
+
+* input: term to evaluate and community to measure against
+
+* output: score ranking of how well term will be received by community
+
+* communities:
+  **"cloud"** twitter messages
+  or
+  **"big data"** twitter messages
+
 --------------------------------------------------------------------------------
 
 ### Watson - Question and Answer
+
+[Direct responses to user inquiries fueled by primary document sources](
+  http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/question-answer.html)
+
+* input: questions and which data set to query
+
+* output: multiple answers with confidence scores and links to evidence
+
+* data sets:
+  **Healthcare data** (including Healthfinder and CDC Health Topics) or
+  **Travel data** (including Wikivoyage, TSA, and CDC Travel)
 
 --------------------------------------------------------------------------------
 
 ### Watson - Relationship Extraction
 
+[Intelligently finds relationships between sentence components
+(nouns, verbs, subjects, objects, etc.)](
+  http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/relationship-extraction.html)
+
+* input: text news articles
+
+* output: entities from text and relationships in XML data structure
+
+* input is processed over a domain optimized for news articles
+
 --------------------------------------------------------------------------------
 
 ### Watson - User Modeling
 
+[Improves understanding of people's preferences to help engage users on their
+own terms](
+  http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/user-modeling.html)
+
+
+* input: text from an individual
+
+* output: tree of social characteristcs in JSON and visualizations using HTML
+  and SVG
+
+* input should be at least 1000 words of text written by one individual
+
 --------------------------------------------------------------------------------
 
 ### Watson - Visualization Rendering
+
+[Graphical representations of data analysis for easier understanding](
+  http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/visualization-rendering.html)
+
+* This service is an SDK that can be used to visualize any numeric data
+
+* aka RAVE
+
+* supports iOS, Android, Java and JavaScript
 
 --------------------------------------------------------------------------------
 
@@ -371,12 +473,6 @@ class: center, middle
 
 * check the [Watson Developer Cloud](http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/)
   for updates
-
---------------------------------------------------------------------------------
-
-### Watson Service -
-
-
 
 ================================================================================
 
