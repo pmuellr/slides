@@ -5,16 +5,20 @@ Patrick Mueller
 [`muellerware.org`](http://muellerware.org)<br>
 developer advocate for IBM's [Bluemix](http://bluemix.net) PaaS<br>
 
-<div class="smaller">
+<div class="smaller"><div class="smaller"><div class="smaller">
 <a href="http://pmuellr.github.io/slides/2015/02-java-intro-with-watson">
          http://pmuellr.github.io/slides/2015/02-java-intro-with-watson
 </a>
 <br>
+<a href="http://pmuellr.github.io/slides/2015/02-java-intro-with-watson/java-intro-with-watson.pdf">
+         http://pmuellr.github.io/slides/2015/02-java-intro-with-watson/java-intro-with-watson.pdf
+</a>
+<br>
 <a href="http://pmuellr.github.io/slides/">
          http://pmuellr.github.io/slides/
-        (all slides)
 </a>
-</div>
+(all of Patrick's slides)
+</div></div></div>
 
 <div class="toolBar no-print">
   <div class="navHelp" title="use the cursor keys to navigate, 'n' to toggle nav buttons, 's' to toggle control panel">
