@@ -77,9 +77,21 @@ layout: true
 
 ---
 
+### agenda
+
+* Bluemix intro
+
+* deploy a sample app
+
+* code snippets
+
+* Watson services
+
+---
+
 ### what is Bluemix
 
-* Platform-as-a-Service aka PaaS aka web app hosting platform
+* **Platform-as-a-Service** *aka* **PaaS** *aka* **web app hosting platform**
 
 * you provide the app, Bluemix hosts the app
 
@@ -107,8 +119,7 @@ Bluemix Answers
 * <a class="smaller" href="https://developer.ibm.com/answers/smartspace/bluemix/">https://developer.ibm.com/answers/smartspace/bluemix/</a>
 * open to the public
 * thousands of questions already asked and answered
-* please ask any questions here, but no IBM Confidential or IBM internal
-  questions
+* IBMers: do not ask questions containing sensitive IBM internal information
 
 ---
 
@@ -124,17 +135,27 @@ Bluemix Answers
 
 ---
 
-### sign up for Bluemix and Dev Ops Services
+### sign up for Bluemix and DevOps Services
 
 * for Bluemix, register here (click on **SIGN UP**):
 
   <https://bluemix.net>
 
-* for Dev Ops Services, register here:
+* for DevOps Services, register here, after registering at Bluemix
+  (click on **LOG IN**):
 
-  <https://jazz.net/action/register>
+  <https://hub.jazz.net/>
 
   use the same userid/password as for Bluemix
+
+---
+
+### sign up for Bluemix and DevOps Services (more)
+
+* IBMers: use your IBM email address when registering
+
+* if you have problems registering, send an email to
+  [id@bluemix.net](mailto:id@bluemix.net)
 
 ---
 
@@ -179,7 +200,7 @@ pre-reqs for Java development
 
 * Eclipse using `cf` command-line tool, or Bluemix plugin for Eclipse
 
-* Dev Ops Services - <http://hub.jazz.net>; edit, build, deploy all from the web
+* DevOps Services - <http://hub.jazz.net>; edit, build, deploy all from the web
 
 ---
 
@@ -187,11 +208,15 @@ pre-reqs for Java development
 
 * code / instructions, available here:
 
-<a class="smaller" href="https://hub.jazz.net/project/pmuellr/um-java/overview">
-         https://hub.jazz.net/project/pmuellr/um-java/overview
-</a>
+  <a class="smaller" href="https://hub.jazz.net/project/pmuellr/um-java/overview">
+  https://hub.jazz.net/project/pmuellr/um-java/overview
+  </a>
 
-* (live demo of deploying app using IDS)
+* a live version of this application here:
+
+  <http://watson-um-demo.mybluemix.net/>
+
+* (show deployment of the app using DevOps Services)
 
 ---
 
@@ -201,7 +226,7 @@ pre-reqs for Java development
 
 * deployment options
 
-  * commit to git, let IDS redeploy to Bluemix
+  * commit to git, let DevOps Services redeploy to Bluemix
 
   * deploy directly using Eclipse for Bluemix tools
 
@@ -271,18 +296,18 @@ import com.ibm.json.java.JSONArray;
 import com.ibm.json.java.JSONObject;
 
 JSONObject getVcapServices() {
-  String envServices = System.getenv("VCAP_SERVICES");
+  String vcap = System.getenv("VCAP_SERVICES");
 
-  if (envServices == null) return null;
-  JSONObject sysEnv = null;
+  if (vcap == null) return null;
+  JSONObject vcapObject = null;
   try {
-     sysEnv = JSONObject.parse(envServices);
+     vcapObject = JSONObject.parse(vcap);
   }
   catch (IOException e) {
     String message = "Error parsing VCAP_SERVICES: ";
     logger.log(Level.SEVERE, message + e.getMessage(), e);
   }
-  return sysEnv;
+  return vcapObject;
 }
 
 ```
@@ -292,22 +317,22 @@ JSONObject getVcapServices() {
 ### getting service credentials from parsed `VCAP_SERVICES` in Java
 
 ```java
-// serviceName = "user_modeling";
-private void processVCAP_Services(serviceName) {
+// label = "user_modeling";
+private void processVCAP_Services(label) {
   JSONObject sysEnv = getVcapServices();
   if (sysEnv == null) return;
 
-  for (Object key : sysEnv.keySet()) {
-    String keyString = (String) key;
-    if (keyString.startsWith(serviceName)) {
-      JSONArray services = (JSONArray)sysEnv.get(key);
-      JSONObject service = (JSONObject)services.get(0);
+  for (Object labelTest : sysEnv.keySet()) {
+    String labelString = (String) labelTest;
+    if (labelString.startsWith(label)) {
+      JSONArray  services = (JSONArray)  sysEnv.get(labelTest);
+      JSONObject service  = (JSONObject) services.get(0);
       JSONObject credentials;
 
-      credentials = (JSONObject)service.get("credentials");
-      baseURL  = (String)credentials.get("url");
-      username = (String)credentials.get("username");
-      password = (String)credentials.get("password");
+      credentials = (JSONObject) service.get("credentials");
+      baseURL     = (String) credentials.get("url");
+      username    = (String) credentials.get("username");
+      password    = (String) credentials.get("password");
     }
   }
 }
@@ -335,6 +360,7 @@ URI profileURI = new URI(baseURL + "api/v2/profile").normalize();
 Request profileRequest = Request.Post(profileURI)
   .addHeader("Accept", "application/json")
   .bodyString(content.toString(), ContentType.APPLICATION_JSON);
+
 String profileString = ex.execute(profileRequest)
   .handleResponse(new ResponseHandler<String>() {
     @Override
@@ -388,6 +414,19 @@ data set to analyze
 
 ---
 
+### Watson - Concept Insights
+
+[Explores information based on the concepts behind your input](
+  http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/concept-insights.html)
+
+* input: content and queries, in text and HTML
+
+* output: a list of content that is relevant to your queries
+
+* dataset: also uses English Wikipedia
+
+---
+
 ### Watson - Language Identification
 
 [Identifies the language in which text is written](
@@ -401,6 +440,7 @@ data set to analyze
   </span></span>
 
 * input: text
+
 * output: 5-letter ISO language code; eg, "`en-US`"
 
 ---
@@ -444,8 +484,8 @@ data set to analyze
 * output: multiple answers with confidence scores and links to evidence
 
 * data sets:
-  **Healthcare data** (including Healthfinder and CDC Health Topics) or
-  **Travel data** (including Wikivoyage, TSA, and CDC Travel)
+  **healthcare data** (including Healthfinder and CDC Health Topics) or
+  **travel data** (including Wikivoyage, TSA, and CDC Travel)
 
 ---
 
@@ -459,7 +499,46 @@ data set to analyze
 
 * output: entities from text and relationships in XML data structure
 
-* input is processed over a domain optimized for news articles
+* dataset: domain optimized for news articles
+
+---
+
+### Watson - Speech to Text
+
+[Transcribes English speech to text with low latency](
+  http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/speech-to-text.html)
+
+* input: streamed or recorded audio
+
+* output: text transcriptions of the recognized words
+
+* dataset: intelligible english speech
+
+---
+
+### Watson - Text to Speech
+
+[Synthesizes natural-sounding speech from English or Spanish text](
+  http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/text-to-speech.html)
+
+* input: English or Spanish text
+
+* output: synthesized audio based on the input text
+
+* dataset: English or Spanish text
+
+---
+
+### Watson - Tradeoff Analytics
+
+[Helps users make better choices to best meet multiple conflicting goals](
+  http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/tradeoff-analytics.html)
+
+* input: decision problem in a JSON document
+
+* output: problem and its resolution in a JSON document
+
+* dataset: self-contained in input decision problem
 
 ---
 
@@ -468,7 +547,6 @@ data set to analyze
 [Improves understanding of people's preferences to help engage users on their
 own terms](
   http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/user-modeling.html)
-
 
 * input: text from an individual
 
@@ -479,25 +557,30 @@ own terms](
 
 ---
 
-### Watson - Visualization Rendering
+### Watson - Visual Recognition
 
-[Graphical representations of data analysis for easier understanding](
-  http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/visualization-rendering.html)
+[Analyzes the visual content of images and video frames to understand the content directly](
+  http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/visual-recognition.html)
 
-* This service is an SDK that can be used to visualize any numeric data
+* input: JPEG images
 
-* aka RAVE
+* output: a set of labels and likelihood scores
 
-* supports iOS, Android, Java and JavaScript
+* dataset: large number of classified pictures
 
 ---
 
-### Watson - more services!
+### Watson - more information
 
-* new Watson services will be released over time
+* [Watson Developer Cloud](http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/)
+  web site
 
-* check the [Watson Developer Cloud](http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/)
-  for updates
+* one stop shopping for
+
+  * getting started information
+  * reference documentation
+  * app gallery
+  * sample code
 
 ---
 
