@@ -6,5 +6,6 @@
   "license":      "Apache-2.0",
   "devDependencies": {
   },
-  "scripts": { "install": "cd 2014/04-debugging-node/snippets; npm install" }
+  "scripts": {
+	}
 }

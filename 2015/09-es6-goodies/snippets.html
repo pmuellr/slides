@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>node.js on bluemix snippets</title>
+    <link rel="icon"       href="../../images/js.png">
+    <link rel="stylesheet" href="highlightjs-styles.css">
+    <style>
+      body {
+        background-color:       #DDD;
+      }
+
+      .indent {
+        margin-left:            2em;
+      }
+
+      .smaller {
+        font-size:              80%;
+      }
+
+      pre {
+        margin-left:            2em;
+        margin-right:           2em;
+        padding:                1em;
+        background-color:       #EEE;
+        border:                 thin solid black;
+        border-radius:          1em;
+      }
+    </style>
+  </head>
+  <body>
+
+<!-- ================================== -->
+<hr>
+<h2>Line-Poster.js<h2>
+<div class='indent smaller'><a href='snippets/Line-Poster.js'>link</a></div>
+<pre><code><span class="hljs-pi">"use strict"</span>
+
+<span class="hljs-keyword">const</span> _ = <span class="hljs-built_in">require</span>(<span class="hljs-string">"underscore"</span>)
+
+<span class="hljs-keyword">const</span> interpolate = <span class="hljs-built_in">require</span>(<span class="hljs-string">"./interpolate"</span>)
+
+<span class="hljs-built_in">module</span>.exports = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">LinePoster</span>(<span class="hljs-params">lines</span>) </span>{
+  <span class="hljs-keyword">let</span> result = <span class="hljs-literal">undefined</span>
+
+  <span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">p</span>(<span class="hljs-params">strings <span class="hljs-comment">/*, value, value */</span></span>) </span>{
+    <span class="hljs-keyword">if</span> (!strings) {
+      <span class="hljs-keyword">if</span> (!result) result = lines.join(<span class="hljs-string">'\n'</span>)
+      <span class="hljs-keyword">return</span> result
+    }
+
+    <span class="hljs-keyword">const</span> values = _.toArray(<span class="hljs-built_in">arguments</span>).slice(<span class="hljs-number">1</span>)
+
+    lines.push( interpolate(strings, values))
+  }
+}
+</code></pre>
+
+<!-- ================================== -->
+<hr>
+<h2>interpolate.js<h2>
+<div class='indent smaller'><a href='snippets/interpolate.js'>link</a></div>
+<pre><code><span class="hljs-keyword">const</span> _ = <span class="hljs-built_in">require</span>(<span class="hljs-string">"underscore"</span>)
+
+<span class="hljs-comment">//-----------------------------------------------------------------</span>
+<span class="hljs-comment">// f([a1,a2,..], [b1,b2,..]) -&gt; "" + a1 + b1 + a2 + b2 ...</span>
+<span class="hljs-comment">//-----------------------------------------------------------------</span>
+
+<span class="hljs-built_in">module</span>.exports = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">interpolate</span>(<span class="hljs-params">strings, values</span>) </span>{
+  strings = _.zip(strings, values)
+  strings = _.flatten(strings)
+
+  <span class="hljs-keyword">return</span> strings.join(<span class="hljs-string">''</span>)
+}
+</code></pre>
+
+<!-- ================================== -->
+<hr>
+<h2>string-pusher-old.js<h2>
+<div class='indent smaller'><a href='snippets/string-pusher-old.js'>link</a></div>
+<pre><code><span class="hljs-pi">"use strict"</span>
+
+
+<span class="hljs-keyword">const</span> lines = []
+
+lines.push(<span class="hljs-string">"Hello"</span>)
+lines.push(<span class="hljs-string">"line number: "</span> + (<span class="hljs-number">1</span>+<span class="hljs-number">1</span>))
+lines.push(<span class="hljs-string">"Later"</span>)
+
+<span class="hljs-built_in">console</span>.log(lines.join(<span class="hljs-string">'\n'</span>))
+</code></pre>
+
+<!-- ================================== -->
+<hr>
+<h2>string-pusher.js<h2>
+<div class='indent smaller'><a href='snippets/string-pusher.js'>link</a></div>
+<pre><code><span class="hljs-pi">"use strict"</span>
+<span class="hljs-keyword">const</span> LinePoster = <span class="hljs-built_in">require</span>(<span class="hljs-string">"./Line-Poster"</span>)
+
+<span class="hljs-keyword">const</span> p = LinePoster([])
+
+p<span class="hljs-string">`Hello`</span>
+p<span class="hljs-string">`line number: <span class="hljs-subst">${1+1}</span>`</span>
+p<span class="hljs-string">`Later`</span>
+
+<span class="hljs-built_in">console</span>.log(p())
+</code></pre>
+
+
+    <script src="../../lib/jquery/2.1.1/jquery.min.js"></script>
+  </body>
+</html>

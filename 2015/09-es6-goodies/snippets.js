@@ -1,0 +1,6 @@
+Snippets = {
+    "Line-Poster.js": "\"use strict\"\n\nconst _ = require(\"underscore\")\n\nconst interpolate = require(\"./interpolate\")\n\nmodule.exports = function LinePoster(lines) {\n  let result = undefined\n\n  return function p(strings /*, value, value */) {\n    if (!strings) {\n      if (!result) result = lines.join('\\n')\n      return result\n    }\n\n    const values = _.toArray(arguments).slice(1)\n\n    lines.push( interpolate(strings, values))\n  }\n}\n",
+    "interpolate.js": "const _ = require(\"underscore\")\n\n//-----------------------------------------------------------------\n// f([a1,a2,..], [b1,b2,..]) -> \"\" + a1 + b1 + a2 + b2 ...\n//-----------------------------------------------------------------\n\nmodule.exports = function interpolate(strings, values) {\n  strings = _.zip(strings, values)\n  strings = _.flatten(strings)\n\n  return strings.join('')\n}\n",
+    "string-pusher-old.js": "\"use strict\"\n\n\nconst lines = []\n\nlines.push(\"Hello\")\nlines.push(\"line number: \" + (1+1))\nlines.push(\"Later\")\n\nconsole.log(lines.join('\\n'))\n",
+    "string-pusher.js": "\"use strict\"\nconst LinePoster = require(\"./Line-Poster\")\n\nconst p = LinePoster([])\n\np`Hello`\np`line number: ${1+1}`\np`Later`\n\nconsole.log(p())\n"
+}
