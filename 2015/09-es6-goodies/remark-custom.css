@@ -24,6 +24,12 @@ code .hilite {
   color:              #090;
 }
 
+blockquote {
+  border-left:        0.5em solid #777;
+  border-radius:      20px;
+  padding-left:       1em;
+}
+
 body a:visited, body a {
   color:              #99F;
   text-decoration:    none;

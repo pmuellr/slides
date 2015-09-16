@@ -42,19 +42,65 @@
 <span class="hljs-keyword">const</span> interpolate = <span class="hljs-built_in">require</span>(<span class="hljs-string">"./interpolate"</span>)
 
 <span class="hljs-built_in">module</span>.exports = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">LinePoster</span>(<span class="hljs-params">lines</span>) </span>{
-  <span class="hljs-keyword">let</span> result = <span class="hljs-literal">undefined</span>
+  lines = lines || []
 
   <span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">p</span>(<span class="hljs-params">strings <span class="hljs-comment">/*, value, value */</span></span>) </span>{
-    <span class="hljs-keyword">if</span> (!strings) {
-      <span class="hljs-keyword">if</span> (!result) result = lines.join(<span class="hljs-string">'\n'</span>)
-      <span class="hljs-keyword">return</span> result
-    }
+    <span class="hljs-keyword">if</span> (!strings) <span class="hljs-keyword">return</span> lines.join(<span class="hljs-string">'\n'</span>)
 
     <span class="hljs-keyword">const</span> values = _.toArray(<span class="hljs-built_in">arguments</span>).slice(<span class="hljs-number">1</span>)
 
     lines.push( interpolate(strings, values))
   }
 }
+</code></pre>
+
+<!-- ================================== -->
+<hr>
+<h2>arrow-function.js<h2>
+<div class='indent smaller'><a href='snippets/arrow-function.js'>link</a></div>
+<pre><code><span class="hljs-keyword">const</span> foo = ()    =&gt; <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"in foo"</span>)
+            <span class="hljs-comment">// ~like function foo() { console.log(...) }</span>
+<span class="hljs-keyword">const</span> bar = x     =&gt; <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"in bar with"</span>, x)
+            <span class="hljs-comment">// ~like function bar(x) { console.log(...) }</span>
+<span class="hljs-keyword">const</span> gru = (x,y) =&gt; <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"in gru with"</span>, x, y)
+            <span class="hljs-comment">// ~like function gru(x,y) { console.log(...) }</span>
+<span class="hljs-keyword">const</span> pup = () =&gt; {
+  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"in pup with"</span>)
+  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"...nothing"</span>)
+}
+
+foo(); bar(<span class="hljs-number">42</span>); gru(<span class="hljs-number">1</span>,<span class="hljs-number">99</span>); pup()
+
+<span class="hljs-comment">// prints:</span>
+<span class="hljs-comment">// in foo</span>
+<span class="hljs-comment">// in bar with 42</span>
+<span class="hljs-comment">// in gru with 1 99</span>
+<span class="hljs-comment">// in pup with</span>
+<span class="hljs-comment">// ...nothing</span>
+</code></pre>
+
+<!-- ================================== -->
+<hr>
+<h2>arrow-in-class.js<h2>
+<div class='indent smaller'><a href='snippets/arrow-in-class.js'>link</a></div>
+<pre><code><span class="hljs-pi">"use strict"</span>
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">FakeTransaction</span> </span>{
+  expensiveThing(cb) {
+    setTimeout( () =&gt; <span class="hljs-keyword">this</span>.expensiveThingDone(cb), <span class="hljs-number">500</span>)
+    <span class="hljs-comment">//                ^^^^ look ma, no bind() or self/that</span>
+  }
+
+  expensiveThingDone(cb) {
+    cb()
+  }
+}
+
+<span class="hljs-keyword">new</span> FakeTransaction().expensiveThing(
+  () =&gt; <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"expensive thing done!"</span>)
+)
+
+<span class="hljs-comment">// prints: "expensive thing done"</span>
 </code></pre>
 
 <!-- ================================== -->
@@ -68,11 +114,77 @@
 <span class="hljs-comment">//-----------------------------------------------------------------</span>
 
 <span class="hljs-built_in">module</span>.exports = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">interpolate</span>(<span class="hljs-params">strings, values</span>) </span>{
+
+  <span class="hljs-comment">// zip([a1,a2,..], [b1,b2,..])) -&gt; [[a1,b1], [a2,b2], ...]</span>
   strings = _.zip(strings, values)
+
+  <span class="hljs-comment">// flatten([[a1,b1], [a2,b2], ...]) -&gt; [a1, b1, a2, b2, ...]</span>
   strings = _.flatten(strings)
 
   <span class="hljs-keyword">return</span> strings.join(<span class="hljs-string">''</span>)
 }
+</code></pre>
+
+<!-- ================================== -->
+<hr>
+<h2>simple-class-old.js<h2>
+<div class='indent smaller'><a href='snippets/simple-class-old.js'>link</a></div>
+<pre><code><span class="hljs-pi">"use strict"</span>
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Animal</span>(<span class="hljs-params">name</span>) </span>{
+  <span class="hljs-keyword">this</span>.name = name
+}
+
+Animal.prototype.speak = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">speak</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"hi, my name is "</span> + <span class="hljs-keyword">this</span>.name)
+}
+
+<span class="hljs-keyword">new</span> Animal(<span class="hljs-string">"Bob"</span>).speak()
+
+<span class="hljs-comment">// prints: hi, my name is Bob</span>
+</code></pre>
+
+<!-- ================================== -->
+<hr>
+<h2>simple-class.js<h2>
+<div class='indent smaller'><a href='snippets/simple-class.js'>link</a></div>
+<pre><code><span class="hljs-pi">"use strict"</span>
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Animal</span> </span>{
+
+  constructor(name) {
+    <span class="hljs-keyword">this</span>.name = name
+  }
+
+  speak() {
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`hi, my name is <span class="hljs-subst">${this.name}</span>`</span>)
+  }
+}
+
+<span class="hljs-keyword">new</span> Animal(<span class="hljs-string">"Bob"</span>).speak()
+
+<span class="hljs-comment">// prints: hi, my name is Bob</span>
+</code></pre>
+
+<!-- ================================== -->
+<hr>
+<h2>simple-template.js<h2>
+<div class='indent smaller'><a href='snippets/simple-template.js'>link</a></div>
+<pre><code>x = <span class="hljs-string">"World"</span>
+y = <span class="hljs-string">"Hello"</span>
+
+<span class="hljs-built_in">console</span>.log(<span class="hljs-string">`<span class="hljs-subst">${y}</span>, <span class="hljs-subst">${x}</span>`</span>)
+<span class="hljs-comment">// prints "Hello, World"</span>
+
+<span class="hljs-built_in">console</span>.log(
+<span class="hljs-string">`multi
+line
+strings`</span>
+)
+<span class="hljs-comment">// prints:</span>
+<span class="hljs-comment">// multi</span>
+<span class="hljs-comment">// line</span>
+<span class="hljs-comment">// strings</span>
 </code></pre>
 
 <!-- ================================== -->
@@ -82,6 +194,8 @@
 <pre><code><span class="hljs-pi">"use strict"</span>
 
 
+<span class="hljs-comment">// old school push-lines-to-array, join-when-done</span>
+
 <span class="hljs-keyword">const</span> lines = []
 
 lines.push(<span class="hljs-string">"Hello"</span>)
@@ -89,6 +203,11 @@ lines.push(<span class="hljs-string">"line number: "</span> + (<span class="hljs
 lines.push(<span class="hljs-string">"Later"</span>)
 
 <span class="hljs-built_in">console</span>.log(lines.join(<span class="hljs-string">'\n'</span>))
+
+<span class="hljs-comment">// prints:</span>
+<span class="hljs-comment">//   Hello</span>
+<span class="hljs-comment">//   line number: 2</span>
+<span class="hljs-comment">//   Later</span>
 </code></pre>
 
 <!-- ================================== -->
@@ -98,13 +217,66 @@ lines.push(<span class="hljs-string">"Later"</span>)
 <pre><code><span class="hljs-pi">"use strict"</span>
 <span class="hljs-keyword">const</span> LinePoster = <span class="hljs-built_in">require</span>(<span class="hljs-string">"./Line-Poster"</span>)
 
-<span class="hljs-keyword">const</span> p = LinePoster([])
+<span class="hljs-comment">// new school push-lines-to-array, join-when-done</span>
+
+<span class="hljs-keyword">const</span> p = LinePoster()
 
 p<span class="hljs-string">`Hello`</span>
 p<span class="hljs-string">`line number: <span class="hljs-subst">${1+1}</span>`</span>
 p<span class="hljs-string">`Later`</span>
 
 <span class="hljs-built_in">console</span>.log(p())
+
+<span class="hljs-comment">// prints:</span>
+<span class="hljs-comment">//   Hello</span>
+<span class="hljs-comment">//   line number: 2</span>
+<span class="hljs-comment">//   Later</span>
+</code></pre>
+
+<!-- ================================== -->
+<hr>
+<h2>subclass.js<h2>
+<div class='indent smaller'><a href='snippets/subclass.js'>link</a></div>
+<pre><code><span class="hljs-pi">"use strict"</span>
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Animal</span> </span>{
+  species() {                 <span class="hljs-comment">// &lt;----------------</span>
+    <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">"subclass responsibiity"</span>) <span class="hljs-comment">// h/t Smalltalk</span>
+  }
+}
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Frog</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Animal</span> </span>{   <span class="hljs-comment">// &lt;----------------</span>
+  species() {                 <span class="hljs-comment">// &lt;----------------</span>
+    <span class="hljs-keyword">return</span> <span class="hljs-string">"frog"</span>
+  }
+}
+
+<span class="hljs-built_in">console</span>.log(<span class="hljs-keyword">new</span> Frog().species())   <span class="hljs-comment">// prints: frog</span>
+<span class="hljs-built_in">console</span>.log(<span class="hljs-keyword">new</span> Animal().species()) <span class="hljs-comment">// throws error</span>
+</code></pre>
+
+<!-- ================================== -->
+<hr>
+<h2>super-calls.js<h2>
+<div class='indent smaller'><a href='snippets/super-calls.js'>link</a></div>
+<pre><code><span class="hljs-pi">"use strict"</span>
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Animal</span> </span>{
+  constructor(name) {
+    <span class="hljs-keyword">this</span>.name = name
+  }
+  speak() {
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"hi, I'm "</span> + <span class="hljs-keyword">this</span>.name)
+  }
+}
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Frog</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Animal</span> </span>{
+  constructor(name) {
+    <span class="hljs-keyword">super</span>(name)     <span class="hljs-comment">// &lt;--------------</span>
+  }
+}
+
+<span class="hljs-keyword">new</span> Frog(<span class="hljs-string">"Bob"</span>).speak()   <span class="hljs-comment">// prints: hi, I'm Bob</span>
 </code></pre>
 
 
