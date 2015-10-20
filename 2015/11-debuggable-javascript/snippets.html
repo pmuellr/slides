@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>node.js on bluemix snippets</title>
+    <link rel="icon"       href="../../images/js.png">
+    <link rel="stylesheet" href="highlightjs-styles.css">
+    <style>
+      body {
+        background-color:       #DDD;
+      }
+
+      .indent {
+        margin-left:            2em;
+      }
+
+      .smaller {
+        font-size:              80%;
+      }
+
+      pre {
+        margin-left:            2em;
+        margin-right:           2em;
+        padding:                1em;
+        background-color:       #EEE;
+        border:                 thin solid black;
+        border-radius:          1em;
+      }
+    </style>
+  </head>
+  <body>
+
+<!-- ================================== -->
+<hr>
+<h2>sample.js<h2>
+<div class='indent smaller'><a href='snippets/sample.js'>link</a></div>
+<pre><code><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">factorial</span>(<span class="hljs-params">n</span>) </span>{
+  <span class="hljs-keyword">if</span> (n &lt;= <span class="hljs-number">0</span>) <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>
+  <span class="hljs-keyword">if</span> (n == <span class="hljs-number">1</span>) <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>
+  <span class="hljs-keyword">return</span> n * factorial(n-<span class="hljs-number">1</span>)
+}
+
+<span class="hljs-built_in">console</span>.log(factorial(<span class="hljs-number">20</span>))
+</code></pre>
+
+
+    <script src="../../lib/jquery/2.1.1/jquery.min.js"></script>
+  </body>
+</html>

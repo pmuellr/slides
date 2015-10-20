@@ -1,0 +1,10 @@
+{
+	"private":			true,
+  "name":         "snippets",
+  "version":      "0.0.0",
+  "description":  "snippets",
+  "license":    	"Apache-2.0",
+  "devDependencies": {
+    "highlight.js":       "8.8.x"
+  }
+}
