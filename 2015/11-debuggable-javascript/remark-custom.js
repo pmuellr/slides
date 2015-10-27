@@ -5,9 +5,25 @@
 
 var SlidesRatio   = localStorage.getItem("remark-ratio")   || "4:3"
 var SlidesClicker = localStorage.getItem("remark-clicker") || "off"
-var SlidesCPanel  = localStorage.getItem("remark-cpanel") || "off"
+var SlidesCPanel  = localStorage.getItem("remark-cpanel")  || "off"
 
 var SlideShow
+
+//----------------------------------------------------------------------
+function init() {
+
+  replaceSnippets()
+
+  SlideShow = remark.create({
+    ratio: SlidesRatio,
+    navigation: { scroll: false, touch:  true }
+  })
+
+  initClickerMode()
+  initToolBar()
+
+  setTimeout(installGA, 1000)
+}
 
 //----------------------------------------------------------------------
 function replaceSnippets() {
@@ -166,7 +182,7 @@ function initToolBar() {
 //----------------------------------------------------------------------
 function installGA() {
   if (location.protocol == "file:") return
-    
+
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
   m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
@@ -174,22 +190,6 @@ function installGA() {
 
   ga('create', 'UA-49999565-2', 'pmuellr.github.io');
   ga('send', 'pageview');
-}
-
-//----------------------------------------------------------------------
-function init() {
-
-  replaceSnippets()
-
-  SlideShow = remark.create({
-    ratio: SlidesRatio,
-    navigation: { scroll: false, touch:  true }
-  })
-
-  initClickerMode()
-  initToolBar()
-
-  setTimeout(installGA, 1000)
 }
 
 //----------------------------------------------------------------------

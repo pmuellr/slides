@@ -170,6 +170,12 @@ p .comment, .comment {
   right:              60px;
 }
 
+.page-context {
+  position:           absolute;
+  top:                12px;
+  left:                1em;
+}
+
 .bordered {
   border:            solid thin black;
 }

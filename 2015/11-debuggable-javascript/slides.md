@@ -5,7 +5,7 @@ Patrick Mueller
 [`muellerware.org`](http://muellerware.org)<br>
 senior node engineer at [NodeSource](https://nodesource.com)<br>
 
-<div class="smaller"><div class="smaller">
+<div class="smaller"><div class="smaller"><div class="smaller">
 <a href="http://pmuellr.github.io/slides/2015/11-debuggable-javascript">
          http://pmuellr.github.io/slides/2015/11-debuggable-javascript
 </a>
@@ -18,7 +18,7 @@ senior node engineer at [NodeSource](https://nodesource.com)<br>
          http://pmuellr.github.io/slides/
 </a>
 (all of Patrick's slides)
-</div></div>
+</div></div></div>
 
 <style>
 .nodevember-logo {
@@ -27,59 +27,33 @@ senior node engineer at [NodeSource](https://nodesource.com)<br>
 }
 </style>
 
-<div style="float:right">
-  <img class="nodevember-logo" src="images/nodevember-logo.png">
-</div>
-
-<div class="toolBar no-print">
-  <div class="navHelp" title="use the cursor keys to navigate, 'n' to toggle nav buttons, 's' to toggle control panel">
-    <img class="button-1st"  height=16 src="../../glyphicons_free/glyphicons/png/glyphicons_171_fast_backward.png">
-    <img class="button-prev" height=16 src="../../glyphicons_free/glyphicons/png/glyphicons_172_rewind.png">
-    <img class="button-next" height=16 src="../../glyphicons_free/glyphicons/png/glyphicons_176_forward.png">
-  </div>
-  <div>&nbsp;&nbsp;</div>
-  <div class="controlPanel" title="'s' to toggle control panel">
-    <img class="button-clicker" height=16 src="../../glyphicons_free/glyphicons/png/glyphicons_046_router.png"   title="use clicker">
-    <img class="button-hd"      height=16 src="../../glyphicons_free/glyphicons/png/glyphicons_391_video_hd.png" title="toggle HD">
-  </div>
-</div>
+//!embed: toolbar.md
 
 ---
 
 layout: true
 
-<div class="page-icon">
-<span class="smaller"><span class="smaller"><span class="smaller">
-<tt>making your JavaScript debuggable</tt>
-</span></span></span>
-<!--
-  <img height=24 src="../../glyphicons_free/glyphicons/png/glyphicons_027_search.png">
-  &nbsp;
-  <img height=24 src="../../images/js.png">
-  &nbsp;
--->
-</div>
-
-{{content}}
-
-<div class="toolBar no-print">
-  <div class="navHelp" title="use the cursor keys to navigate, 'n' to toggle nav buttons, 's' to toggle control panel">
-    <img class="button-1st"  height=16 src="../../glyphicons_free/glyphicons/png/glyphicons_171_fast_backward.png">
-    <img class="button-prev" height=16 src="../../glyphicons_free/glyphicons/png/glyphicons_172_rewind.png">
-    <img class="button-next" height=16 src="../../glyphicons_free/glyphicons/png/glyphicons_176_forward.png">
-  </div>
-  <div>&nbsp;&nbsp;</div>
-  <div class="controlPanel" title="'s' to toggle control panel">
-    <img class="button-clicker" height=16 src="../../glyphicons_free/glyphicons/png/glyphicons_027_search.png"   title="use clicker">
-    <img class="button-hd"      height=16 src="../../glyphicons_free/glyphicons/png/glyphicons_391_video_hd.png" title="toggle HD">
-  </div>
-</div>
+//!embed: layout.md
+//!embed: toolbar.md
 
 ================================================================================
 
 class: center, middle
 
 # code reading
+
+---
+
+layout: true
+
+<div class="page-context">
+<span class="smaller"><span class="smaller"><span class="smaller">
+<tt>code reading</tt>
+</span></span></span>
+</div>
+
+//!embed: layout.md
+//!embed: toolbar.md
 
 ================================================================================
 
@@ -150,7 +124,17 @@ Die! Die! Die!
 
 --------------------------------------------------------------------------------
 
-<img src="images/HFaTfMRP.jpg" style="float:right">
+## linting - [npm eslint](https://npmjs.org/package/eslint)
+
+
+--------------------------------------------------------------------------------
+
+## code style conformance - [npm jscs](https://npmjs.org/package/jscs)
+
+
+--------------------------------------------------------------------------------
+
+<img src="images/HFaTfMRP.jpg" style="float:right; margin-left:1em;">
 
 ## Human Factors and Typography for More Readable Programs
 
@@ -163,12 +147,31 @@ Die! Die! Die!
 
 <img src="images/HFaTfMRP-example.gif">
 
+---
+
+layout: true
+
+//!embed: layout.md
+//!embed: toolbar.md
 
 ================================================================================
 
 class: center, middle
 
 # logging
+
+---
+
+layout: true
+
+<div class="page-context">
+<span class="smaller"><span class="smaller"><span class="smaller">
+<tt>logging</tt>
+</span></span></span>
+</div>
+
+//!embed: layout.md
+//!embed: toolbar.md
 
 ================================================================================
 
@@ -243,11 +246,31 @@ class: left, middle
 //!snippet: bole.js
 ```
 
+---
+
+layout: true
+
+//!embed: layout.md
+//!embed: toolbar.md
+
 ================================================================================
 
 class: center, middle
 
 # error handling
+
+---
+
+layout: true
+
+<div class="page-context">
+<span class="smaller"><span class="smaller"><span class="smaller">
+<tt>error handling</tt>
+</span></span></span>
+</div>
+
+//!embed: layout.md
+//!embed: toolbar.md
 
 --------------------------------------------------------------------------------
 
@@ -275,13 +298,22 @@ class: center, middle
 
 --------------------------------------------------------------------------------
 
-## `Error.prepareStackTrace()`
+### `Error.prepareStackTrace = ...`
+
+```js
+function v8PrepareStackTrace(error, callSites) {
+  for (let callSite of callSites) {
+    const funcName = callSite.getFunctionName()
+    const file     = callSite.getFileName()
+    const line     = callSite.getLineNumber()
+    ...
+  }
+  return outputString
+}
+```
 
 reference: [javascript_stack_trace_api.md](https://chromium.googlesource.com/v8/v8/+/master/docs/javascript_stack_trace_api.md)
 
-at:
-
-* <https://chromium.googlesource.com/v8/v8/+/master/docs>
 
 
 --------------------------------------------------------------------------------
@@ -300,11 +332,31 @@ at:
 //!snippet: q-longStack-after.js
 ```
 
+---
+
+layout: true
+
+//!embed: layout.md
+//!embed: toolbar.md
+
 ================================================================================
 
 class: center, middle
 
 # early warning systems
+
+---
+
+layout: true
+
+<div class="page-context">
+<span class="smaller"><span class="smaller"><span class="smaller">
+<tt>early warning systems</tt>
+</span></span></span>
+</div>
+
+//!embed: layout.md
+//!embed: toolbar.md
 
 --------------------------------------------------------------------------------
 
@@ -316,7 +368,7 @@ class: center, middle
 
 --------------------------------------------------------------------------------
 
-## testing
+## testing - [npm mocha](http://npmjs.org/package/mocha)
 
 ```js
 //!snippet: mocha.js
@@ -324,17 +376,26 @@ class: center, middle
 
 --------------------------------------------------------------------------------
 
-## testing
+## testing - [npm tape](http://npmjs.org/package/tape)
 
-* mocha - <http://visionmedia.github.io/mocha/>
+```js
+//!snippet: tape.js
+```
 
-* jasmine - <http://jasmine.github.io>
+
+--------------------------------------------------------------------------------
+
+## code coverage - [coveralls](https://coveralls.io)
+
+--------------------------------------------------------------------------------
+
+## dependency updating - [David](https://david-dm.org)
 
 --------------------------------------------------------------------------------
 
 ## linting
 
-<pre><code>&gt; <span style="color:#00A;">jshint snippets/*.js</span>
+<pre><code>$ <span style="color:#00A;">jshint snippets/*.js</span>
 snippets/alert.js: line 1, col 17, Missing semicolon.
 
 snippets/console_log.js: line 1, col 19, Missing semicolon.
@@ -360,11 +421,31 @@ snippets/console_time.js: line 8, col 21, Missing semicolon.
 * jslint - <http://jslint.com/>
 
 
+---
+
+layout: true
+
+//!embed: layout.md
+//!embed: toolbar.md
+
 ================================================================================
 
 class: center, middle
 
-# etc
+# actual debugging
+
+---
+
+layout: true
+
+<div class="page-context">
+<span class="smaller"><span class="smaller"><span class="smaller">
+<tt>actual debugging</tt>
+</span></span></span>
+</div>
+
+//!embed: layout.md
+//!embed: toolbar.md
 
 --------------------------------------------------------------------------------
 
@@ -466,6 +547,19 @@ class: center, middle
 
 # cpu profiles
 
+---
+
+layout: true
+
+<div class="page-icon">
+<span class="smaller"><span class="smaller"><span class="smaller">
+<tt>making your JavaScript debuggable</tt>
+</span></span></span>
+</div>
+
+{{content}}
+
+//!embed: toolbar.md
 
 ================================================================================
 

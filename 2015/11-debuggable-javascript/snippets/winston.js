@@ -1,8 +1,10 @@
-var winston = require("winston")
+const winston = require("winston")
 
-winston.remove(winston.transports.Console)
-winston.add(winston.transports.Console, { level:"warn" })
-winston.add(winston.transports.File, { filename: "x.log" })
+const transports = winston.transports
+
+winston.remove(transports.Console)
+winston.add(transports.Console, { level: "warn" })
+winston.add(transports.File, { filename: "x.log" })
 
 winston.info("info message")
 winston.warn("warning message")

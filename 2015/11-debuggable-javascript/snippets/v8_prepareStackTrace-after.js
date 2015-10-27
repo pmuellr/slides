@@ -1,7 +1,10 @@
 //!hide
 /*
 //!show
-Error.prepareStackTrace = function(err, stackTrace) { ... }
+Error.prepareStackTrace = function(err, stackTrace) {
+  ...
+}
+
 //!hide
 */
 Error.prepareStackTrace = v8PrepareStackTrace
@@ -12,9 +15,9 @@ function b() { c() }
 function c() { throw new Error("foo blatz") }
 
 // Error: foo blatz
-//    v8_prepareStackTrace-after.js  13 - c()
-//    v8_prepareStackTrace-after.js  12 - b()
-//    v8_prepareStackTrace-after.js  11 - a()
+//    script.js  13 - c()
+//    script.js  12 - b()
+//    script.js  11 - a()
 //!hide
 
 function alignLeft(string, length) {

@@ -5,12 +5,11 @@ function b() { c() }
 function c() { throw new Error("foo blatz") }
 
 // Error: foo blatz
-//     at c (/path/to/snippets/v8_prepareStackTrace-before.js:5:22)
-//     at b (/path/to/snippets/v8_prepareStackTrace-before.js:4:16)
-//     at a (/path/to/snippets/v8_prepareStackTrace-before.js:3:16)
-//     at Object.<anonymous> (/path/to/snippets/v8_prepareStackTrace-before.js:2:7)
+//     at c (.../script.js:5:22)
+//     at b (.../script.js:4:16)
+//     at a (.../script.js:3:16)
+//     at Object.<anonymous> (.../script.js:2:7)
 //     at Module._compile (module.js:456:26)
-//     at Object.Module._extensions..js (module.js:474:10)
 //     ...
 //!hide
 

@@ -7,7 +7,7 @@ function b() { throw new Error("foo") }
 a()
 
 // Error: foo
-//     at b (/path/to/snippets/q-longStack-after.js:5:22)
+//     at b (.../script.js.js:5:22)
 // From previous event:
-//     at a (/path/to/snippets/q-longStack-after.js:4:29)
-//     at Object.<anonymous> (/path/to/snippets/q-longStack-after.js:7:1)
+//     at a (.../script.js.js:4:29)
+//     at Object.<anonymous> (.../script.js.js:7:1)

@@ -1,7 +1,8 @@
-process.on("exit", code => console.log("exiting with code: " + code))
+process.on("exit", code =>
+	console.log("exiting with code: " + code))
 process.on("uncaughtException", err =>
-	console.log("uncaught exception: " + err.stack
-)
+	console.log("uncaught exception: " + err.stack))
+
 function a() { throw new Error("die die die") }
 
 a()
@@ -9,7 +10,7 @@ a()
 // prints:
 //
 // uncaught exception: Error: die die die
-//    at a (/path/to/process-events.js:9:22)
-//    at Object.<anonymous> (/path/to/process-events.js:11:1)
+//    at a (.../script.js:9:22)
+//    at Object.<anonymous> (.../script.js:11:1)
 //    ... more stack trace lines
 // exiting with code: 0

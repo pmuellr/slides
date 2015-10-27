@@ -43,8 +43,9 @@ bole.output({ level: <span class="hljs-string">"info"</span>, stream: process.st
 log.info(<span class="hljs-string">"hi"</span>)
 
 <span class="hljs-comment">// prints</span>
-<span class="hljs-comment">// {"time":"2015-10-27T03:56:45.762Z","hostname":"my-hostname",</span>
-<span class="hljs-comment">//  "pid":53014,"level":"info","name":"myapp","message":"hi"}</span>
+<span class="hljs-comment">// {"time":"2015-10-27T03:56:45.762Z",</span>
+<span class="hljs-comment">//  "hostname":"my-hostname", "pid":53014,</span>
+<span class="hljs-comment">//  "level":"info", "name":"myapp", "message":"hi"}</span>
 
 <span class="hljs-comment">// du -h bole - 144K</span>
 </code></pre>
@@ -61,8 +62,9 @@ log.level(<span class="hljs-string">"info"</span>)
 log.info(<span class="hljs-string">"hi"</span>)
 
 <span class="hljs-comment">// prints</span>
-<span class="hljs-comment">// {"name":"myapp","hostname":"my-hostname","pid":49675,</span>
-<span class="hljs-comment">//  "level":30,"msg":"hi","time":"2015-10-27T03:49:14.759Z","v":0}</span>
+<span class="hljs-comment">// {"name":"myapp", "hostname":"my-hostname",</span>
+<span class="hljs-comment">//  "pid":49675, "level":30, "msg":"hi",</span>
+<span class="hljs-comment">//  "time":"2015-10-27T03:49:14.759Z", "v":0}</span>
 
 <span class="hljs-comment">// du -h bunyan - 2.5M</span>
 </code></pre>
@@ -227,7 +229,7 @@ a()
 <span class="hljs-comment">//!show</span>
 describe(<span class="hljs-string">"Array"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
   describe(<span class="hljs-string">"#indexOf()"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
-    it(<span class="hljs-string">"should return -1 when the value is not present"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
+    it(<span class="hljs-string">"should return -1 on not found"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
       assert.equal(-<span class="hljs-number">1</span>, [<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>].indexOf(<span class="hljs-number">1</span>));
     })
   })
@@ -236,9 +238,9 @@ describe(<span class="hljs-string">"Array"</span>, <span class="hljs-function"><
 <span class="hljs-comment">//  0 passing (3ms)</span>
 <span class="hljs-comment">//  1 failing</span>
 <span class="hljs-comment">//</span>
-<span class="hljs-comment">//  1) Array #indexOf() should return -1 when the value is not present:</span>
+<span class="hljs-comment">//  1) Array #indexOf() should return -1 on not found:</span>
 <span class="hljs-comment">//     AssertionError: -1 == 0</span>
-<span class="hljs-comment">//      at Context.&lt;anonymous&gt; (path/to/testing.js:7:14)</span>
+<span class="hljs-comment">//      at Context.&lt;anonymous&gt; (.../script.js:7:14)</span>
 <span class="hljs-comment">//      ...</span>
 </code></pre>
 
@@ -246,10 +248,11 @@ describe(<span class="hljs-string">"Array"</span>, <span class="hljs-function"><
 <hr>
 <h2>process-events.js<h2>
 <div class='indent smaller'><a href='snippets/process-events.js'>link</a></div>
-<pre><code>process.on(<span class="hljs-string">"exit"</span>, code =&gt; console.log(<span class="hljs-string">"exiting with code: "</span> + code))
+<pre><code>process.on(<span class="hljs-string">"exit"</span>, code =&gt;
+	console.log(<span class="hljs-string">"exiting with code: "</span> + code))
 process.on(<span class="hljs-string">"uncaughtException"</span>, err =&gt;
-	console.log(<span class="hljs-string">"uncaught exception: "</span> + err.stack
-)
+	console.log(<span class="hljs-string">"uncaught exception: "</span> + err.stack))
+
 <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">a</span><span class="hljs-params">()</span> {</span> <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">"die die die"</span>) }
 
 a()
@@ -257,8 +260,8 @@ a()
 <span class="hljs-comment">// prints:</span>
 <span class="hljs-comment">//</span>
 <span class="hljs-comment">// uncaught exception: Error: die die die</span>
-<span class="hljs-comment">//    at a (/path/to/process-events.js:9:22)</span>
-<span class="hljs-comment">//    at Object.&lt;anonymous&gt; (/path/to/process-events.js:11:1)</span>
+<span class="hljs-comment">//    at a (.../script.js:9:22)</span>
+<span class="hljs-comment">//    at Object.&lt;anonymous&gt; (.../script.js:11:1)</span>
 <span class="hljs-comment">//    ... more stack trace lines</span>
 <span class="hljs-comment">// exiting with code: 0</span>
 </code></pre>
@@ -341,10 +344,11 @@ Q.longStackSupport = <span class="hljs-literal">true</span>
 a()
 
 <span class="hljs-comment">// Error: foo</span>
-<span class="hljs-comment">//     at b (/path/to/snippets/q-longStack-after.js:5:22)</span>
+<span class="hljs-comment">//     at b (.../script.js.js:5:22)</span>
 <span class="hljs-comment">// From previous event:</span>
-<span class="hljs-comment">//     at a (/path/to/snippets/q-longStack-after.js:4:29)</span>
-<span class="hljs-comment">//     at Object.&lt;anonymous&gt; (/path/to/snippets/q-longStack-after.js:7:1)</span></code></pre>
+<span class="hljs-comment">//     at a (.../script.js.js:4:29)</span>
+<span class="hljs-comment">//     at Object.&lt;anonymous&gt; (.../script.js.js:7:1)</span>
+</code></pre>
 
 <!-- ================================== -->
 <hr>
@@ -359,11 +363,12 @@ a()
 a()
 
 <span class="hljs-comment">// Error: foo</span>
-<span class="hljs-comment">//     at b (/path/to/snippets/q-longStack-before.js:5:22)</span>
-<span class="hljs-comment">//     at _fulfilled (/path/to/snippets/node_modules/q/q.js:787:54)</span>
-<span class="hljs-comment">//     at self.promiseDispatch.done (/path/to/snippets/node_modules/q/q.js:816:30)</span>
-<span class="hljs-comment">//     at Promise.promise.promiseDispatch (/path/to/snippets/node_modules/q/q.js:749:13)</span>
-<span class="hljs-comment">//     at /path/to</span></code></pre>
+<span class="hljs-comment">//     at b (.../script.js:5:22)</span>
+<span class="hljs-comment">//     at _fulfilled (.../node_modules/q/q.js:787:54)</span>
+<span class="hljs-comment">//     at self.promiseDispatch.done ...</span>
+<span class="hljs-comment">//     at Promise.promise.promiseDispatch ...</span>
+<span class="hljs-comment">//     ...</span>
+</code></pre>
 
 <!-- ================================== -->
 <hr>
@@ -405,7 +410,10 @@ console.log(factorial(<span class="hljs-number">20</span>))
 <pre><code><span class="hljs-comment">//!hide</span>
 <span class="hljs-comment">/*
 //!show
-Error.prepareStackTrace = function(err, stackTrace) { ... }
+Error.prepareStackTrace = function(err, stackTrace) {
+  ...
+}
+
 //!hide
 */</span>
 <span class="hljs-built_in">Error</span>.prepareStackTrace = v8PrepareStackTrace
@@ -416,9 +424,9 @@ Error.prepareStackTrace = function(err, stackTrace) { ... }
 <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">c</span><span class="hljs-params">()</span> {</span> <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">"foo blatz"</span>) }
 
 <span class="hljs-comment">// Error: foo blatz</span>
-<span class="hljs-comment">//    v8_prepareStackTrace-after.js  13 - c()</span>
-<span class="hljs-comment">//    v8_prepareStackTrace-after.js  12 - b()</span>
-<span class="hljs-comment">//    v8_prepareStackTrace-after.js  11 - a()</span>
+<span class="hljs-comment">//    script.js  13 - c()</span>
+<span class="hljs-comment">//    script.js  12 - b()</span>
+<span class="hljs-comment">//    script.js  11 - a()</span>
 <span class="hljs-comment">//!hide</span>
 
 <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">alignLeft</span><span class="hljs-params">(string, length)</span> {</span>
@@ -485,12 +493,11 @@ Error.prepareStackTrace = function(err, stackTrace) { ... }
 <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">c</span><span class="hljs-params">()</span> {</span> <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">"foo blatz"</span>) }
 
 <span class="hljs-comment">// Error: foo blatz</span>
-<span class="hljs-comment">//     at c (/path/to/snippets/v8_prepareStackTrace-before.js:5:22)</span>
-<span class="hljs-comment">//     at b (/path/to/snippets/v8_prepareStackTrace-before.js:4:16)</span>
-<span class="hljs-comment">//     at a (/path/to/snippets/v8_prepareStackTrace-before.js:3:16)</span>
-<span class="hljs-comment">//     at Object.&lt;anonymous&gt; (/path/to/snippets/v8_prepareStackTrace-before.js:2:7)</span>
+<span class="hljs-comment">//     at c (.../script.js:5:22)</span>
+<span class="hljs-comment">//     at b (.../script.js:4:16)</span>
+<span class="hljs-comment">//     at a (.../script.js:3:16)</span>
+<span class="hljs-comment">//     at Object.&lt;anonymous&gt; (.../script.js:2:7)</span>
 <span class="hljs-comment">//     at Module._compile (module.js:456:26)</span>
-<span class="hljs-comment">//     at Object.Module._extensions..js (module.js:474:10)</span>
 <span class="hljs-comment">//     ...</span>
 <span class="hljs-comment">//!hide</span>
 
@@ -551,11 +558,13 @@ Error.prepareStackTrace = function(err, stackTrace) { ... }
 <hr>
 <h2>winston.js<h2>
 <div class='indent smaller'><a href='snippets/winston.js'>link</a></div>
-<pre><code><span class="hljs-keyword">var</span> winston = <span class="hljs-built_in">require</span>(<span class="hljs-string">"winston"</span>)
+<pre><code><span class="hljs-keyword">const</span> winston = <span class="hljs-built_in">require</span>(<span class="hljs-string">"winston"</span>)
 
-winston.remove(winston.transports.Console)
-winston.add(winston.transports.Console, { level:<span class="hljs-string">"warn"</span> })
-winston.add(winston.transports.File, { filename: <span class="hljs-string">"x.log"</span> })
+<span class="hljs-keyword">const</span> transports = winston.transports
+
+winston.remove(transports.Console)
+winston.add(transports.Console, { level: <span class="hljs-string">"warn"</span> })
+winston.add(transports.File, { filename: <span class="hljs-string">"x.log"</span> })
 
 winston.info(<span class="hljs-string">"info message"</span>)
 winston.warn(<span class="hljs-string">"warning message"</span>)
@@ -563,7 +572,8 @@ winston.error(<span class="hljs-string">"error message"</span>)
 
 <span class="hljs-comment">// prints:</span>
 <span class="hljs-comment">// warn: warning message</span>
-<span class="hljs-comment">// error: error message</span></code></pre>
+<span class="hljs-comment">// error: error message</span>
+</code></pre>
 
 
     <script src="../../lib/jquery/2.1.1/jquery.min.js"></script>
