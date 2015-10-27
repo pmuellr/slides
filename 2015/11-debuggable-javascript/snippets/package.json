@@ -5,6 +5,16 @@
   "description":  "snippets",
   "license":    	"Apache-2.0",
   "devDependencies": {
-    "highlight.js":       "8.8.x"
+		"async":              "1.5.x",
+		"bunyan":             "1.5.x",
+		"bole":               "2.0.x",
+    "debug":              "0.8.x",
+    "highlight.js":       "8.0.x",
+    "hooker":             "0.2.x",
+  	"long-stack-traces": 	"0.1.x",
+    "mocha":              "1.18.x",
+  	"q":									"1.0.1",
+		"tape":               "4.2.x",
+  	"winston":						"0.7.3"
   }
 }

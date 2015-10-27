@@ -130,6 +130,7 @@ Original style from softwaremaniacs.org (c) Ivan Sagalaev <Maniac@SoftwareManiac
 .hljs-request,
 .hljs-status {
   font-weight: bold;
+  color: #88E;
 }
 
 .asciidoc .hljs-emphasis,
