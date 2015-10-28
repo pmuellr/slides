@@ -29,32 +29,14 @@ senior node engineer at [NodeSource](https://nodesource.com)<br>
 
 //!embed: toolbar.md
 
----
-
-layout: true
-
 //!embed: layout.md
-//!embed: toolbar.md
-
 ================================================================================
 
 class: center, middle
 
 # code reading
 
----
-
-layout: true
-
-<div class="page-context">
-<span class="smaller"><span class="smaller"><span class="smaller">
-<tt>code reading</tt>
-</span></span></span>
-</div>
-
-//!embed: layout.md
-//!embed: toolbar.md
-
+//!embed: layout.md code reading
 ================================================================================
 
 class: left, middle
@@ -147,32 +129,14 @@ Die! Die! Die!
 
 <img src="images/HFaTfMRP-example.gif">
 
----
-
-layout: true
-
 //!embed: layout.md
-//!embed: toolbar.md
-
 ================================================================================
 
 class: center, middle
 
 # logging
 
----
-
-layout: true
-
-<div class="page-context">
-<span class="smaller"><span class="smaller"><span class="smaller">
-<tt>logging</tt>
-</span></span></span>
-</div>
-
-//!embed: layout.md
-//!embed: toolbar.md
-
+//!embed: layout.md logging
 ================================================================================
 
 class: left, middle
@@ -246,32 +210,14 @@ class: left, middle
 //!snippet: bole.js
 ```
 
----
-
-layout: true
-
 //!embed: layout.md
-//!embed: toolbar.md
-
 ================================================================================
 
 class: center, middle
 
 # error handling
 
----
-
-layout: true
-
-<div class="page-context">
-<span class="smaller"><span class="smaller"><span class="smaller">
-<tt>error handling</tt>
-</span></span></span>
-</div>
-
-//!embed: layout.md
-//!embed: toolbar.md
-
+//!embed: layout.md error handling
 --------------------------------------------------------------------------------
 
 ## builtin `process` events
@@ -314,8 +260,6 @@ function v8PrepareStackTrace(error, callSites) {
 
 reference: [javascript_stack_trace_api.md](https://chromium.googlesource.com/v8/v8/+/master/docs/javascript_stack_trace_api.md)
 
-
-
 --------------------------------------------------------------------------------
 
 ### npm `Q.longStackSupport` - before
@@ -332,32 +276,14 @@ reference: [javascript_stack_trace_api.md](https://chromium.googlesource.com/v8/
 //!snippet: q-longStack-after.js
 ```
 
----
-
-layout: true
-
 //!embed: layout.md
-//!embed: toolbar.md
-
 ================================================================================
 
 class: center, middle
 
 # early warning systems
 
----
-
-layout: true
-
-<div class="page-context">
-<span class="smaller"><span class="smaller"><span class="smaller">
-<tt>early warning systems</tt>
-</span></span></span>
-</div>
-
-//!embed: layout.md
-//!embed: toolbar.md
-
+//!embed: layout.md early warning systems
 --------------------------------------------------------------------------------
 
 class: center, middle
@@ -421,32 +347,14 @@ snippets/console_time.js: line 8, col 21, Missing semicolon.
 * jslint - <http://jslint.com/>
 
 
----
-
-layout: true
-
 //!embed: layout.md
-//!embed: toolbar.md
-
 ================================================================================
 
 class: center, middle
 
 # actual debugging
 
----
-
-layout: true
-
-<div class="page-context">
-<span class="smaller"><span class="smaller"><span class="smaller">
-<tt>actual debugging</tt>
-</span></span></span>
-</div>
-
-//!embed: layout.md
-//!embed: toolbar.md
-
+//!embed: layout.md actual debugging
 --------------------------------------------------------------------------------
 
 ## builtin module `repl`
@@ -535,32 +443,15 @@ also provides
 * overriding results
 * https://github.com/cowboy/javascript-hooker
 
-================================================================================
+--------------------------------------------------------------------------------
 
-class: center, middle
+## heap snapshots
 
-# heap snapshots
+--------------------------------------------------------------------------------
 
-================================================================================
+## cpu profiles
 
-class: center, middle
-
-# cpu profiles
-
----
-
-layout: true
-
-<div class="page-icon">
-<span class="smaller"><span class="smaller"><span class="smaller">
-<tt>making your JavaScript debuggable</tt>
-</span></span></span>
-</div>
-
-{{content}}
-
-//!embed: toolbar.md
-
+//!embed: layout.md
 ================================================================================
 
 class: center, middle

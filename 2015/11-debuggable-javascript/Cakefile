@@ -51,8 +51,8 @@ buildIndex = ->
   log "building index.html from shell.html and slides.md"
 
   slides = cat "slides.md"
-  slides = normalizeSlides slides
   slides = processEmbeds slides
+  slides = normalizeSlides slides
 
   shell = cat "shell.html"
   index = shell.replace "%slides.md%", slides
@@ -63,12 +63,18 @@ buildIndex = ->
 
 #-------------------------------------------------------------------------------
 processEmbeds = (slides) ->
+  pattern = /^\/\/!embed:\s+(.*?)(\s+(.*))?$/
+
   lines = slides.split /\n/
 
   lines = lines.map (line) ->
-    return line unless match = line.match(/^\/\/!embed:\s+(.*)$/)
+    return line unless match = line.match pattern
 
-    return cat match[1]
+    file = match[1]
+    arg  = match[3] || ""
+
+    content = cat file
+    content = content.replace /%arg%/g, arg
 
   return lines.join "\n"
 
