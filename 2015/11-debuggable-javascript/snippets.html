@@ -160,24 +160,21 @@ setTimeout(a, <span class="hljs-number">1000</span>)</code></pre>
 <hr>
 <h2>hooker.js<h2>
 <div class='indent smaller'><a href='snippets/hooker.js'>link</a></div>
-<pre><code><span class="hljs-keyword">const</span> hooker = <span class="hljs-built_in">require</span>(<span class="hljs-string">"hooker"</span>)
+<pre><code>const hooker = require("hooker")
 
-<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">log</span><span class="hljs-params">(prefix, name, value)</span> {</span>
-	console.log(<span class="hljs-string">"%s Math.%s: %j"</span>, prefix, name, value)
+function log(prefix, name, value) {
+	console.log("%s Math.%s: %j", prefix, name, value)
 }
 
-hooker.hook(<span class="hljs-built_in">Math</span>, <span class="hljs-built_in">Object</span>.getOwnPropertyNames(<span class="hljs-built_in">Math</span>), {
-	passName: <span class="hljs-literal">true</span>,
-	pre: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(name)</span> {</span>
-		log(<span class="hljs-string">"-&gt;"</span>, name, [].slice.call(<span class="hljs-built_in">arguments</span>,<span class="hljs-number">1</span>))
-	},
-	post: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(result, name)</span> {</span>
-		log(<span class="hljs-string">"&lt;-"</span>, name, result)
+hooker.hook(Math, Object.getOwnPropertyNames(Math), {
+	passName: true,
+	pre: (name) =&gt; log("-&gt;", name, [].slice.call(arguments,1)),
+	post: function (result, name) -&gt; log("&lt;-", name, result)
 	}
 })
 
-<span class="hljs-built_in">Math</span>.max(<span class="hljs-number">5</span>, <span class="hljs-number">6</span>, <span class="hljs-number">7</span>)
-<span class="hljs-built_in">Math</span>.sqrt(<span class="hljs-number">2</span>)
+Math.max(5, 6, 7)
+Math.sqrt(2)
 </code></pre>
 
 <!-- ================================== -->
@@ -223,7 +220,7 @@ a()
 <h2>mocha.js<h2>
 <div class='indent smaller'><a href='snippets/mocha.js'>link</a></div>
 <pre><code><span class="hljs-comment">//!hide</span>
-<span class="hljs-comment">// node node_modules/.bin/mocha testing.js</span>
+<span class="hljs-comment">// node node_modules/.bin/mocha mocha.js</span>
 <span class="hljs-keyword">var</span> assert = <span class="hljs-built_in">require</span>(<span class="hljs-string">"assert"</span>)
 
 <span class="hljs-comment">//!show</span>
@@ -401,6 +398,29 @@ a(<span class="hljs-number">3</span>)
 }
 
 console.log(factorial(<span class="hljs-number">20</span>))
+</code></pre>
+
+<!-- ================================== -->
+<hr>
+<h2>tape.js<h2>
+<div class='indent smaller'><a href='snippets/tape.js'>link</a></div>
+<pre><code><span class="hljs-keyword">const</span> test = <span class="hljs-built_in">require</span>(<span class="hljs-string">'tape'</span>)
+
+<span class="hljs-comment">//!show</span>
+test(<span class="hljs-string">'Array #indexOf()'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(t)</span> {</span>
+  t.equal(-<span class="hljs-number">1</span>, [<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>].indexOf(<span class="hljs-number">1</span>), <span class="hljs-string">'should return -1 on not found'</span>)
+  t.end()
+})
+
+<span class="hljs-comment">// TAP version 13</span>
+<span class="hljs-comment">// # Array #indexOf()</span>
+<span class="hljs-comment">// not ok 1 should return -1 on not found</span>
+<span class="hljs-comment">// ...</span>
+<span class="hljs-comment">//</span>
+<span class="hljs-comment">// 1..1</span>
+<span class="hljs-comment">// # tests 1</span>
+<span class="hljs-comment">// # pass  0</span>
+<span class="hljs-comment">// # fail  1</span>
 </code></pre>
 
 <!-- ================================== -->

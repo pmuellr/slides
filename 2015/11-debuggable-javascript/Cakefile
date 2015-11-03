@@ -11,7 +11,7 @@ hljs = require "./snippets/node_modules/highlight.js"
 task "watch", "watch for source file changes, build", -> taskWatch()
 task "build", "run a build",                          -> taskBuild()
 
-WatchSpec = "*.md snippets/**/*.js"
+WatchSpec = "*.md snippets/*.js"
 
 #-------------------------------------------------------------------------------
 mkdir "-p", "tmp"

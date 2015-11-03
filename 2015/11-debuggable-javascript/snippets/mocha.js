@@ -1,5 +1,5 @@
 //!hide
-// node node_modules/.bin/mocha testing.js
+// node node_modules/.bin/mocha mocha.js
 var assert = require("assert")
 
 //!show

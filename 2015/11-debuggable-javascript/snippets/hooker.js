@@ -6,11 +6,8 @@ function log(prefix, name, value) {
 
 hooker.hook(Math, Object.getOwnPropertyNames(Math), {
 	passName: true,
-	pre: function (name) {
-		log("->", name, [].slice.call(arguments,1))
-	},
-	post: function (result, name) {
-		log("<-", name, result)
+	pre: (name) => log("->", name, [].slice.call(arguments,1)),
+	post: function (result, name) -> log("<-", name, result)
 	}
 })
 
