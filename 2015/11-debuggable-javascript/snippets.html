@@ -179,6 +179,19 @@ Math.sqrt(2)
 
 <!-- ================================== -->
 <hr>
+<h2>internal-debug.js<h2>
+<div class='indent smaller'><a href='snippets/internal-debug.js'>link</a></div>
+<pre><code><span class="hljs-keyword">var</span> vm = <span class="hljs-built_in">require</span>(<span class="hljs-string">'vm'</span>)
+<span class="hljs-keyword">var</span> Debug = vm.runInDebugContext(<span class="hljs-string">'Debug'</span>)
+
+console.log(Debug)
+Debug.scripts().forEach(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(script)</span> {</span>
+  console.log(script.name)
+})
+</code></pre>
+
+<!-- ================================== -->
+<hr>
 <h2>long-stack-traces-after.js<h2>
 <div class='indent smaller'><a href='snippets/long-stack-traces-after.js'>link</a></div>
 <pre><code><span class="hljs-built_in">require</span>(<span class="hljs-string">"long-stack-traces"</span>)

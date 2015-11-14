@@ -106,28 +106,31 @@ Die! Die! Die!
 
 --------------------------------------------------------------------------------
 
-## linting - [npm eslint](https://npmjs.org/package/eslint)
+## linting and code style - [standard](http://npmjs.org/package/standard)
 
+```text
+$ node_modules/.bin/standard
 
---------------------------------------------------------------------------------
+standard: Use JavaScript Standard Style
+      (https://github.com/feross/standard)
+  path/to/bole.js:1:22: Strings must use singlequote.
+  path/to/bole.js:3:18: Strings must use singlequote.
+  path/to/bole.js:4:22: Strings must use singlequote.
+  path/to/bole.js:6:10: Strings must use singlequote.
+  ...
 
-## code style conformance - [npm jscs](https://npmjs.org/package/jscs)
-
-
---------------------------------------------------------------------------------
-
-<img src="images/HFaTfMRP.jpg" style="float:right; margin-left:1em;">
-
-## Human Factors and Typography for More Readable Programs
-
-* 1990
-* Ronald M. Baecker, Aaron Marcus
-
-[ISBN 0201107457](http://www.amazon.com/Human-Factors-Typography-Readable-Programs/dp/0201107457)
+(it never ends)
+```
 
 --------------------------------------------------------------------------------
 
-<img src="images/HFaTfMRP-example.gif">
+## general thoughts
+
+* keep functions shorter than a "page"; v8 will "inline" short functions!
+
+* add vertical whitespace to separate meaty bits (eg, functions)
+
+* lots of great ideas in [Code Complete](http://www.amazon.com/Code-Complete-Practical-Handbook-Construction/dp/0735619670)
 
 //!embed: layout.md
 ================================================================================
@@ -281,118 +284,6 @@ reference: [javascript_stack_trace_api.md](https://chromium.googlesource.com/v8/
 
 class: center, middle
 
-# early warning systems
-
-//!embed: layout.md early warning systems
---------------------------------------------------------------------------------
-
-class: center, middle
-
-## If debugging is the process of removing bugs, then programming must be the process of putting them in.
-
-### -- Edsger W. Dijkstra
-
---------------------------------------------------------------------------------
-
-## testing - [npm mocha](http://npmjs.org/package/mocha)
-
-```js
-//!snippet: mocha.js
-```
-
---------------------------------------------------------------------------------
-
-## testing - [npm tape](http://npmjs.org/package/tape)
-
-```js
-//!snippet: tape.js
-```
-
-
---------------------------------------------------------------------------------
-
-## code coverage - [coveralls](https://coveralls.io)
-
-* a bit complicated to set up
-
-* but worth it
-
-  * if you're into code coverage   
-
---------------------------------------------------------------------------------
-
-## dependencies - [snyk](https://app.snyk.io/)
-
-```text
-$ node_modules/.bin/snyk test
-✓ Tested 190 dependencies for known vulnerabilities,
-  no vulnerabilities found.
-
-Next steps:
-- Run `snyk monitor` to be notified about new
-  related vulnerabilities.
-- Run `snyk test` as part of your CI/test.
-```
-
---------------------------------------------------------------------------------
-
-## dependencies - [greenkeeper](http://greenkeeper.io/)
-
-<pre><code>$ npm install -g greenkeeper
-...
-$ greenkeeper login
-...
-<span style="color:#0C0">*  info</span> <span style="color:magenta">login</span> That was successful,
-        now syncing all your GitHub repos
-<span style="color:#0C0">*  info</span> <span style="color:magenta">login</span> Done syncing 403 repositories
-You are now logged in, synced and all set up!
-<span style="color:#0C0">*  info</span> <span style="color:magenta">login</span> Find out how to get started with
-        $ greenkeeper start
-$
-</code></pre>
-
---------------------------------------------------------------------------------
-
-## linting - eslint
-
-<pre><code>$ <span style="color:#00A;">node_modules/.bin/eslint .</span>
-
-<u>path/to/snippets/bole.js</u>
-  1:2  <span style="color:red">error</span>  Parsing error: Unexpected token const
-
-<u>path/to/snippets/bunyan.js</u>
-  1:2  <span style="color:red">error</span>  Parsing error: Unexpected token const
-
-<u>path/to/snippets/debug.js</u>
-  1:2  <span style="color:red">error</span>  Parsing error: Unexpected token const
-
-... repeats ad nauseum ...
-</code></pre>
-
-
---------------------------------------------------------------------------------
-
-## linting and code style - [standard](http://npmjs.org/package/standard)
-
-```text
-$ node_modules/.bin/standard
-
-standard: Use JavaScript Standard Style
-      (https://github.com/feross/standard)
-  path/to/bole.js:1:22: Strings must use singlequote.
-  path/to/bole.js:3:18: Strings must use singlequote.
-  path/to/bole.js:4:22: Strings must use singlequote.
-  path/to/bole.js:6:10: Strings must use singlequote.
-  ...
-
-(it never ends)
-```
-
-//!embed: layout.md
-================================================================================
-
-class: center, middle
-
 # actual debugging
 
 //!embed: layout.md actual debugging
@@ -460,7 +351,23 @@ debug&gt;
 
 --------------------------------------------------------------------------------
 
-## npm [`hooker`](https://github.com/cowboy/javascript-hooker)
+## npm [`node-inspector`](https://www.npmjs.com/package/node-inspector)
+
+* Chrome Dev Tools user interface
+
+* but for debugging node
+
+--------------------------------------------------------------------------------
+
+## IDEs with debugging support
+
+* [IntelliJ IDEA](https://www.jetbrains.com/editors/nodejs.jsp?ide=idea)
+
+* [Visual Studio Code](https://code.visualstudio.com/Docs/editor/debugging)
+
+--------------------------------------------------------------------------------
+
+## npm [`hooker`](https://www.npmjs.com/package/hooker)
 
 ```js
 //!snippet: hooker.js
@@ -485,11 +392,105 @@ also provides
 
 --------------------------------------------------------------------------------
 
-## heap snapshots
+## cpu profiles / heap snapshots
+
+* V8 provides a built-in sampling cpu profiler
+  * see time spent in expensive functions
+  * shows stack for those functions
+
+* V8 provides a built-in heap snapshot facility
+  * dumps a representation of **ALL** JS objects
+
+--------------------------------------------------------------------------------
+
+## cpu profiles / heap snapshots
+
+* npm [`v8-profiler`](https://www.npmjs.com/package/v8-profiler)
+
+* [StrongLoop](https://docs.strongloop.com/display/SLC/Profiling)
+
+* [N|Solid](https://nodesource.com/products/nsolid)
+
+These tools generate files that can be loaded in Chrome Dev Tools.
+StrongLoop and N|Solid also provide their own viewers.
+
+--------------------------------------------------------------------------------
+
+## cpu profiles - pro tips
+
+* **NAME YOUR FUNCTIONS**
+
+* use `node --no-use-inlining` if your functions are getting inlined
+
+--------------------------------------------------------------------------------
+
+## heap snapshots - pro tips
+
+* easiest available data is organized by class name - so use classes
+
+* inject "tags" into objects you want to track, or via WeakSet
+
+
+//!embed: layout.md
+================================================================================
+
+class: center, middle
+
+# how can you help?
+
+//!embed: layout.md how can you help?
+--------------------------------------------------------------------------------
+
+## write debugging tools!
+
+* lots of low hanging fruit
+* lots of data from existing v8 debugging tools
+* better typesetting of programs
 
 --------------------------------------------------------------------------------
 
 ## cpu profiles
+
+* v8 format subject to change
+
+--------------------------------------------------------------------------------
+
+## heap snapshots
+
+* start with `npm [snapshot-utils](https://www.npmjs.com/package/snapshot-utils)`
+
+* example: [displaying all "variables" in a shapshot](http://bmeck.github.io/snapshot-utils/doc/manual/tutorial.html#get-variables-in-a-heapsnapshot)
+
+* v8 format subject to change
+
+--------------------------------------------------------------------------------
+
+## access debugger from your app
+
+* tantalizing snippet from the [`vm` module](https://nodejs.org/api/vm.html#vm_vm_runindebugcontext_code)
+
+```js
+//!snippet: internal-debug.js
+```
+
+* notes on functions available, beyond the v8 source: [node-debug-context](https://github.com/pmuellr/node-debug-context)
+
+
+--------------------------------------------------------------------------------
+
+<img src="images/HFaTfMRP.jpg" style="float:right; margin-left:1em;">
+
+## Human Factors and Typography for More Readable Programs
+
+* 1990
+* Ronald M. Baecker, Aaron Marcus
+
+[ISBN 0201107457](http://www.amazon.com/Human-Factors-Typography-Readable-Programs/dp/0201107457)
+
+--------------------------------------------------------------------------------
+
+<img src="images/HFaTfMRP-example.gif">
+
 
 //!embed: layout.md
 ================================================================================
