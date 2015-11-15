@@ -73,8 +73,8 @@ log.info(<span class="hljs-string">"hi"</span>)
 <hr>
 <h2>console_log.js<h2>
 <div class='indent smaller'><a href='snippets/console_log.js'>link</a></div>
-<pre><code>console.log(<span class="hljs-string">"foo"</span>)
-<span class="hljs-comment">// prints: foo</span>
+<pre><code>console.log(__filename + <span class="hljs-string">": foo"</span>)
+<span class="hljs-comment">// prints: /path/to/script.js: foo</span>
 
 console.log(<span class="hljs-string">"foo"</span>, <span class="hljs-string">"bar"</span>)
 <span class="hljs-comment">// prints: foo bar</span>
@@ -87,6 +87,25 @@ console.log(<span class="hljs-string">"a-%s-b %j"</span>, <span class="hljs-numb
 
 console.log(process)
 <span class="hljs-comment">// prints: { title: 'node', ...many lines... }</span>
+</code></pre>
+
+<!-- ================================== -->
+<hr>
+<h2>console_table.js<h2>
+<div class='indent smaller'><a href='snippets/console_table.js'>link</a></div>
+<pre><code><span class="hljs-comment">// dream code!</span>
+
+<span class="hljs-keyword">const</span> people = [
+  {firstName: <span class="hljs-string">'George'</span>, lastName: <span class="hljs-string">'Bush'</span>},
+  {firstName: <span class="hljs-string">'Barack'</span>, lastName: <span class="hljs-string">'Obama'</span>},
+]
+
+console.table(people)
+
+<span class="hljs-comment">// index  firstName  lastName</span>
+<span class="hljs-comment">// -----  ---------  --------</span>
+<span class="hljs-comment">//     0  George     Bush</span>
+<span class="hljs-comment">//     1  Barack     Obama</span>
 </code></pre>
 
 <!-- ================================== -->
@@ -128,7 +147,8 @@ a()
 <span class="hljs-comment">//     at c (&lt;program&gt;:3:24)</span>
 <span class="hljs-comment">//     at b (&lt;program&gt;:2:16)</span>
 <span class="hljs-comment">//     at a (&lt;program&gt;:1:78)</span>
-<span class="hljs-comment">//     at ...</span></code></pre>
+<span class="hljs-comment">//     at ...</span>
+</code></pre>
 
 <!-- ================================== -->
 <hr>
@@ -160,21 +180,30 @@ setTimeout(a, <span class="hljs-number">1000</span>)</code></pre>
 <hr>
 <h2>hooker.js<h2>
 <div class='indent smaller'><a href='snippets/hooker.js'>link</a></div>
-<pre><code>const hooker = require("hooker")
+<pre><code><span class="hljs-comment">//!hide</span>
+<span class="hljs-keyword">const</span> hooker = <span class="hljs-built_in">require</span>(<span class="hljs-string">"hooker"</span>)
 
-function log(prefix, name, value) {
-	console.log("%s Math.%s: %j", prefix, name, value)
+<span class="hljs-comment">//!show</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">preCall</span><span class="hljs-params">(name)</span> {</span>
+	<span class="hljs-keyword">const</span> args = [].slice.call(<span class="hljs-built_in">arguments</span>,<span class="hljs-number">1</span>)
+	log(<span class="hljs-string">"-&gt;"</span>, name, args)
 }
-
-hooker.hook(Math, Object.getOwnPropertyNames(Math), {
-	passName: true,
-	pre: (name) =&gt; log("-&gt;", name, [].slice.call(arguments,1)),
-	post: function (result, name) -&gt; log("&lt;-", name, result)
-	}
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">postCall</span><span class="hljs-params">(result, name)</span> {</span>
+	log(<span class="hljs-string">"&lt;-"</span>, name, result)
+}
+hooker.hook(<span class="hljs-built_in">Math</span>, <span class="hljs-built_in">Object</span>.getOwnPropertyNames(<span class="hljs-built_in">Math</span>), {
+  passName: <span class="hljs-literal">true</span>,
+  pre:  preCall,
+  post: postCall
 })
 
-Math.max(5, 6, 7)
-Math.sqrt(2)
+<span class="hljs-built_in">Math</span>.max(<span class="hljs-number">5</span>, <span class="hljs-number">6</span>, <span class="hljs-number">7</span>)
+<span class="hljs-built_in">Math</span>.sqrt(<span class="hljs-number">2</span>)
+<span class="hljs-comment">//!hide</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">log</span><span class="hljs-params">(prefix, name, value)</span> {</span>
+  console.log(<span class="hljs-string">"%s Math.%s: %j"</span>, prefix, name, value)
+}
+<span class="hljs-comment">//!show</span>
 </code></pre>
 
 <!-- ================================== -->
@@ -182,36 +211,39 @@ Math.sqrt(2)
 <h2>internal-debug.js<h2>
 <div class='indent smaller'><a href='snippets/internal-debug.js'>link</a></div>
 <pre><code><span class="hljs-keyword">var</span> vm = <span class="hljs-built_in">require</span>(<span class="hljs-string">'vm'</span>)
+
 <span class="hljs-keyword">var</span> Debug = vm.runInDebugContext(<span class="hljs-string">'Debug'</span>)
 
-console.log(Debug)
-Debug.scripts().forEach(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(script)</span> {</span>
-  console.log(script.name)
-})
+console.log(Debug.DebugEvent.Break)
+
+console.log(Debug.debuggerFlags())
+
+<span class="hljs-comment">// console.log(Debug)</span>
+Debug.scripts().forEach(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(script)</span> {</span> console.log(script.name); })
 </code></pre>
 
 <!-- ================================== -->
 <hr>
 <h2>long-stack-traces-after.js<h2>
 <div class='indent smaller'><a href='snippets/long-stack-traces-after.js'>link</a></div>
-<pre><code><span class="hljs-built_in">require</span>(<span class="hljs-string">"long-stack-traces"</span>)
-a()
+<pre><code><span class="hljs-keyword">if</span> (process.env.NODE_ENV !== <span class="hljs-string">'production'</span>)
+  <span class="hljs-built_in">require</span>(<span class="hljs-string">'longjohn'</span>)
 
+a()
 <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">a</span><span class="hljs-params">()</span> {</span> setTimeout(b, <span class="hljs-number">100</span>) }
 <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">b</span><span class="hljs-params">()</span> {</span> setTimeout(c, <span class="hljs-number">100</span>) }
 <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">c</span><span class="hljs-params">()</span> {</span> <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">"foo"</span>) }
-
-<span class="hljs-comment">// Uncaught Error: foo</span>
-<span class="hljs-comment">//     at [object Object].c (/path/to/long-stack-traces.js:7:22)</span>
-<span class="hljs-comment">//     at Timer.listOnTimeout [as ontimeout] (timers.js:110:15)</span>
-<span class="hljs-comment">// ----------------------------------------</span>
-<span class="hljs-comment">//     at Object.setTimeout</span>
-<span class="hljs-comment">//     at [object Object].b (/path/to/long-stack-traces.js:5:16)</span>
-<span class="hljs-comment">//     at Timer.listOnTimeout [as ontimeout] (timers.js:110:15)</span>
-<span class="hljs-comment">// ----------------------------------------</span>
-<span class="hljs-comment">//     at Object.setTimeout</span>
-<span class="hljs-comment">//     at a (/path/to/long-stack-traces.js:3:16)</span>
-<span class="hljs-comment">//     ...</span></code></pre>
+<span class="hljs-comment">// Error: foo</span>
+<span class="hljs-comment">//     at [object Object].c (path/to/script.js:6:22)</span>
+<span class="hljs-comment">//     at Timer.listOnTimeout (timers.js:92:15)</span>
+<span class="hljs-comment">// ---------------------------------------------</span>
+<span class="hljs-comment">//     at [object Object].b (path/to/script.js:5:16)</span>
+<span class="hljs-comment">//     at Timer.listOnTimeout (timers.js:92:15)</span>
+<span class="hljs-comment">// ---------------------------------------------</span>
+<span class="hljs-comment">//     at a (path/to/script.js:4:16)</span>
+<span class="hljs-comment">//     at Object.&lt;anonymous&gt; (path/to/script.js:2:1)</span>
+<span class="hljs-comment">//     ...</span>
+</code></pre>
 
 <!-- ================================== -->
 <hr>
@@ -225,8 +257,9 @@ a()
 <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">c</span><span class="hljs-params">()</span> {</span> <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">"foo"</span>) }
 
 <span class="hljs-comment">// Error: foo</span>
-<span class="hljs-comment">//     at c [as _onTimeout] (/path/to/snippets/long-stack-traces-before.js:6:22)</span>
-<span class="hljs-comment">//     at Timer.listOnTimeout [as ontimeout] (timers.js:110:15)</span></code></pre>
+<span class="hljs-comment">//     at c [as _onTimeout] (/path/to/script.js:6:22)</span>
+<span class="hljs-comment">//     at Timer.listOnTimeout [as ontimeout] (timers.js:110:15)</span>
+</code></pre>
 
 <!-- ================================== -->
 <hr>
@@ -278,6 +311,50 @@ a()
 
 <!-- ================================== -->
 <hr>
+<h2>pyramid-of-doom-err-fixed.js<h2>
+<div class='indent smaller'><a href='snippets/pyramid-of-doom-err-fixed.js'>link</a></div>
+<pre><code><span class="hljs-comment">//!hide</span>
+<span class="hljs-keyword">const</span> fs = <span class="hljs-built_in">require</span>(<span class="hljs-string">"fs"</span>)
+<span class="hljs-comment">//!show</span>
+fs.readdir(<span class="hljs-string">"."</span>, cbReadDir)
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">cbReadDir</span><span class="hljs-params">(err, files)</span> {</span>
+  files.forEach(eachFile)
+}
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">eachFile</span><span class="hljs-params">(file)</span> {</span>
+  <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">"huh?"</span>)
+}
+
+<span class="hljs-comment">// Error: huh?</span>
+<span class="hljs-comment">//   at eachFile (path/to/script.js:9:9)</span>
+<span class="hljs-comment">//   at Array.forEach (native)</span>
+<span class="hljs-comment">//   at cbReadDir (path/to/script.js:6:9)</span>
+<span class="hljs-comment">//   at FSReqWrap.oncomplete (fs.js:82:15)</span>
+</code></pre>
+
+<!-- ================================== -->
+<hr>
+<h2>pyramid-of-doom-err.js<h2>
+<div class='indent smaller'><a href='snippets/pyramid-of-doom-err.js'>link</a></div>
+<pre><code><span class="hljs-comment">//!hide</span>
+<span class="hljs-keyword">const</span> fs = <span class="hljs-built_in">require</span>(<span class="hljs-string">"fs"</span>)
+<span class="hljs-comment">//!show</span>
+fs.readdir(<span class="hljs-string">"."</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(err, files)</span>{</span>
+  files.forEach(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(file)</span> {</span>
+    <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">"huh?"</span>)
+  })
+})
+
+
+
+<span class="hljs-comment">// Error: huh?</span>
+<span class="hljs-comment">//   at path/to/script.js:6:11</span>
+<span class="hljs-comment">//   at Array.forEach (native)</span>
+<span class="hljs-comment">//   at path/to/script.js:5:9</span>
+<span class="hljs-comment">//   at FSReqWrap.oncomplete (fs.js:82:15)</span>
+</code></pre>
+
+<!-- ================================== -->
+<hr>
 <h2>pyramid-of-doom-fixed-1.js<h2>
 <div class='indent smaller'><a href='snippets/pyramid-of-doom-fixed-1.js'>link</a></div>
 <pre><code><span class="hljs-comment">//!hide</span>
@@ -320,6 +397,26 @@ fs.readdir(<span class="hljs-string">"."</span>, cbReadDir)
     console.log(file, data.length)
   }
 }
+</code></pre>
+
+<!-- ================================== -->
+<hr>
+<h2>pyramid-of-doom-fixed.js<h2>
+<div class='indent smaller'><a href='snippets/pyramid-of-doom-fixed.js'>link</a></div>
+<pre><code><span class="hljs-comment">//!hide</span>
+<span class="hljs-keyword">const</span> fs = <span class="hljs-built_in">require</span>(<span class="hljs-string">"fs"</span>)
+<span class="hljs-comment">//!show</span>
+fs.readdir(<span class="hljs-string">"."</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(err, files)</span>{</span>
+  files.forEach(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(file)</span> {</span>
+    <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">"huh?"</span>)
+  })
+})
+
+<span class="hljs-comment">// Error: huh?</span>
+<span class="hljs-comment">//   at path/to/script.js:6:11</span>
+<span class="hljs-comment">//   at Array.forEach (native)</span>
+<span class="hljs-comment">//   at path/to/script.js:5:9</span>
+<span class="hljs-comment">//   at FSReqWrap.oncomplete (fs.js:82:15)</span>
 </code></pre>
 
 <!-- ================================== -->

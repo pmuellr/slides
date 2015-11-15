@@ -19,7 +19,8 @@ blockquote {
   margin-left:        0;
   padding-left:       1em;
   border-left:        2px solid #777;
-
+  font-style:         italic;
+  font-family:        serif;
 }
 
 pre {

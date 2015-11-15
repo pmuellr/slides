@@ -45,22 +45,10 @@ class: left, middle
 
 [Stack Overflow ](http://programmers.stackexchange.com/questions/152464/im-doing-90-maintenance-and-10-development-is-this-normal)
 
-> ... more than 50% of the global software population is engaged in modifying
-  existing applications rather than writing new applications." -
+> In 2001, more than 50% of the global software population is engaged in modifying
+  existing applications rather than writing new applications.
 
 [Capers Jones](http://www.compaid.com/caiinternet/ezine/capersjones-maintenance.pdf)
-
-================================================================================
-
-class: left, middle
-
-> In 1949 as soon as we started programming, we found to our surprise that it
-wasn’t as easy to get programs right as we had thought. Debugging had to be
-discovered. I can remember the exact instant when I realised that a large part
-of my life from then on was going to be spent in finding mistakes in my own
-programs.
-
-[Maurice Wilkes](http://www.telegraph.co.uk/news/obituaries/technology-obituaries/8171435/Professor-Sir-Maurice-Wilkes.html)
 
 ================================================================================
 
@@ -70,6 +58,8 @@ class: center, middle
 
 # you will read a lot of code
 
+# optimize for readability
+
 --------------------------------------------------------------------------------
 
 ## pyramid of doom
@@ -77,8 +67,6 @@ class: center, middle
 ```js
 //!snippet: pyramid-of-doom.js
 ```
-
-Die! Die! Die!
 
 --------------------------------------------------------------------------------
 
@@ -94,6 +82,22 @@ Die! Die! Die!
 
 ```js
 //!snippet: pyramid-of-doom-fixed-2.js
+```
+
+--------------------------------------------------------------------------------
+
+## pyramid of doom - unnamed functions!
+
+```js
+//!snippet: pyramid-of-doom-err.js
+```
+
+--------------------------------------------------------------------------------
+
+## pyramid of doom - unnamed functions fixed!
+
+```js
+//!snippet: pyramid-of-doom-err-fixed.js
 ```
 
 --------------------------------------------------------------------------------
@@ -115,22 +119,26 @@ standard: Use JavaScript Standard Style
       (https://github.com/feross/standard)
   path/to/bole.js:1:22: Strings must use singlequote.
   path/to/bole.js:3:18: Strings must use singlequote.
-  path/to/bole.js:4:22: Strings must use singlequote.
-  path/to/bole.js:6:10: Strings must use singlequote.
   ...
 
 (it never ends)
 ```
 
+> No decisions to make. No .eslintrc, .jshintrc, or .jscsrc files to manage. It just works.
+
 --------------------------------------------------------------------------------
 
-## general thoughts
+## other things
 
 * keep functions shorter than a "page"; v8 will "inline" short functions!
 
-* add vertical whitespace to separate meaty bits (eg, functions)
+* one-line arrow functions - no return or braces needed!
 
-* lots of great ideas in [Code Complete](http://www.amazon.com/Code-Complete-Practical-Handbook-Construction/dp/0735619670)
+  ```js
+  [ 1, 4, 9 ].map(x => Math.sqrt(x)) // [ 1, 2, 3 ]
+  ```
+
+* lots of great general ideas in [Code Complete](http://www.amazon.com/Code-Complete-Practical-Handbook-Construction/dp/0735619670)
 
 //!embed: layout.md
 ================================================================================
@@ -145,13 +153,13 @@ class: center, middle
 class: left, middle
 
 > The most effective debugging tool is still careful thought,
-  coupled with judiciously placed print statements."
+  coupled with judiciously placed print statements.
 
 [Brian W. Kernighan](http://www.mtholyoke.edu/~mcrowley/beginners.pdf)
 
 --------------------------------------------------------------------------------
 
-## `console.log()`
+## [`console.log()`](https://nodejs.org/api/console.html)
 
 ```js
 //!snippet: console_log.js
@@ -159,7 +167,7 @@ class: left, middle
 
 --------------------------------------------------------------------------------
 
-## `console.time()`
+## [`console.time()`](https://nodejs.org/api/console.html)
 
 ```js
 //!snippet: console_time.js
@@ -167,7 +175,7 @@ class: left, middle
 
 --------------------------------------------------------------------------------
 
-## `console.trace()`
+## [`console.trace()`](https://nodejs.org/api/console.html)
 
 ```js
 //!snippet: console_trace.js
@@ -175,7 +183,21 @@ class: left, middle
 
 --------------------------------------------------------------------------------
 
-## npm `debug`
+## [`console.table()???`](https://developer.mozilla.org/en-US/docs/Web/API/Console/table)
+
+```js
+//!snippet: console_table.js
+```
+
+--------------------------------------------------------------------------------
+
+class: center, middle
+
+# logging that stays in your code
+
+--------------------------------------------------------------------------------
+
+## [npm `debug`](https://npmjs.org/package/debug)
 
 ```js
 //!snippet: debug.js
@@ -191,7 +213,7 @@ class: left, middle
 
 --------------------------------------------------------------------------------
 
-## npm `winston`
+## [npm `winston`](https://npmjs.org/package/winston)
 
 ```js
 //!snippet: winston.js
@@ -199,7 +221,7 @@ class: left, middle
 
 --------------------------------------------------------------------------------
 
-## npm `bunyan`
+## [npm `bunyan`](https://npmjs.org/package/bunyan)
 
 ```js
 //!snippet: bunyan.js
@@ -207,11 +229,37 @@ class: left, middle
 
 --------------------------------------------------------------------------------
 
-## npm `bole`
+## [npm `bole`](https://npmjs.org/package/bole)
 
 ```js
 //!snippet: bole.js
 ```
+
+--------------------------------------------------------------------------------
+
+## [npm `hooker`](https://www.npmjs.com/package/hooker)
+
+```js
+//!snippet: hooker.js
+```
+
+--------------------------------------------------------------------------------
+
+## [npm `hooker`](https://github.com/cowboy/javascript-hooker)
+
+prints:
+```
+-> Math.max: [5,6,7]
+<- Math.max: 7
+-> Math.sqrt: [2]
+<- Math.sqrt: 1.4142135623730951
+```
+
+also provides
+
+* filtering arguments
+* overriding results
+
 
 //!embed: layout.md
 ================================================================================
@@ -223,7 +271,7 @@ class: center, middle
 //!embed: layout.md error handling
 --------------------------------------------------------------------------------
 
-## builtin `process` events
+## builtin [`process` events](https://nodejs.org/api/process.html#process_event_exit)
 
 ```js
 //!snippet: process-events.js
@@ -265,18 +313,18 @@ reference: [javascript_stack_trace_api.md](https://chromium.googlesource.com/v8/
 
 --------------------------------------------------------------------------------
 
-### npm `Q.longStackSupport` - before
+### [npm `longjohn`](https://www.npmjs.com/package/longjohn) - before
 
 ```js
-//!snippet: q-longStack-before.js
+//!snippet: long-stack-traces-before.js
 ```
 
 --------------------------------------------------------------------------------
 
-### npm `Q.longStackSupport` - after
+### [npm `longjohn`](https://www.npmjs.com/package/longjohn) - after
 
 ```js
-//!snippet: q-longStack-after.js
+//!snippet: long-stack-traces-after.js
 ```
 
 //!embed: layout.md
@@ -289,7 +337,7 @@ class: center, middle
 //!embed: layout.md actual debugging
 --------------------------------------------------------------------------------
 
-## builtin module `repl`
+## [builtin module `repl`](https://nodejs.org/api/repl.html)
 
 ```js
 //!snippet: repl.js
@@ -297,7 +345,7 @@ class: center, middle
 
 --------------------------------------------------------------------------------
 
-## builtin debugger
+## [builtin debugger](https://nodejs.org/api/debugger.html)
 
 ```js
 //!snippet: debugger.js
@@ -305,7 +353,7 @@ class: center, middle
 
 --------------------------------------------------------------------------------
 
-## builtin debugger
+## [builtin debugger](https://nodejs.org/api/debugger.html)
 
 <table>
 <tr>
@@ -351,9 +399,12 @@ debug&gt;
 
 --------------------------------------------------------------------------------
 
-## npm [`node-inspector`](https://www.npmjs.com/package/node-inspector)
+## [npm `node-inspector`](https://www.npmjs.com/package/node-inspector)
 
 * Chrome Dev Tools user interface
+  * breakpoints
+  * stepping
+  * watches
 
 * but for debugging node
 
@@ -364,31 +415,6 @@ debug&gt;
 * [IntelliJ IDEA](https://www.jetbrains.com/editors/nodejs.jsp?ide=idea)
 
 * [Visual Studio Code](https://code.visualstudio.com/Docs/editor/debugging)
-
---------------------------------------------------------------------------------
-
-## npm [`hooker`](https://www.npmjs.com/package/hooker)
-
-```js
-//!snippet: hooker.js
-```
-
---------------------------------------------------------------------------------
-
-## npm [`hooker`](https://github.com/cowboy/javascript-hooker)
-
-prints:
-```
--> Math.max: [5,6,7]
-<- Math.max: 7
--> Math.sqrt: [2]
-<- Math.sqrt: 1.4142135623730951
-```
-
-also provides
-
-* filtering arguments
-* overriding results
 
 --------------------------------------------------------------------------------
 
@@ -422,13 +448,64 @@ StrongLoop and N|Solid also provide their own viewers.
 
 * use `node --no-use-inlining` if your functions are getting inlined
 
+* more info at [Google's Chrome DevTools site](https://developers.google.com/web/tools/chrome-devtools/profile/rendering-tools/js-execution?hl=en)
+
 --------------------------------------------------------------------------------
 
 ## heap snapshots - pro tips
 
-* easiest available data is organized by class name - so use classes
+* data is organized by class name
 
-* inject "tags" into objects you want to track, or via WeakSet
+* if classes won't work, inject "tags" (named class instances) into
+  objects you want to track
+
+* take two snapshots, then "Comparison view" to see object counts diffs between
+  the two
+
+* more info at [Google's Chrome DevTools site](https://developers.google.com/web/tools/chrome-devtools/profile/memory-problems/heap-snapshots?hl=en)
+
+
+--------------------------------------------------------------------------------
+
+## heap snapshots - tagging things
+
+```js
+class RequestTag {}
+class ResponseTag {}
+...
+function requestHandler(req, res) {
+  req.__hstag = new RequestTag
+  res.__hstag = new ResponseTag
+  ...
+}
+
+```
+
+Now you can search the snapshot for `"tag"` to see all tagged objects.
+
+--------------------------------------------------------------------------------
+
+## demo - memory leak
+
+* server that leaks `request` objects - [demos/snapshot-untagged.js](demos/snapshot-untagged.js)
+
+* same server, but tags `request` and `response` objects - [demos/snapshot-tagged.js](demos/snapshot-tagged.js)
+
+* run both, take heap snapshots, and you can see from the 'tagged' version
+  exactly what's leaking, since `requests` are instances of `IncomingMessage`
+
+--------------------------------------------------------------------------------
+
+## demo - cpu profiling
+
+* program with a number of small functions - [demos/profile-inline.js](demos/profile-inline.js)
+
+* run with no special flags - most of the functions will be inlined, and no
+  longer visible in stack traces
+
+* run with `--no-use-inlining` - none of the functions will be inlined, and all
+  will be visible in stack traces
+
 
 
 //!embed: layout.md
@@ -444,37 +521,35 @@ class: center, middle
 ## write debugging tools!
 
 * lots of low hanging fruit
+  * what do other languages support?
+  * what did Smalltalk and LISP do 30 years ago?
+
 * lots of data from existing v8 debugging tools
-* better typesetting of programs
+
+* also needed - better typesetting of code
 
 --------------------------------------------------------------------------------
 
 ## cpu profiles
 
-* v8 format subject to change
+* tree of function invocation records
+* for each function
+  * functions called, available as `children`
+  * number of "ticks" spent executing code
+
+Highlight expensive functions/lines in your editor?
+
+Find which module is uses the most CPU?
 
 --------------------------------------------------------------------------------
 
 ## heap snapshots
 
-* start with `npm [snapshot-utils](https://www.npmjs.com/package/snapshot-utils)`
+* **tons** of data; even a small snaphot is megabytes in size
+
+* start with [`npm snapshot-utils`](https://www.npmjs.com/package/snapshot-utils)
 
 * example: [displaying all "variables" in a shapshot](http://bmeck.github.io/snapshot-utils/doc/manual/tutorial.html#get-variables-in-a-heapsnapshot)
-
-* v8 format subject to change
-
---------------------------------------------------------------------------------
-
-## access debugger from your app
-
-* tantalizing snippet from the [`vm` module](https://nodejs.org/api/vm.html#vm_vm_runindebugcontext_code)
-
-```js
-//!snippet: internal-debug.js
-```
-
-* notes on functions available, beyond the v8 source: [node-debug-context](https://github.com/pmuellr/node-debug-context)
-
 
 --------------------------------------------------------------------------------
 

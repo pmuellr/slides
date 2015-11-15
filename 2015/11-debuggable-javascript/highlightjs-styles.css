@@ -50,6 +50,10 @@ Original style from softwaremaniacs.org (c) Ivan Sagalaev <Maniac@SoftwareManiac
   color: #800;
 }
 
+.hljs-function .hljs-title {
+  color: #B00;
+}
+
 .smartquote,
 .hljs-comment,
 .hljs-annotation,

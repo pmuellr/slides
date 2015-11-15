@@ -1,5 +1,5 @@
-console.log("foo")
-// prints: foo
+console.log(__filename + ": foo")
+// prints: /path/to/script.js: foo
 
 console.log("foo", "bar")
 // prints: foo bar

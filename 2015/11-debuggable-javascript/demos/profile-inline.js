@@ -8,7 +8,7 @@ process.title = PROGRAM
 
 log('starting')
 
-setInterval(a, 10)
+setInterval(a, 50)
 
 //------------------------------------------------------------------------------
 const COUNT = 2

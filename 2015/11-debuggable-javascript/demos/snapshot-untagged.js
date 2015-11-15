@@ -19,7 +19,7 @@ function listening() {
   const port = server.address().port
   URL = `http://localhost:${port}`
   log(`starting server at ${URL}`)
-  setInterval(makeRequest, 100)
+  setInterval(makeRequest, 50)
 }
 
 //------------------------------------------------------------------------------
