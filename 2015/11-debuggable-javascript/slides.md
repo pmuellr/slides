@@ -446,6 +446,8 @@ StrongLoop and N|Solid also provide their own viewers.
 
 * **NAME YOUR FUNCTIONS**
 
+* **[always set `NODE_ENV` to `"production"`](http://apmblog.dynatrace.com/2015/07/22/the-drastic-effects-of-omitting-node_env-in-your-express-js-applications/)** (environment variable)
+
 * use `node --no-use-inlining` if your functions are getting inlined
 
 * more info at [Google's Chrome DevTools site](https://developers.google.com/web/tools/chrome-devtools/profile/rendering-tools/js-execution?hl=en)
@@ -487,9 +489,9 @@ Now you can search the snapshot for `"tag"` to see all tagged objects.
 
 ## demo - memory leak
 
-* server that leaks `request` objects - [demos/snapshot-untagged.js](demos/snapshot-untagged.js)
+* server that leaks `request` objects - [demos/snapshot-untagged.js](demos/snapshot-untagged.js.html)
 
-* same server, but tags `request` and `response` objects - [demos/snapshot-tagged.js](demos/snapshot-tagged.js)
+* same server, but tags `request` and `response` objects - [demos/snapshot-tagged.js](demos/snapshot-tagged.js.html)
 
 * run both, take heap snapshots, and you can see from the 'tagged' version
   exactly what's leaking, since `requests` are instances of `IncomingMessage`
@@ -498,7 +500,7 @@ Now you can search the snapshot for `"tag"` to see all tagged objects.
 
 ## demo - cpu profiling
 
-* program with a number of small functions - [demos/profile-inline.js](demos/profile-inline.js)
+* program with a number of small functions - [demos/profile-inline.js](demos/profile-inline.js.html)
 
 * run with no special flags - most of the functions will be inlined, and no
   longer visible in stack traces
@@ -513,12 +515,12 @@ Now you can search the snapshot for `"tag"` to see all tagged objects.
 
 class: center, middle
 
-# how can you help?
+# want to help build more debugging tools?
 
 //!embed: layout.md how can you help?
 --------------------------------------------------------------------------------
 
-## write debugging tools!
+## moar debugging tools!
 
 * lots of low hanging fruit
   * what do other languages support?
@@ -527,6 +529,16 @@ class: center, middle
 * lots of data from existing v8 debugging tools
 
 * also needed - better typesetting of code
+
+--------------------------------------------------------------------------------
+
+## Node.js Tracing Work Group
+
+* one of the many [Node.js Working Groups](https://github.com/nodejs/node/blob/master/WORKING_GROUPS.md)
+
+* working on low-level, real-time tracing APIs and tools
+
+* come join us at a hangout; meeting minutes at [github.com/nodejs/tracing-wg](https://github.com/nodejs/tracing-wg/blob/master/wg-meetings/2015-10-07.md)
 
 --------------------------------------------------------------------------------
 
