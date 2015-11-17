@@ -1,0 +1,24 @@
+{
+	"private":			true,
+  "name":         "snippets",
+  "version":      "0.0.0",
+  "description":  "snippets",
+  "license":    	"Apache-2.0",
+  "devDependencies": {
+		"async":              "1.5.x",
+		"bunyan":             "1.5.x",
+		"bole":               "2.0.x",
+		"coveralls":					"2.11.x",
+    "debug":              "0.8.x",
+		"eslint":             "1.8.x",
+    "highlight.js":       "8.0.x",
+    "hooker":             "0.2.x",
+		"longjohn":           "0.2.x",
+  	"long-stack-traces": 	"0.1.x",
+    "mocha":              "1.18.x",
+  	"q":									"1.0.1",
+		"standard":						"5.3.x",
+		"tape":               "4.2.x",
+  	"winston":						"0.7.3"
+  }
+}
