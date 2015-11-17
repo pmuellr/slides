@@ -1,5 +1,9 @@
 'use strict'
 
+// Note that if you profile this program, the functions f, e, d, c, then b will
+// rapidly disappear from the trace, as V8 is inlining those functions.
+// You can turn off this inlining by using the node option --no-use-inlining
+
 const fs = require('fs')
 const path = require('path')
 
