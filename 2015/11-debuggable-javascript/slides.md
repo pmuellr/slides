@@ -6,18 +6,29 @@ Patrick Mueller
 senior node engineer at [NodeSource](https://nodesource.com)<br>
 
 <div class="smaller"><div class="smaller"><div class="smaller">
+
+<a href="https://www.youtube.com/watch?v=msVR235vIOM&amp;ab_channel=Nodevember">YouTube video</a>
+
+<br>
+
 <a href="http://pmuellr.github.io/slides/2015/11-debuggable-javascript">
          http://pmuellr.github.io/slides/2015/11-debuggable-javascript
 </a>
+
 <br>
+
 <a href="http://pmuellr.github.io/slides/2015/11-debuggable-javascript/slides.pdf">
          http://pmuellr.github.io/slides/2015/11-debuggable-javascript/slides.pdf
 </a>
+
 <br>
+
+
 <a href="http://pmuellr.github.io/slides/">
          http://pmuellr.github.io/slides/
 </a>
 (all of Patrick's slides)
+
 </div></div></div>
 
 <style>
