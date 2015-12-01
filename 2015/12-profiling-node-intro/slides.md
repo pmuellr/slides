@@ -1,4 +1,7 @@
+
 background-image: url(images/Node-Interactive-template-2.png)
+
+//!embed: toolbar.md
 
 --------------------------------------------------------------------------------
 
