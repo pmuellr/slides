@@ -1,3 +1,7 @@
+background-image: url(images/Node-Interactive-template-2.png)
+
+--------------------------------------------------------------------------------
+
 # introduction to profiling Node.js applications
 
 Patrick Mueller
@@ -34,22 +38,28 @@ senior node engineer at [NodeSource](https://nodesource.com)<br>
 
 class: center, middle
 
-# %section 1%
+# what is profiling?
 
-//!embed: layout.md %section 1%
+//!embed: layout.md what is profiling?
 ================================================================================
 
-class: left, middle
+## profiling: performance and memory
 
-> pithy quote here
+* performance via CPU profiling
 
-[author](#quote-link)
+* memory via heap snapshots
 
 --------------------------------------------------------------------------------
 
-## slide title
+## CPU profiling
 
-* slide content
+* blah blah
+
+--------------------------------------------------------------------------------
+
+## heap snapshots
+
+* blah blah
 
 
 //!embed: layout.md
@@ -57,22 +67,20 @@ class: left, middle
 
 class: center, middle
 
-# %section-2%
+# how do you profile?
 
-//!embed: layout.md %section-2%
+//!embed: layout.md how do you profile?
 ================================================================================
 
-class: left, middle
+## profiling performance
 
-> pithy quote here
-
-[author](#quote-link)
+* blah blah
 
 --------------------------------------------------------------------------------
 
-## slide title
+## profiling memory
 
-* slide content
+* blah blah
 
 
 //!embed: layout.md
@@ -80,14 +88,21 @@ class: left, middle
 
 class: center, middle
 
-# %section-3%
+# profiling tips
 
-//!embed: layout.md %section-3%
+//!embed: layout.md profiling tips
+================================================================================
+
+
+## profiling performance
+
+* blah blah
+
 --------------------------------------------------------------------------------
 
-## slide title
+## profiling memory
 
-* slide content
+* blah blah
 
 
 //!embed: layout.md
@@ -96,3 +111,7 @@ class: center, middle
 class: center, middle
 
 # `fin`
+
+--------------------------------------------------------------------------------
+
+background-image: url(images/Node-Interactive-template-1.png)

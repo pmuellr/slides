@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>making your JavaScript debuggable</title>
+    <title>introduction to profiling Node.js applications</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <link rel="icon"       href="../../images/muellerware.png">
     <link rel="stylesheet" href="remark-custom.css">
@@ -9,6 +9,10 @@
   </head>
   <body>
     <textarea id="source" cols="100" rows="40" style="display: none;">
+
+background-image: url(images/Node-Interactive-template-2.png)
+
+---
 
 # introduction to profiling Node.js applications
 
@@ -88,7 +92,7 @@ layout: true
 
 class: center, middle
 
-# %section 1%
+# what is profiling?
 
 ---
 
@@ -96,7 +100,7 @@ layout: true
 
 <div class="page-context">
 <span class="smaller"><span class="smaller"><span class="smaller">
-<tt>%section 1%</tt>
+<tt>what is profiling?</tt>
 </span></span></span>
 </div>
 
@@ -123,100 +127,23 @@ layout: true
 
 ---
 
-class: left, middle
+## profiling: performance and memory
 
-> pithy quote here
+* performance via CPU profiling
 
-[author](#quote-link)
-
----
-
-## slide title
-
-* slide content
-
+* memory via heap snapshots
 
 ---
 
-layout: true
+## CPU profiling
 
-<div class="page-context">
-<span class="smaller"><span class="smaller"><span class="smaller">
-<tt></tt>
-</span></span></span>
-</div>
-
-<div class="page-icon">
-<span class="smaller"><span class="smaller"><span class="smaller">
-<tt>profiling Node.js applications</tt>
-</span></span></span>
-</div>
-
-{{content}}
-
-<div class="toolBar no-print">
-  <div class="navHelp" title="use the cursor keys to navigate, 'n' to toggle nav buttons, 's' to toggle control panel">
-    <img class="button-1st"  height=16 src="../../glyphicons_free/glyphicons/png/glyphicons_171_fast_backward.png">
-    <img class="button-prev" height=16 src="../../glyphicons_free/glyphicons/png/glyphicons_172_rewind.png">
-    <img class="button-next" height=16 src="../../glyphicons_free/glyphicons/png/glyphicons_176_forward.png">
-  </div>
-  <div>&nbsp;&nbsp;</div>
-  <div class="controlPanel" title="'s' to toggle control panel">
-    <img class="button-clicker" height=16 src="../../glyphicons_free/glyphicons/png/glyphicons_027_search.png"   title="use clicker">
-    <img class="button-hd"      height=16 src="../../glyphicons_free/glyphicons/png/glyphicons_391_video_hd.png" title="toggle HD">
-  </div>
-</div>
+* blah blah
 
 ---
 
-class: center, middle
+## heap snapshots
 
-# %section-2%
-
----
-
-layout: true
-
-<div class="page-context">
-<span class="smaller"><span class="smaller"><span class="smaller">
-<tt>%section-2%</tt>
-</span></span></span>
-</div>
-
-<div class="page-icon">
-<span class="smaller"><span class="smaller"><span class="smaller">
-<tt>profiling Node.js applications</tt>
-</span></span></span>
-</div>
-
-{{content}}
-
-<div class="toolBar no-print">
-  <div class="navHelp" title="use the cursor keys to navigate, 'n' to toggle nav buttons, 's' to toggle control panel">
-    <img class="button-1st"  height=16 src="../../glyphicons_free/glyphicons/png/glyphicons_171_fast_backward.png">
-    <img class="button-prev" height=16 src="../../glyphicons_free/glyphicons/png/glyphicons_172_rewind.png">
-    <img class="button-next" height=16 src="../../glyphicons_free/glyphicons/png/glyphicons_176_forward.png">
-  </div>
-  <div>&nbsp;&nbsp;</div>
-  <div class="controlPanel" title="'s' to toggle control panel">
-    <img class="button-clicker" height=16 src="../../glyphicons_free/glyphicons/png/glyphicons_027_search.png"   title="use clicker">
-    <img class="button-hd"      height=16 src="../../glyphicons_free/glyphicons/png/glyphicons_391_video_hd.png" title="toggle HD">
-  </div>
-</div>
-
----
-
-class: left, middle
-
-> pithy quote here
-
-[author](#quote-link)
-
----
-
-## slide title
-
-* slide content
+* blah blah
 
 
 ---
@@ -254,7 +181,7 @@ layout: true
 
 class: center, middle
 
-# %section-3%
+# how do you profile?
 
 ---
 
@@ -262,7 +189,7 @@ layout: true
 
 <div class="page-context">
 <span class="smaller"><span class="smaller"><span class="smaller">
-<tt>%section-3%</tt>
+<tt>how do you profile?</tt>
 </span></span></span>
 </div>
 
@@ -289,9 +216,97 @@ layout: true
 
 ---
 
-## slide title
+## profiling performance
 
-* slide content
+* blah blah
+
+---
+
+## profiling memory
+
+* blah blah
+
+
+---
+
+layout: true
+
+<div class="page-context">
+<span class="smaller"><span class="smaller"><span class="smaller">
+<tt></tt>
+</span></span></span>
+</div>
+
+<div class="page-icon">
+<span class="smaller"><span class="smaller"><span class="smaller">
+<tt>profiling Node.js applications</tt>
+</span></span></span>
+</div>
+
+{{content}}
+
+<div class="toolBar no-print">
+  <div class="navHelp" title="use the cursor keys to navigate, 'n' to toggle nav buttons, 's' to toggle control panel">
+    <img class="button-1st"  height=16 src="../../glyphicons_free/glyphicons/png/glyphicons_171_fast_backward.png">
+    <img class="button-prev" height=16 src="../../glyphicons_free/glyphicons/png/glyphicons_172_rewind.png">
+    <img class="button-next" height=16 src="../../glyphicons_free/glyphicons/png/glyphicons_176_forward.png">
+  </div>
+  <div>&nbsp;&nbsp;</div>
+  <div class="controlPanel" title="'s' to toggle control panel">
+    <img class="button-clicker" height=16 src="../../glyphicons_free/glyphicons/png/glyphicons_027_search.png"   title="use clicker">
+    <img class="button-hd"      height=16 src="../../glyphicons_free/glyphicons/png/glyphicons_391_video_hd.png" title="toggle HD">
+  </div>
+</div>
+
+---
+
+class: center, middle
+
+# profiling tips
+
+---
+
+layout: true
+
+<div class="page-context">
+<span class="smaller"><span class="smaller"><span class="smaller">
+<tt>profiling tips</tt>
+</span></span></span>
+</div>
+
+<div class="page-icon">
+<span class="smaller"><span class="smaller"><span class="smaller">
+<tt>profiling Node.js applications</tt>
+</span></span></span>
+</div>
+
+{{content}}
+
+<div class="toolBar no-print">
+  <div class="navHelp" title="use the cursor keys to navigate, 'n' to toggle nav buttons, 's' to toggle control panel">
+    <img class="button-1st"  height=16 src="../../glyphicons_free/glyphicons/png/glyphicons_171_fast_backward.png">
+    <img class="button-prev" height=16 src="../../glyphicons_free/glyphicons/png/glyphicons_172_rewind.png">
+    <img class="button-next" height=16 src="../../glyphicons_free/glyphicons/png/glyphicons_176_forward.png">
+  </div>
+  <div>&nbsp;&nbsp;</div>
+  <div class="controlPanel" title="'s' to toggle control panel">
+    <img class="button-clicker" height=16 src="../../glyphicons_free/glyphicons/png/glyphicons_027_search.png"   title="use clicker">
+    <img class="button-hd"      height=16 src="../../glyphicons_free/glyphicons/png/glyphicons_391_video_hd.png" title="toggle HD">
+  </div>
+</div>
+
+---
+
+
+## profiling performance
+
+* blah blah
+
+---
+
+## profiling memory
+
+* blah blah
 
 
 ---
@@ -330,6 +345,10 @@ layout: true
 class: center, middle
 
 # `fin`
+
+---
+
+background-image: url(images/Node-Interactive-template-1.png)
 
 
     </textarea>
