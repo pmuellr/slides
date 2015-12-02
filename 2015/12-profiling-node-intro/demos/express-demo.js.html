@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>/Users/pmuellr/Projects/slides/2015/12-profiling-node-intro/demos/express-demo/index.js</title>
+<link rel="stylesheet" type="text/css" href="highlight.css">
+</head>
+<body class="hl">
+<pre class="hl"><span class="hl str">'use strict'</span>
+
+<span class="hl kwa">const</span> path <span class="hl opt">=</span> <span class="hl kwd">require</span><span class="hl opt">(</span><span class="hl str">'path'</span><span class="hl opt">)</span>
+<span class="hl kwa">const</span> http <span class="hl opt">=</span> <span class="hl kwd">require</span><span class="hl opt">(</span><span class="hl str">'http'</span><span class="hl opt">)</span>
+<span class="hl kwa">const</span> express <span class="hl opt">=</span> <span class="hl kwd">require</span><span class="hl opt">(</span><span class="hl str">'express'</span><span class="hl opt">)</span>
+
+<span class="hl kwa">const</span> app <span class="hl opt">=</span> <span class="hl kwd">express</span><span class="hl opt">()</span>
+
+<span class="hl kwa">const</span> PORT <span class="hl opt">=</span> process<span class="hl opt">.</span>env<span class="hl opt">.</span>PORT <span class="hl opt">||</span> <span class="hl str">&quot;8000&quot;</span>
+<span class="hl kwa">const</span> URL <span class="hl opt">= `</span>http<span class="hl opt">:</span><span class="hl slc">//localhost:${PORT}`</span>
+
+process<span class="hl opt">.</span>title <span class="hl opt">=</span> path<span class="hl opt">.</span><span class="hl kwd">basename</span><span class="hl opt">(</span>__dirname<span class="hl opt">)</span>
+
+app<span class="hl opt">.</span><span class="hl kwa">set</span><span class="hl opt">(</span><span class="hl str">'view engine'</span><span class="hl opt">,</span> <span class="hl str">'jade'</span><span class="hl opt">)</span>
+app<span class="hl opt">.</span><span class="hl kwa">use</span><span class="hl opt">(</span>cacheRequest<span class="hl opt">)</span>
+app<span class="hl opt">.</span><span class="hl kwa">get</span><span class="hl opt">(</span><span class="hl str">'/'</span><span class="hl opt">,</span> renderPage<span class="hl opt">)</span>
+
+<span class="hl kwa">const</span> server <span class="hl opt">=</span> app<span class="hl opt">.</span><span class="hl kwd">listen</span><span class="hl opt">(</span>PORT<span class="hl opt">,</span> onServerListening<span class="hl opt">)</span>
+
+<span class="hl kwd">setInterval</span><span class="hl opt">(</span>pingServer<span class="hl opt">,</span> <span class="hl num">333</span><span class="hl opt">)</span>
+
+<span class="hl slc">// -----------------------------------------------------------------------------</span>
+<span class="hl kwa">function</span> <span class="hl kwd">renderPage</span> <span class="hl opt">(</span>req<span class="hl opt">,</span> res<span class="hl opt">) {</span>
+  res<span class="hl opt">.</span><span class="hl kwd">render</span><span class="hl opt">(</span><span class="hl str">'index'</span><span class="hl opt">)</span>
+<span class="hl opt">}</span>
+
+<span class="hl slc">// -----------------------------------------------------------------------------</span>
+<span class="hl kwa">function</span> <span class="hl kwd">pingServer</span> <span class="hl opt">() {</span>
+  http<span class="hl opt">.</span><span class="hl kwa">get</span><span class="hl opt">(</span>URL<span class="hl opt">,</span> res <span class="hl opt">=&gt;</span> <span class="hl kwa">null</span><span class="hl opt">)</span>
+<span class="hl opt">}</span>
+
+<span class="hl slc">// -----------------------------------------------------------------------------</span>
+<span class="hl kwa">function</span> <span class="hl kwd">onServerListening</span> <span class="hl opt">() {</span>
+  console<span class="hl opt">.</span><span class="hl kwd">log</span><span class="hl opt">(`</span>Example app listening at <span class="hl opt">${</span>URL<span class="hl opt">}`)</span>
+<span class="hl opt">}</span>
+
+<span class="hl slc">// -----------------------------------------------------------------------------</span>
+<span class="hl kwa">const</span> Requests <span class="hl opt">= []</span>
+<span class="hl kwa">function</span> <span class="hl kwd">cacheRequest</span> <span class="hl opt">(</span>req<span class="hl opt">,</span> res<span class="hl opt">,</span> next<span class="hl opt">) {</span>
+  req<span class="hl opt">.</span>__tag <span class="hl opt">=</span> <span class="hl kwa">new</span> <span class="hl kwd">TagRequest</span><span class="hl opt">()</span>
+  Requests<span class="hl opt">.</span><span class="hl kwd">push</span><span class="hl opt">(</span>req<span class="hl opt">)</span>
+  <span class="hl kwd">next</span><span class="hl opt">()</span>
+<span class="hl opt">}</span>
+
+<span class="hl slc">// -----------------------------------------------------------------------------</span>
+<span class="hl kwa">class</span> TagRequest <span class="hl opt">{}</span>
+</pre>
+</body>
+</html>
+<!--HTML generated by highlight 3.23, http://www.andre-simon.de/-->

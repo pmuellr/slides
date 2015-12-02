@@ -6,9 +6,10 @@ popd > /dev/null
 
 echo $SCRIPTPATH
 
-highlight -i $SCRIPTPATH/profile-inline.js    -o $SCRIPTPATH/profile-inline.js.html
-highlight -i $SCRIPTPATH/profile-no-inline.js -o $SCRIPTPATH/profile-no-inline.js.html
-highlight -i $SCRIPTPATH/snapshot-tagged.js   -o $SCRIPTPATH/snapshot-tagged.js.html
-highlight -i $SCRIPTPATH/snapshot-untagged.js -o $SCRIPTPATH/snapshot-untagged.js.html
+highlight -i $SCRIPTPATH/profile-inline.js     -o $SCRIPTPATH/profile-inline.js.html
+highlight -i $SCRIPTPATH/profile-no-inline.js  -o $SCRIPTPATH/profile-no-inline.js.html
+highlight -i $SCRIPTPATH/snapshot-tagged.js    -o $SCRIPTPATH/snapshot-tagged.js.html
+highlight -i $SCRIPTPATH/snapshot-untagged.js  -o $SCRIPTPATH/snapshot-untagged.js.html
+highlight -i $SCRIPTPATH/express-demo/index.js -o $SCRIPTPATH/express-demo.js.html
 
-cp $SCRIPTPATH/highlight-save.css $SCRIPTPATH/highlight.css 
+cp $SCRIPTPATH/highlight-save.css $SCRIPTPATH/highlight.css
