@@ -67,42 +67,42 @@ class: center, middle
 
 --------------------------------------------------------------------------------
 
-## time-line showing stack traces
-
-<img width="100%" src="images/cpu-profile-cdt-timeline.png">
-
---------------------------------------------------------------------------------
-
-## table showing functions time
-
-<img width="100%" src="images/cpu-profile-cdt-table.png">
-
---------------------------------------------------------------------------------
-
-## flame graph
-
-<img width="100%" src="images/cpu-profile-nsolid-flamegraph.png">
-
---------------------------------------------------------------------------------
-
-## sunburst
-
-<img width="100%" src="images/cpu-profile-nsolid-sunburst.png">
-
---------------------------------------------------------------------------------
-
-## treemap
-
-<img width="100%" src="images/cpu-profile-nsolid-treemap.png">
-
---------------------------------------------------------------------------------
-
 ## understanding CPU profiling
 
 * intro: [Google Developers: Speed Up JavaScript Execution](https://developers.google.com/web/tools/chrome-devtools/profile/rendering-tools/js-execution?hl=en)
 
 * **self time** - the time it took to run the function, **not** including any functions that it called
 * **total time** - the time it took to run the function, including any functions that it called
+
+--------------------------------------------------------------------------------
+
+**time-line from Chrome Dev Tools**
+
+<img width="100%" src="images/cpu-profile-cdt-timeline.png">
+
+--------------------------------------------------------------------------------
+
+**table from Chrome Dev Tools**
+
+<img width="100%" src="images/cpu-profile-cdt-table.png">
+
+--------------------------------------------------------------------------------
+
+**flame graph from N|Solid**
+
+<img width="100%" src="images/cpu-profile-nsolid-flamegraph.png">
+
+--------------------------------------------------------------------------------
+
+**sunburst from N|Solid**
+
+<img width="100%" src="images/cpu-profile-nsolid-sunburst.png">
+
+--------------------------------------------------------------------------------
+
+**treemap from N|Solid**
+
+<img width="100%" src="images/cpu-profile-nsolid-treemap.png">
 
 --------------------------------------------------------------------------------
 
@@ -121,11 +121,13 @@ class: center, middle
 
 ## demo time!
 
-* using N|Solid - [getting started info](https://nodesource.com/blog/getting-started-with-the-nsolid-console)
+expecting faster response time from `ab` - what's slowing down this app?
+
+* [source for the express-demo](demos/express-demo.js.html)
 
 * see the instructions in [demos/README.md](demos/README.md)
 
-* [source for the express-demo](demos/express-demo.js.html)
+* using N|Solid - [getting started info](https://nodesource.com/blog/getting-started-with-the-nsolid-console)
 
 //!embed: layout.md
 ================================================================================
@@ -139,27 +141,63 @@ class: center, middle
 
 ## what are V8 heap snapshots?
 
-* blah blah
+* JSON file describing every reachable JavaScript object in the application;
+  taking a snapshot always starts with a garbage collection
+
+* JSON files are ... large; figure 2x heap memory allocated by Node.js
+
+* triggered via single native V8 call - `TakeHeapSnapshot()`
+
+--------------------------------------------------------------------------------
+
+## understanding heap snapshots
+
+* intro: [Google Developers: Viewing Heap Snapshots](https://developers.google.com/web/tools/chrome-devtools/profile/memory-problems/heap-snapshots)
+
+* objects grouped by by constructor name
+
+* shallow size - the size of memory held by an object itself
+
+* retained size - the size of memory that can be freed once an object is deleted
 
 --------------------------------------------------------------------------------
 
 ## what kind of output can you get?
 
-* blah blah
+* large JSON file - could be 100's of MB
+
+* object counts/sizes grouped by constructor name; sortable by name / count / sizes
+
+* can "diff" snapshots to help identify leaks
+
+* can drill into or out from references in Chrome Dev Tools; references / referenced by
+
 
 --------------------------------------------------------------------------------
 
 ## how can you get heap snapshots?
 
-* blah blah
+* [npm v8-profiler](https://www.npmjs.com/package/v8-profiler) (requires
+  instrumenting your code)
+
+* [npm node-inspector](https://www.npmjs.com/package/node-inspector)
+
+* [StrongLoop arc](https://strongloop.com/node-js/devops-tools/)
+
+* [NodeSource N|Solid](https://nodesource.com/products/nsolid)
 
 --------------------------------------------------------------------------------
 
 ## demo time!
 
-see the instructions in [demos/README.md](demos/README.md)
+this app seems to be leaking memory - what objects are leaking?
 
-[source for the express-demo](demos/express-demo.js.html)
+* [source for the express-demo](demos/express-demo.js.html)
+
+* see the instructions in [demos/README.md](demos/README.md)
+
+* using N|Solid - [getting started info](https://nodesource.com/blog/getting-started-with-the-nsolid-console)
+
 
 
 //!embed: layout.md
@@ -175,14 +213,26 @@ class: center, middle
 
 ## profiling performance
 
-* blah blah
+* always look for **width** in trace visualizations; height only shows stack
+  trace which may not have any perf consequences
+
+* "script" profiling a web server: start profile, run load tester, stop profile
+
+* use node/v8 option `--no-use-inlining` to turn off function inlining; stack
+  traces may make more sense
+
 
 --------------------------------------------------------------------------------
 
 ## profiling memory
 
-* blah blah
+* easiest way to find a memory leak:
+  * take a heap snapshot; run load tester; take another heap snapshot;
+    diff in Chrome Dev Tools
 
+* 'tag' objects you think might be leaking w/easy to find class:
+
+  `req.__tag = new TagRequest()`
 
 //!embed: layout.md
 ================================================================================
