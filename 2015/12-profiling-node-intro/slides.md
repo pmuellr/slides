@@ -73,9 +73,9 @@ class: center, middle
 
 * provides times spent executing functions:
 
-  * **self time** - the time it took to run the function, **not** including any functions that it called
+  * **<u>self time</u>** - time to run the function, **not** including any functions that it called
 
-  * **total time** - the time it took to run the function, including any functions that it called
+  * **<u>total time</u>** - time to run the function, including any functions that it called
 
 --------------------------------------------------------------------------------
 
@@ -154,9 +154,9 @@ class: center, middle
 
 * object sizes/counts, grouped by constructor
 
-  * **shallow size** - the size of memory held by an object itself
+  * **<u>shallow size</u>** - the size of memory held by an object itself
 
-  * **retained size** - the size of memory that can be freed once an object is deleted
+  * **<u>retained size</u>** - the size of memory that can be freed once an object is deleted
 
 
 --------------------------------------------------------------------------------
