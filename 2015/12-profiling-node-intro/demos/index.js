@@ -5,8 +5,13 @@ const cluster = require('cluster')
 const child_process = require('child_process')
 
 const apps = [
-  {name: 'express-demo', dir: 'express-demo', program: 'index'},
-  {name: 'express-demo-opt', dir: 'express-demo', program: 'index-opt'},
+  {name: 'express-demo',          dir: 'express-demo', program: 'index'},
+
+  {name: 'Malevolent Muskrat',    dir: '.',            program: 'no-op'},
+  {name: 'Persnickety Pachyderm', dir: '.',            program: 'no-op'},
+  {name: 'Zany Zebra',            dir: '.',            program: 'no-op'},
+
+  // {name: 'express-demo-opt', dir: 'express-demo', program: 'index-opt'},
   // {name: 'profile-inline'},
   // {name: 'profile-no-inline', args: ['--no-use-inlining']},
   // {name: 'snapshot-untagged'},

@@ -1,5 +1,7 @@
 'use strict'
 
+console.log(`starting app: ${process.env.NSOLID_APPNAME}`)
+
 const path = require('path')
 const http = require('http')
 const express = require('express')

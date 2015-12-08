@@ -57,7 +57,7 @@ class: center, middle
 
 ## what does V8's CPU profiler do?
 
-* turn profiler on / off
+* trigger profiler on / off
 
 * when on, at regular intervals, V8 will capture current stack trace, with
   time stamp, and source file / line numbers
@@ -71,8 +71,11 @@ class: center, middle
 
 * intro: [Google Developers: Speed Up JavaScript Execution](https://developers.google.com/web/tools/chrome-devtools/profile/rendering-tools/js-execution?hl=en)
 
-* **self time** - the time it took to run the function, **not** including any functions that it called
-* **total time** - the time it took to run the function, including any functions that it called
+* provides times spent executing functions:
+
+  * **self time** - the time it took to run the function, **not** including any functions that it called
+
+  * **total time** - the time it took to run the function, including any functions that it called
 
 --------------------------------------------------------------------------------
 
@@ -100,12 +103,6 @@ class: center, middle
 
 --------------------------------------------------------------------------------
 
-**treemap from N|Solid**
-
-<img width="100%" src="images/cpu-profile-nsolid-treemap.png">
-
---------------------------------------------------------------------------------
-
 ## how can you get CPU profiles?
 
 * [npm v8-profiler](https://www.npmjs.com/package/v8-profiler) (requires
@@ -121,7 +118,8 @@ class: center, middle
 
 ## demo time!
 
-expecting faster response time from `ab` - what's slowing down this app?
+expecting faster response time in app when load testing with `ab` -
+**what's slowing down this app?**
 
 * [source for the express-demo](demos/express-demo.js.html)
 
@@ -154,11 +152,11 @@ class: center, middle
 
 * intro: [Google Developers: Viewing Heap Snapshots](https://developers.google.com/web/tools/chrome-devtools/profile/memory-problems/heap-snapshots)
 
-* objects grouped by by constructor name
+* object sizes/counts, grouped by constructor
 
-* shallow size - the size of memory held by an object itself
+  * **shallow size** - the size of memory held by an object itself
 
-* retained size - the size of memory that can be freed once an object is deleted
+  * **retained size** - the size of memory that can be freed once an object is deleted
 
 
 --------------------------------------------------------------------------------
@@ -168,14 +166,11 @@ class: center, middle
 <img width="100%" src="images/mem-profile-cdt-refs.png">
 
 
-
 --------------------------------------------------------------------------------
 
 ## what kind of output can you get?
 
-* large JSON file - could be 100's of MB
-
-* object counts/sizes grouped by constructor name; sortable by name / count / sizes
+* large JSON file - could be 100's of MB; figure 2x allocated heap
 
 * can "diff" snapshots to help identify leaks
 
@@ -199,7 +194,7 @@ class: center, middle
 
 ## demo time!
 
-this app seems to be leaking memory - what objects are leaking?
+this app seems to be leaking memory - **what objects are leaking?**
 
 * [source for the express-demo](demos/express-demo.js.html)
 
@@ -222,13 +217,13 @@ class: center, middle
 
 ## profiling performance
 
-* always look for **width** in trace visualizations; height only shows stack
+* look for **width** in trace visualizations; height only shows stack
   trace which may not have any perf consequences
 
 * "script" profiling a web server: start profile, run load tester, stop profile
 
 * use node/v8 option `--no-use-inlining` to turn off function inlining; stack
-  traces may make more sense
+  traces may make more sense (but no inlining!)
 
 
 --------------------------------------------------------------------------------
