@@ -39,6 +39,16 @@ senior node engineer at [NodeSource](https://nodesource.com)<br>
 //!embed: layout.md
 ================================================================================
 
+## what happened to Making Your Node.js Applications Debuggable?
+
+* this preso is a subset of that topic
+* slides available
+  * http://pmuellr.github.io/slides/2015/11-debuggable-javascript
+* video available
+  * https://www.youtube.com/watch?v=msVR235vIOM
+
+================================================================================
+
 ## what kind of profiling?
 
 * **<u>performance</u>** with V8's CPU profiler
