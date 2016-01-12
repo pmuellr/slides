@@ -1,0 +1,11 @@
+{
+  "name": "01-intro-to-profiling",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "watch": "nodemon --exec 'make' --ext js,key,pdf"
+  },
+  "author": "",
+  "license": "ISC"
+}
