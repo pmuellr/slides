@@ -2,19 +2,26 @@
 'use strict'
 
 const path = require('path')
+const events = require('events')
 const child_process = require('child_process')
 
 const PROGRAM = path.basename(__filename)
 process.title = `nsolid_${PROGRAM}`
 
-spawn('cpu-profile')
+events.defaultMaxListeners = 100
+
+spawn('cpu-hawg')
 spawn('mem-hawg')
+spawn('server-dev', [], 5)
+spawn('server-test', [], 3)
 
 setTimeout(x => x, 1000 * 60 * 60 * 24)
 
 function spawn (script, args, count) {
   if (!args) args = []
   if (!count) count = 1
+
+  const origArgs = args.slice()
 
   args.unshift(script)
   args.unshift('--no-use-inlining')
@@ -26,7 +33,7 @@ function spawn (script, args, count) {
 
   count--
   if (count <= 0) return
-  setTimeout(() => spawn(count, script), 1000)
+  setTimeout(() => spawn(script, origArgs, count), 1000)
 }
 
 function env (appName) {

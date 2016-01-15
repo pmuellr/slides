@@ -1,42 +1,43 @@
 'use strict'
 
-const http = require('http')
 const path = require('path')
 
 const PROGRAM = path.basename(__filename)
 process.title = `nsolid_${PROGRAM}`
-log('starting')
+log(`starting`)
 
-let Port = 0
+const LeakyObjectCache = new Map()
+const LeakyModelCache = new Map()
 
-const server = http.createServer(handleRequest)
+// 100 per second
+setInterval(main, 1000 / 100)
 
-server.listen(Port, function () {
-  Port = server.address().port
-  log(`server listening on http://localhost:${Port}`)
-
-  setInterval(sendRequests, 50)
-})
-
-function handleRequest (req, res) {
-  req.__tag = new RequestTag()
-  Cache.push(req)
-
-  doStuff(300000) // 300,000 ns = 0.3 ms
-  res.end('Hello, world!')
+function main () {
+  a(); b()
 }
 
-const Cache = []
+class TagObject {}
 
-class RequestTag {}
-
-function sendRequests () {
-  http.request(`http://localhost:${Port}/`, res => null).end()
+function a () {
+  const object = { prop: "val" }
+  object.__tag = new TagObject()
+  LeakyObjectCache.set(object, {})
 }
 
-function doStuff (ns) {
-  const timeStart = process.hrtime()
-  while (process.hrtime(timeStart)[1] < ns) { /* noop */ }
+class Model { constructor () { this.odd = Date.now() % 2 }}
+class TagModelExtraWork {}
+
+function b () {
+  const model = new Model()
+  processModel(model)
+  LeakyModelCache.set(model, {})
+}
+
+function processModel (model) {
+  if (model.odd) return
+
+  model.__tag = new TagModelExtraWork()
+  // ...
 }
 
 function log (message) {

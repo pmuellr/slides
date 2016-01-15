@@ -8,13 +8,11 @@ const PROGRAM = path.basename(__filename)
 process.title = `nsolid_${PROGRAM}`
 log('starting')
 
-setTimeout(main, 100)
-
-const factor = 1
+// 1 per second
+setInterval(main, 1000 / 1)
 
 function main () {
   a(); z(); z(); z()
-  setTimeout(main, 1000)
 }
 
 function a () { doStuff(1); b(); doStuff(1) }
@@ -32,6 +30,8 @@ function doStuff (ms) {
   const timeStart = Date.now()
   while (Date.now() - timeStart < ms * factor) { /* noop */ }
 }
+
+const factor = 1
 
 function log (message) {
   console.log(`${PROGRAM}:${process.pid} ${message}`)
