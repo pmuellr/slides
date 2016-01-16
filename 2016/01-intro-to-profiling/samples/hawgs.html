@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Profiling Node.js Applications</title>
+    <meta charset="utf-8">
+    <style>
+      body {
+      }
+      h1, h2, h3 {
+      }
+      .remark-code, .remark-inline-code {
+      }
+      .nsc {
+        font-style: italic;
+        float: right;
+      }
+      code.remark-code {
+        font-size: 110%;
+      }
+      .remark-slide-number {
+        display: none;
+      }
+      @media print {
+        .nsc {
+          display: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <textarea id="source">
+
+<!-- ======================================================================= -->
+
+<a class="nsc" href="http://localhost:3000/app/cpu-hawg" target="nsc">(show in N|Solid)</a>
+
+**cpu-hawg**
+
+```js
+setInterval(processThings, 1000 / 1)
+
+function processThings () {
+  a(); z(); z(); z()
+}
+
+function a () { doStuff(1); b(); doStuff(1) }
+function b () { doStuff(2); c(); doStuff(2) }
+function c () { doStuff(3); d(); doStuff(3) }
+function d () { doStuff(4); e(); doStuff(4) }
+function e () { doStuff(5); f(); doStuff(5) }
+function f () { doStuff(6) }
+
+function z () { doStuff(7); y(); doStuff(7) }
+function y () { doStuff(8); x(); doStuff(8) }
+function x () { doStuff(9) }
+```
+
+<!-- ======================================================================= -->
+
+---
+
+<a class="nsc" href="http://localhost:3000/app/mem-hawg-A1" target="nsc">(show in N|Solid)</a>
+
+**mem-hawg A1 - leaking literal JavaScript objects**
+
+```js
+function aFunction () {
+  const point = { x: 0, y: 0 }
+  ...
+  ...
+}
+```
+
+<!-- ======================================================================= -->
+
+---
+
+<a class="nsc" href="http://localhost:3000/app/mem-hawg-A2" target="nsc">(show in N|Solid)</a>
+
+**mem-hawg A2 - tagging JavaScript objects**
+
+```js
+function aFunction () {
+  const point = { x: 0, y: 0 }
+  point.__tag = new TagLiteralPoint()
+  ...
+}
+
+class TagLiteralPoint {}
+```
+
+<!-- ======================================================================= -->
+
+---
+
+<a class="nsc" href="http://localhost:3000/app/mem-hawg-B1" target="nsc">(show in N|Solid)</a>
+
+**mem-hawg B1 - leaking class instances, but why?**
+
+```js
+function aFunction () {
+  const point = new Point()
+
+  if (point.x > 25) {
+    processPointA(point)
+  } else {
+    processPointB(point)
+  }
+}
+
+function processPointA (point) {
+  ...
+  ...
+}
+
+function processPointB (point) {
+  ...
+  ...
+}
+```
+
+<!-- ======================================================================= -->
+
+---
+
+<a class="nsc" href="http://localhost:3000/app/mem-hawg-B2" target="nsc">(show in N|Solid)</a>
+
+**mem-hawg B2 - tagging code paths**
+
+```js
+function aFunction () {
+  const point = new Point()
+
+  if (point.x > 25) {
+    processPointA(point)
+  } else {
+    processPointB(point)
+  }
+}
+
+function processPointA (point) {
+  point.__tagA = new TagProcessedPointA()
+  ...
+}
+
+function processPointB (point) {
+  point.__tagB = new TagProcessedPointB()
+  ...
+}
+
+class TagProcessedPointA {}; class TagProcessedPointB {}
+```
+
+    </textarea>
+    <script src="../../../remark/0.12.0/remark.min.js">
+    </script>
+    <script>
+      var slideshow = remark.create();
+    </script>
+  </body>
+</html>

@@ -7,19 +7,7 @@ process.title = `nsolid_${PROGRAM}`
 log(`starting`)
 
 // 100 per second
-setInterval(main, 1000 / 100)
-
-function main () {
-  a(); b()
-}
-
-class TagLiteralPoint {}
-
-function a () {
-  const point = { x: 0, y: 0 }
-  point.__tag = new TagLiteralPoint()
-  maybeLeakyFunction(point)
-}
+setInterval(aFunction, 1000 / 100)
 
 class Point {
   constructor () {
@@ -28,10 +16,7 @@ class Point {
   }
 }
 
-class TagProcessedPointA {}
-class TagProcessedPointB {}
-
-function b () {
+function aFunction () {
   const point = new Point()
 
   if (point.x > 25) {
@@ -42,14 +27,17 @@ function b () {
 }
 
 function processPointA (point) {
-  point.__tag = new TagProcessedPointA()
+  point.__tagA = new TagProcessedPointA()
   maybeLeakyFunction(point)
 }
 
 function processPointB (point) {
-  point.__tag = new TagProcessedPointB()
+  point.__tagB = new TagProcessedPointB()
   maybeNotLeakyFunction(point)
 }
+
+class TagProcessedPointA {}
+class TagProcessedPointB {}
 
 const LeakyCache = new Map()
 

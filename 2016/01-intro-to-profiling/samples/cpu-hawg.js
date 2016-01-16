@@ -9,9 +9,9 @@ process.title = `nsolid_${PROGRAM}`
 log('starting')
 
 // 1 per second
-setInterval(main, 1000 / 1)
+setInterval(processThings, 1000 / 1)
 
-function main () {
+function processThings () {
   a(); z(); z(); z()
 }
 

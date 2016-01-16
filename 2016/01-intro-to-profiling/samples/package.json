@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "standard",
+    "test": "standard & npm start",
     "watch": "nodemon --exec 'npm test' --ext js,json",
     "start": "node run.js"
   },
