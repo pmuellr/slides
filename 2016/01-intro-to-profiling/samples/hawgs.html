@@ -11,14 +11,25 @@
       .remark-code, .remark-inline-code {
       }
       .nsc {
+        padding: 0.25em 1em;
+        background-color: #fff;
         font-style: italic;
         float: right;
+        border-radius: 0.25em;
+      }
+      p strong {
+        padding: 0.25em 1em;
+        background-color: #fff;
+        border-radius: 0.25em;
       }
       code.remark-code {
         font-size: 110%;
       }
       .remark-slide-number {
         display: none;
+      }
+      .remark-slide-content {
+        background-color: #f0f0f0;
       }
       @media print {
         .nsc {
@@ -61,41 +72,7 @@ function x () { doStuff(9) }
 
 <a class="nsc" href="http://localhost:3000/app/mem-hawg-A1" target="nsc">(show in N|Solid)</a>
 
-**mem-hawg A1 - leaking literal JavaScript objects**
-
-```js
-function aFunction () {
-  const point = { x: 0, y: 0 }
-  ...
-  ...
-}
-```
-
-<!-- ======================================================================= -->
-
----
-
-<a class="nsc" href="http://localhost:3000/app/mem-hawg-A2" target="nsc">(show in N|Solid)</a>
-
-**mem-hawg A2 - tagging JavaScript objects**
-
-```js
-function aFunction () {
-  const point = { x: 0, y: 0 }
-  point.__tag = new TagLiteralPoint()
-  ...
-}
-
-class TagLiteralPoint {}
-```
-
-<!-- ======================================================================= -->
-
----
-
-<a class="nsc" href="http://localhost:3000/app/mem-hawg-B1" target="nsc">(show in N|Solid)</a>
-
-**mem-hawg B1 - leaking class instances, but why?**
+**mem-hawg A1 - leaking class instances, but why?**
 
 ```js
 function aFunction () {
@@ -123,9 +100,9 @@ function processPointB (point) {
 
 ---
 
-<a class="nsc" href="http://localhost:3000/app/mem-hawg-B2" target="nsc">(show in N|Solid)</a>
+<a class="nsc" href="http://localhost:3000/app/mem-hawg-A2" target="nsc">(show in N|Solid)</a>
 
-**mem-hawg B2 - tagging code paths**
+**mem-hawg A2 - tagging code paths**
 
 ```js
 function aFunction () {
@@ -150,6 +127,42 @@ function processPointB (point) {
 
 class TagProcessedPointA {}; class TagProcessedPointB {}
 ```
+
+<!-- ======================================================================= -->
+
+---
+
+<a class="nsc" href="http://localhost:3000/app/mem-hawg-B1" target="nsc">(show in N|Solid)</a>
+
+**mem-hawg B1 - leaking literal JavaScript objects**
+
+```js
+function aFunction () {
+  const point = { x: 0, y: 0 }
+  ...
+  ...
+}
+```
+
+<!-- ======================================================================= -->
+
+---
+
+<a class="nsc" href="http://localhost:3000/app/mem-hawg-B2" target="nsc">(show in N|Solid)</a>
+
+**mem-hawg B2 - tagging literal JavaScript objects**
+
+```js
+function aFunction () {
+  const point = { x: 0, y: 0 }
+  point.__tag = new TagLiteralPoint()
+  ...
+}
+
+class TagLiteralPoint {}
+```
+
+<!-- ======================================================================= -->
 
     </textarea>
     <script src="../../../remark/0.12.0/remark.min.js">

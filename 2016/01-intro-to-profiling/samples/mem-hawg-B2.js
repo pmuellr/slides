@@ -9,43 +9,18 @@ log(`starting`)
 // 100 per second
 setInterval(aFunction, 1000 / 100)
 
-class Point {
-  constructor () {
-    this.x = Math.random() * 100
-    this.y = Math.random() * 100
-  }
-}
-
 function aFunction () {
-  const point = new Point()
-
-  if (point.x > 25) {
-    processPointA(point)
-  } else {
-    processPointB(point)
-  }
-}
-
-function processPointA (point) {
-  point.__tagA = new TagProcessedPointA()
+  const point = { x: 0, y: 0 }
+  point.__tag = new TagLiteralPoint()
   maybeLeakyFunction(point)
 }
 
-function processPointB (point) {
-  point.__tagB = new TagProcessedPointB()
-  maybeNotLeakyFunction(point)
-}
-
-class TagProcessedPointA {}
-class TagProcessedPointB {}
+class TagLiteralPoint {}
 
 const LeakyCache = new Map()
 
 function maybeLeakyFunction (object) {
   LeakyCache.set(object, LeakyCache.size)
-}
-
-function maybeNotLeakyFunction (object) {
 }
 
 function log (message) {
