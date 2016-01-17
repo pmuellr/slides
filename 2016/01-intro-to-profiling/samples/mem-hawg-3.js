@@ -9,13 +9,18 @@ log(`starting`)
 // 100 per second
 setInterval(aFunction, 1000 / 100)
 
-function aFunction () {
-  const point = { x: 0, y: 0 }
-  point.__tag = new TagLiteralPoint()
-  maybeLeakyFunction(point)
-}
+class TagPoint2D {}
+class TagPoint3D {}
 
-class TagLiteralPoint {}
+function aFunction (someX, someY, someZ) {
+  const point2D = { x: someX, y: someY }
+  const point3D = { x: someX, y: someY, z: someZ }
+
+  point2D.__tag = new TagPoint2D()
+  point3D.__tag = new TagPoint3D()
+
+  maybeLeakyFunction(point2D)
+}
 
 const LeakyCache = new Map()
 

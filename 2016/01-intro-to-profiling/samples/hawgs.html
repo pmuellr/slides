@@ -43,7 +43,88 @@
 
 <!-- ======================================================================= -->
 
-<a class="nsc" href="http://localhost:3000/app/cpu-hawg" target="nsc">(show in N|Solid)</a>
+<a class="nsc" href="http://localhost:3000/" target="nsc">(show in N|Solid)</a>
+
+**mem-hawg-1 - leaking class instances**
+
+```js
+...
+
+class Point2D {
+  constructor (x, y) {
+    ...
+  }
+}
+
+class Point3D extends Point2D {
+  constructor (x, y, z) {
+    ...
+  }
+}
+
+...
+```
+
+<!-- ======================================================================= -->
+
+---
+
+<a class="nsc" href="http://localhost:3000/" target="nsc">(show in N|Solid)</a>
+
+**mem-hawg-2 - leaking plain old objects**
+
+```js
+...
+
+const point2D = { x: someX, y: someY }
+
+doSomething(point2D)
+
+...
+
+const point3D = { x: someX, y: someY, z: someZ }
+
+doSomething(point3D)
+
+...
+```
+
+<!-- ======================================================================= -->
+
+---
+
+<a class="nsc" href="http://localhost:3000/" target="nsc">(show in N|Solid)</a>
+
+**mem-hawg-3 - leaking plain old objects**
+
+```js
+...
+
+const point2D = { x: someX, y: someY }
+point2D.__tag = new TagPoint2D()
+
+doSomething(point2D)
+
+...
+
+const point3D = { x: someX, y: someY, z: someZ }
+point3D.__tag = new TagPoint3D()
+
+doSomething(point3D)
+
+...
+
+class TagPoint2D {}
+class TagPoint3D {}
+
+...
+```
+
+<!-- ======================================================================= -->
+
+---
+
+<a class="nsc" href="http://localhost:3000/" target="nsc">(show in N|Solid)</a>
 
 **cpu-hawg**
 
@@ -64,102 +145,6 @@ function f () { doStuff(6) }
 function z () { doStuff(7); y(); doStuff(7) }
 function y () { doStuff(8); x(); doStuff(8) }
 function x () { doStuff(9) }
-```
-
-<!-- ======================================================================= -->
-
----
-
-<a class="nsc" href="http://localhost:3000/app/mem-hawg-A1" target="nsc">(show in N|Solid)</a>
-
-**mem-hawg A1 - leaking class instances, but why?**
-
-```js
-function aFunction () {
-  const point = new Point()
-
-  if (point.x > 25) {
-    processPointA(point)
-  } else {
-    processPointB(point)
-  }
-}
-
-function processPointA (point) {
-  ...
-  ...
-}
-
-function processPointB (point) {
-  ...
-  ...
-}
-```
-
-<!-- ======================================================================= -->
-
----
-
-<a class="nsc" href="http://localhost:3000/app/mem-hawg-A2" target="nsc">(show in N|Solid)</a>
-
-**mem-hawg A2 - tagging code paths**
-
-```js
-function aFunction () {
-  const point = new Point()
-
-  if (point.x > 25) {
-    processPointA(point)
-  } else {
-    processPointB(point)
-  }
-}
-
-function processPointA (point) {
-  point.__tagA = new TagProcessedPointA()
-  ...
-}
-
-function processPointB (point) {
-  point.__tagB = new TagProcessedPointB()
-  ...
-}
-
-class TagProcessedPointA {}; class TagProcessedPointB {}
-```
-
-<!-- ======================================================================= -->
-
----
-
-<a class="nsc" href="http://localhost:3000/app/mem-hawg-B1" target="nsc">(show in N|Solid)</a>
-
-**mem-hawg B1 - leaking literal JavaScript objects**
-
-```js
-function aFunction () {
-  const point = { x: 0, y: 0 }
-  ...
-  ...
-}
-```
-
-<!-- ======================================================================= -->
-
----
-
-<a class="nsc" href="http://localhost:3000/app/mem-hawg-B2" target="nsc">(show in N|Solid)</a>
-
-**mem-hawg B2 - tagging literal JavaScript objects**
-
-```js
-function aFunction () {
-  const point = { x: 0, y: 0 }
-  point.__tag = new TagLiteralPoint()
-  ...
-}
-
-class TagLiteralPoint {}
 ```
 
 <!-- ======================================================================= -->

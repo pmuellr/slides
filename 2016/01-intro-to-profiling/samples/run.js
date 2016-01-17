@@ -11,10 +11,9 @@ process.title = `nsolid_${PROGRAM}`
 events.defaultMaxListeners = 100
 
 spawn('cpu-hawg')
-spawn('mem-hawg-A1')
-spawn('mem-hawg-A2')
-spawn('mem-hawg-B1')
-spawn('mem-hawg-B2')
+spawn('mem-hawg-1')
+spawn('mem-hawg-2')
+spawn('mem-hawg-3')
 
 setTimeout(x => x, 1000 * 60 * 60 * 24)
 

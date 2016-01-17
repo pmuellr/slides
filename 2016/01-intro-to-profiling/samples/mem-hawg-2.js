@@ -9,29 +9,11 @@ log(`starting`)
 // 100 per second
 setInterval(aFunction, 1000 / 100)
 
-class Point {
-  constructor () {
-    this.x = Math.random() * 100
-    this.y = Math.random() * 100
-  }
-}
+function aFunction (someX, someY, someZ) {
+  const point2D = { x: someX, y: someY }
+  const point3D = { x: someX, y: someY, z: someZ }
 
-function aFunction () {
-  const point = new Point()
-
-  if (point.x > 25) {
-    processPointA(point)
-  } else {
-    processPointB(point)
-  }
-}
-
-function processPointA (point) {
-  maybeLeakyFunction(point)
-}
-
-function processPointB (point) {
-  maybeNotLeakyFunction(point)
+  maybeLeakyFunction(point2D)
 }
 
 const LeakyCache = new Map()
