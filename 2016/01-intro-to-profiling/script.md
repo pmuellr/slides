@@ -1,25 +1,80 @@
 Hello.
 
 I'm Patrick Mueller.  I'm a Senior Node Engineer at NodeSource, where I work
-on diagnostic tooling around Node.js.
+on diagnostic tooling for Node.js.
 
-Today I'm going to be providing an introduction to the topic of profiling
-your Node.js applications.
+Today I'm going to be talking about profiling Node.js applications.
 
-What is profiling?  Profiling a program generally means capturing statistics
-about the program while it's running, and then providing some kind of useful
-visualization of those statistics.  Those visualizations are intended to
-provide a deeper view into your application performance, as well as help
-spot problem areas in your application, like memory leaks or code bottlenecks.
+--------------------------------------------------------------------------------
+
+If you have any question during this webinar, you can post a question to Twitter
+with the hashtag: #needtonode and we'll get an answer for at the end of the
+webinar.
+
+--------------------------------------------------------------------------------
+
+First a little shout-out to the company I work for - NodeSource.
+
+NodeSource provides products and services focused on Node.js in the enterprise,
+and I'll be talking about one of those products today - named N|Solid.
+
+So, if you're working on Node.js in the enterprise, come talk to us!
+
+--------------------------------------------------------------------------------
+
+Here's what we're going to talk about:
+
+* I'll ... [read]
+
+* I'll ... [read]
+
+* I'll ... [read]
+
+--------------------------------------------------------------------------------
+
+What is profiling?  [read]
+
+In the end, profiling "provides deep view into application performance",
+what's happening in the black box that is Node.js.
+
+Stop guessing at what your program is doing and get some objective numbers
+measuring things.
+
+--------------------------------------------------------------------------------
 
 The two profiling tools I'll be talking about today are V8's heap profiler and
-CPU profiler.  Both of these tools are baked into V8, and so available for use
-in Node.js.  You can access the tools via the npm package
-[v8-profiler](https://npmjs.org/package/v8-profiler).  Or, you can use a
-node distribution that provides access direct access to the tools, like
-[N|Solid](https://nodesource.com/products/nsolid) from NodeSource.
+CPU profiler.  Both of these tools are baked into V8, and so they're available for use
+in Node.js.  
 
-Let's look at the heap profiler first.
+The heap profiler measures memory usage.  It can beused to find a memory
+leak, and generally, to optimize the memory use of your program.  Perhaps
+your data structures are using more memory than you thought.  
+
+The CPU profiler measures function execution time, and can be used to find
+a performance bottleneck, and to generally optimize the performance of your
+program.  Perhaps your algorithms are running slower than you thought.
+
+--------------------------------------------------------------------------------
+
+So what's the real value in profiling?  Why is it worth the time to profile
+your application?
+
+Profiling can help you
+
+[read]
+
+Save CPU cycles, save memory usage, save time finding problems in your application,
+
+In the end, all these will save you money!  
+
+Your boss will love you!
+
+--------------------------------------------------------------------------------
+
+Let's look at the heap snapshot profiler first, and see what kind of insights
+it provides.
+
+--------------------------------------------------------------------------------
 
 The heap profiler tool will generate a heap snapshot upon request.  The
 heap snapshot is a JSON-able description of all the JavaScript objects allocated
@@ -28,14 +83,19 @@ twice the amount of RAM your application has allocated.  Eg, if you have an
 application which has 100MB of space allocated for JavaScript objects, plan on
 the heap snapshot being a JSON object of at least 200MB.
 
-Once the heap snapshot is created, it's displayed in a visualization.  The
-current state of the art for heap snapshot visualizations is to show a tabular
-view of the objects, grouped by constructor name.  Also known as class name.
-Statistics available are:
+--------------------------------------------------------------------------------
+
+Once the heap snapshot is created, it's displayed in a visualization.  
+
+The current state of the art for heap snapshot visualizations is to show a
+tabular view of the objects, grouped by constructor name.  Statistics available
+are:
 
 * number of instances of this class
 * "shallow size" of all the instances
 * "retained size" of all the instances
+
+--------------------------------------------------------------------------------
 
 Shallow size is the size of the object, without any of the things that it
 references, which also includes properties.  Typically on Strings and
@@ -44,12 +104,173 @@ Arrays have interesting shallow size values.
 Retained size is the size of all the objects that can be freed once this object
 is garbage collected.  This is usually the most interesting number to look at.
 
+--------------------------------------------------------------------------------
+
+This is a  visualization from Chrome Dev Tools which allows you to
+"diff" two separate heap snapshot files.  You can see that a number of new
+Point2D objects were created, and none were garbage collected.  These are
+probably leaking!
+
+--------------------------------------------------------------------------------
+
+Here's another visualization from Chrome Dev Tools that shows you which objects
+reference the objects you are investigating.  In this case, a Point2D is
+referenced by a few objects which end up being referenced by a module variable
+named LeakyCache.  Time to start looking at your implementation of LeakyCache,
+I think it's leaking!
+
+--------------------------------------------------------------------------------
+
+Now let's take a look at the CPU profiler, and see what kind of insights
+it provides.
+
+--------------------------------------------------------------------------------
+
+The CPU profiler will be run for some number of seconds, and then generate
+a JSON-able description of all the stack frames it has captured over that
+time frame.
+
+One of the primary visualizations of this data is a flame graph, which is
+what we're showing here.
+
+The x-axis measure the time spent in a a function, and the y-axis is
+showing functions called by the function below it.
+
+In this case, I've selected the "doStuff" function, and we can see the
+full stack frame on the right.  doStuff was called by x, which was called
+by y, which was called by z, and so on.  In addition, this visualization shows
+all the doStuff functions called on other stack frames with the lightest blue
+coloring.  We can see that doStuff seems to be consuming most of the time in
+our program.
+
+The call stack on the right also shows the source location of the function,
+and the self and total times for the function.
+
+--------------------------------------------------------------------------------
+
+What are self time and total time?
+
+[read]
+
+Also note that source location is associated with the function.
+
+And though you can't see it from this profile visualization, if you use
+anonymous functions, they'll show up as "(anonymous function)".  So you
+should try to name your functions so that they'll show up nicely in the
+CPU profile.
+
+Last note, v8 aggressively inlines functions, which means for small functions
+that are called a lot, it will put the body of that function into the caller,
+to avoid having to make a function call.  This can yield stack traces with
+missing entries.  In case that makes your profiles hard to follow, you can
+use the --no-use-inlining flag when you run your Node.js program to disable
+inlining.  But note your program will probably run a bit slower when you do this.
+
+--------------------------------------------------------------------------------
+
+Here's another visualization of a CPU profile, called a sunburst.  It's the
+same as the flamegraph, but the x-axis is wrapped around a circle.  It
+exaggerates function calls at greater stack depth.
+
+--------------------------------------------------------------------------------
+
+Here's another visualization of a CPU profile, as a treemap.  The tree map
+represents the self time of a function as the area of the rectangle.  Here
+you can see all the doStuff functions highlighted, taking up almost all the
+area of the graph.  The other functions - in darker blue - are almost
+negligible.
+
+--------------------------------------------------------------------------------
+
+All right, so that's cool useful stuff.  Now, how do I actually use these
+profilers?
+
+--------------------------------------------------------------------------------
+
+One way to profile your code is with the v8-profiler package on npm.  With the
+v8-profiler package you'll manually instrument your application to generate
+the profiling data, and then load the data into Chrome Dev Tools to visualize it.
+
+Another way to provide your code is to use the N|Solid product from NodeSource.
+With N|Solid, you can generate and view the profiling data with the click of a
+button.
+
+--------------------------------------------------------------------------------
+
+Here are the steps to generate and visualize profiling data using v8-profiler
+
+[read]
+
+--------------------------------------------------------------------------------
+
+The other way, which I'll demonstrate in a bit, is using N|Solid.  What is
+N|Solid, I hear you saying?
+
+[read]
+
+--------------------------------------------------------------------------------
+
+To generate and visualize profile data with N|Solid, you'll
+
+[read]
+
+--------------------------------------------------------------------------------
+
+OK, time for a demo.  I have a couple of sample programs I'm already running,
+which we will profile with N|Solid.
+
+--------------------------------------------------------------------------------
+
+demo script here
+
+--------------------------------------------------------------------------------
+
+Ok, some other bits around profiling.  If this sort of thing is something you'd
+like to get involved in, to provide better profiling tools and visualization,
+you might want to check out the Node.js Tracing Work Group, which covers
+tooling like this.
+
+If you have ideas about other sorts of visualizations for heap snapshots and
+CPU profiles - good news - those file formats are JSON, so can easily be
+processed by your own visualizers.  Just write a program that reads JSON and
+generates some kind of a visualization.
+
+--------------------------------------------------------------------------------
+
+If you're interested in N|Solid, you can download it right from our web site.
+It's free for development use.  I also have some links here for some
+getting started blog posts I've written on the NodeSource blog.
+
+--------------------------------------------------------------------------------
+
+I've also listed some references to Google's documentation on heap snapshots
+and CPU profiles from their Chrome documentation.  
+
+--------------------------------------------------------------------------------
+
+Any questions? Post them to Twitter with the hashtag #needtonode
+
+--------------------------------------------------------------------------------
+
+And that's it!  Do we have any questions?
+
+
+
+
+
+
+
+
+
+
+Here's another visualization from Chrome Dev Tools that shows you which objects
+
 So, let's see how we can create a heap snapshot and display it in a
 heap snapshot visualization.
 
 If you're using N|Solid, all you're going to need to do is click on a button
 to generate and display the heap snapshot.  Otherwise you can use the
-open-source `v8-profiler` package to do this.
+npm package `v8-profiler` to do this.
 
 To instrument your application to use `v8-profiler`, do the following:
 
