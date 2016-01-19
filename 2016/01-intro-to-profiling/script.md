@@ -11,6 +11,10 @@ If you have any question during this webinar, you can post a question to Twitter
 with the hashtag: #needtonode and we'll get an answer for at the end of the
 webinar.
 
+I'll also be posting a link to these slides at the end.  The slides include
+some links to other references, so you don't need to try to copy URLs down
+on the slides during the presentation.
+
 --------------------------------------------------------------------------------
 
 First a little shout-out to the company I work for - NodeSource.

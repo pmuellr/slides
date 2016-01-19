@@ -45,7 +45,9 @@
 
 <a class="nsc" href="http://localhost:3000/" target="nsc">(show in N|Solid)</a>
 
-**mem-hawg-1 - leaking class instances**
+**mem-hawg-1.js - leaking class instances**
+
+see gist: <https://gist.github.com/pmuellr/2c7e9c7b95352d1b33e0>
 
 ```js
 ...
@@ -73,6 +75,8 @@ class Point3D extends Point2D {
 
 **mem-hawg-2 - leaking plain old objects**
 
+see gist: <https://gist.github.com/pmuellr/2c7e9c7b95352d1b33e0>
+
 ```js
 ...
 
@@ -96,6 +100,8 @@ doSomething(point3D)
 <a class="nsc" href="http://localhost:3000/" target="nsc">(show in N|Solid)</a>
 
 **mem-hawg-3 - leaking plain old objects**
+
+see gist: <https://gist.github.com/pmuellr/2c7e9c7b95352d1b33e0>
 
 ```js
 ...
@@ -127,6 +133,8 @@ class TagPoint3D {}
 <a class="nsc" href="http://localhost:3000/" target="nsc">(show in N|Solid)</a>
 
 **cpu-hawg**
+
+see gist: <https://gist.github.com/pmuellr/2c7e9c7b95352d1b33e0>
 
 ```js
 setInterval(processThings, 1000 / 1)
