@@ -1,0 +1,12 @@
+{
+  "tunnel":    "cf-ssh",
+
+  "storageApp": {
+    "user":       "user",
+    "password":   "pass",
+    "cfapi":      "https://api.local.pcfdev.io",
+    "org":        "pcfdev-org",
+    "space":      "pcfdev-space",
+    "app":        "nsolid-storage"
+  }
+}

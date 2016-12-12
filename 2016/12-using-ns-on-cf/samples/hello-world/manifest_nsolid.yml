@@ -1,0 +1,8 @@
+---
+applications:
+- name:      hello-world-nsolid
+  memory:    128M
+  command:   node server
+  buildpack: nsolid_buildpack
+  services:
+    - nsolid-storage

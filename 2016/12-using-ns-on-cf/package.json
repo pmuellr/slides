@@ -1,0 +1,7 @@
+{
+  "name": "12-using-ns-on-cf",
+  "version": "1.0.0",
+  "scripts": {
+    "watch": "nodemon --exec 'make' --ext js,key,pdf"
+  }
+}
