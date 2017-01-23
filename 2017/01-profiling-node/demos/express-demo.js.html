@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>/Users/pmuellr/Projects/slides/2017/01-profiling-node/demos/express-demo/index.js</title>
+<link rel="stylesheet" type="text/css" href="highlight.css">
+</head>
+<body class="hl">
+<pre class="hl"><span class="hl str">&apos;use strict&apos;</span>
+
+<span class="hl kwa">const</span> url <span class="hl opt">=</span> <span class="hl kwd">require</span><span class="hl opt">(</span><span class="hl str">&apos;url&apos;</span><span class="hl opt">)</span>
+<span class="hl kwa">const</span> path <span class="hl opt">=</span> <span class="hl kwd">require</span><span class="hl opt">(</span><span class="hl str">&apos;path&apos;</span><span class="hl opt">)</span>
+<span class="hl kwa">const</span> http <span class="hl opt">=</span> <span class="hl kwd">require</span><span class="hl opt">(</span><span class="hl str">&apos;http&apos;</span><span class="hl opt">)</span>
+<span class="hl kwa">const</span> express <span class="hl opt">=</span> <span class="hl kwd">require</span><span class="hl opt">(</span><span class="hl str">&apos;express&apos;</span><span class="hl opt">)</span>
+
+<span class="hl kwa">const</span> app <span class="hl opt">=</span> <span class="hl kwd">express</span><span class="hl opt">()</span>
+
+<span class="hl kwa">const</span> PORT <span class="hl opt">=</span> process<span class="hl opt">.</span>env<span class="hl opt">.</span>PORT <span class="hl opt">||</span> <span class="hl str">&quot;3000&quot;</span>
+<span class="hl kwa">const</span> URL <span class="hl opt">= `</span>http<span class="hl opt">:</span><span class="hl slc">//localhost:${PORT}/`</span>
+<span class="hl kwa">const</span> CHECK_FINISHED_MS <span class="hl opt">=</span> <span class="hl num">5</span> <span class="hl opt">*</span> <span class="hl num">60</span> <span class="hl opt">*</span> <span class="hl num">1000</span> <span class="hl slc">// 5 minutes</span>
+<span class="hl kwa">const</span> SIMULATE_CLIENT <span class="hl opt">=</span> <span class="hl kwa">true</span>
+
+process<span class="hl opt">.</span>title <span class="hl opt">=</span> path<span class="hl opt">.</span><span class="hl kwd">basename</span><span class="hl opt">(</span>__dirname<span class="hl opt">)</span>
+
+app<span class="hl opt">.</span><span class="hl kwa">use</span><span class="hl opt">(</span>ensureFinished<span class="hl opt">)</span>
+app<span class="hl opt">.</span><span class="hl kwa">set</span><span class="hl opt">(</span><span class="hl str">&apos;views&apos;</span><span class="hl opt">,</span> path<span class="hl opt">.</span><span class="hl kwd">join</span><span class="hl opt">(</span>__dirname<span class="hl opt">,</span> <span class="hl str">&apos;views&apos;</span><span class="hl opt">))</span>
+app<span class="hl opt">.</span><span class="hl kwa">set</span><span class="hl opt">(</span><span class="hl str">&apos;view engine&apos;</span><span class="hl opt">,</span> <span class="hl str">&apos;jade&apos;</span><span class="hl opt">)</span>
+app<span class="hl opt">.</span><span class="hl kwa">get</span><span class="hl opt">(</span><span class="hl str">&apos;/&apos;</span><span class="hl opt">,</span> renderPage<span class="hl opt">)</span>
+
+<span class="hl kwa">const</span> server <span class="hl opt">=</span> app<span class="hl opt">.</span><span class="hl kwd">listen</span><span class="hl opt">(</span>PORT<span class="hl opt">,</span> onServerListening<span class="hl opt">)</span>
+
+<span class="hl slc">// simulate 10 clients per second making requests</span>
+<span class="hl kwa">if</span> <span class="hl opt">(</span>SIMULATE_CLIENT<span class="hl opt">) {</span>
+  <span class="hl kwd">setInterval</span><span class="hl opt">(</span>simulateClient<span class="hl opt">,</span> <span class="hl num">100</span><span class="hl opt">)</span>
+<span class="hl opt">}</span>
+
+<span class="hl slc">// simulate a client making a GET / request, as a built-in performance tester</span>
+<span class="hl kwa">function</span> <span class="hl kwd">simulateClient</span> <span class="hl opt">() {</span>
+  http<span class="hl opt">.</span><span class="hl kwa">get</span><span class="hl opt">(</span>URL<span class="hl opt">, (</span>res<span class="hl opt">) =&gt;</span> <span class="hl kwa">null</span><span class="hl opt">)</span>
+<span class="hl opt">}</span>
+
+<span class="hl slc">// render the main page</span>
+<span class="hl kwa">function</span> <span class="hl kwd">renderPage</span> <span class="hl opt">(</span>req<span class="hl opt">,</span> res<span class="hl opt">) {</span>
+  res<span class="hl opt">.</span><span class="hl kwd">render</span><span class="hl opt">(</span><span class="hl str">&apos;index&apos;</span><span class="hl opt">)</span>
+<span class="hl opt">}</span>
+
+<span class="hl slc">// print a message when the server starts</span>
+<span class="hl kwa">function</span> <span class="hl kwd">onServerListening</span> <span class="hl opt">() {</span>
+  console<span class="hl opt">.</span><span class="hl kwd">log</span><span class="hl opt">(`</span>Example app listening at <span class="hl opt">${</span>URL<span class="hl opt">}`)</span>
+<span class="hl opt">}</span>
+
+<span class="hl slc">// check every request to make sure it actually finished</span>
+<span class="hl kwa">function</span> <span class="hl kwd">ensureFinished</span> <span class="hl opt">(</span>req<span class="hl opt">,</span> res<span class="hl opt">,</span> next<span class="hl opt">) {</span>
+  <span class="hl kwd">setTimeout</span><span class="hl opt">(</span>checkFinished<span class="hl opt">,</span> CHECK_FINISHED_MS<span class="hl opt">)</span>
+  <span class="hl kwd">next</span><span class="hl opt">()</span>
+
+  <span class="hl kwa">function</span> <span class="hl kwd">checkFinished</span> <span class="hl opt">() {</span>
+    <span class="hl kwa">if</span> <span class="hl opt">(!</span>res<span class="hl opt">.</span>finished<span class="hl opt">) {</span>
+      console<span class="hl opt">.</span><span class="hl kwd">log</span><span class="hl opt">(</span><span class="hl str">&apos;processing for ${req.method} ${req.url} never finished!&apos;</span><span class="hl opt">)</span>
+    <span class="hl opt">}</span>
+  <span class="hl opt">}</span>
+<span class="hl opt">}</span>
+</pre>
+</body>
+</html>
+<!--HTML generated by highlight 3.32, http://www.andre-simon.de/-->

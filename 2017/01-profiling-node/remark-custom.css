@@ -1,0 +1,182 @@
+/* colors */
+
+.remark-slide-scaler {
+  -moz-box-shadow:    inherit;
+  -webkit-box-shadow: inherit;
+  box-shadow:         inherit;
+}
+
+body, .remark-container {
+  background:         #000;
+}
+
+body .remark-container, body .remark-slide .remark-slide-content {
+  background:         #000;
+  color:              #CCC;
+}
+
+blockquote {
+  margin-left:        0;
+  padding-left:       1em;
+  border-left:        2px solid #777;
+  font-style:         italic;
+  font-family:        serif;
+}
+
+pre {
+  color:              #333;
+  background:         #DDD;
+}
+
+code .hilite {
+  color:              #090;
+}
+
+body a:visited, body a {
+  color:              #99F;
+  text-decoration:    none;
+}
+
+#ibm-8-bar-icon {
+  background-image:   url(../../images/ibm-8-bar-white-trans.png);
+  background-size:    cover;
+}
+
+#cloud-foundry-icon {
+  background-image:   url(../../images/cloud-foundry-trans-lite.png);
+  background-size:    cover;
+}
+
+/* printed */
+
+@media print {
+
+  body, .remark-container {
+    background:       #FFF;
+  }
+
+  body .remark-container, body .remark-slide .remark-slide-content {
+    background:       #FFF;
+    color:            #222;
+  }
+
+  body a:visited, body a {
+    color:              #55F;
+  }
+
+  .no-print {
+    display:          none;
+  }
+
+  #ibm-8-bar-icon {
+    background-image: url(../../images/ibm-8-bar-black-trans.png);
+  }
+
+  #cloud-foundry-icon {
+    background-image: url(../../images/cloud-foundry-trans-dark.png);
+  }
+}
+
+/* fonts */
+
+.remark-slide-content {
+  font-size:         120%;
+  background-repeat: no-repeat;
+}
+
+.remark-container {
+  font-size:          150%;
+  font-family:        'Baskerville', 'Times';
+}
+
+h1, h2, h3 {
+  font-family:        'Gill Sans', 'Verdana';
+}
+
+.remark-slide-number {
+  font-size:          50%;
+}
+
+/* etc */
+
+.remark-slide-content {
+  padding:            1em;
+}
+
+code {
+  font-weight:        bold;
+}
+
+code.remark-code {
+  display:            block;
+  border-radius:      0.5em;
+  padding:            0.5em;
+  font-size:          70%;
+}
+
+pre {
+  border-radius:      0.5em;
+  border:             0;
+}
+
+a:visited, a {
+  text-decoration:    underline;
+}
+
+p .comment, .comment {
+  display:            none;
+}
+
+.underline {
+  text-decoration:    underline;
+}
+
+.smaller {
+  font-size:          80%;
+}
+
+.toolBar {
+  font-size:          50%;
+  bottom:             12px;
+  position:           absolute;
+  left:               20px;
+}
+
+.toolBar div {
+  display:            inline-block;
+}
+
+.toolBar img {
+  background-color:   #666;
+  padding:            0.25em;
+  margin:             0 0.25em;
+  border-radius:      0.4em
+}
+
+.controlPanel {
+  visibility:         hidden;
+}
+
+.controlPanel img.off {
+  background-color:   #F77;
+}
+
+.controlPanel img.on {
+  background-color:   #7F7;
+}
+
+.page-icon {
+  position:           absolute;
+  top:                12px;
+  right:              60px;
+}
+
+.page-context {
+  position:           absolute;
+  top:                12px;
+  left:                1em;
+}
+
+.bordered {
+  border:            solid thin black;
+}
