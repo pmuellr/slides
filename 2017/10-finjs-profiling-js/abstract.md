@@ -1,6 +1,8 @@
-Saving Money and Delighting Customers with Faster JavaScript
+Saving Customers and Money by Making It Go Faster
 ================================================================================
 
-Are you interested in saving money and delighting customers?  One way to do this is to find out where your application is slow, and then making those slow parts fast.  For your server code, removing slow code will save you money, since your applications will use less processor time.  For your server and browser code, your customers will be happier with applications that are snappier.
+Your application's performance is key to keeping customers happy and reining in hardware costs.  Customers frustrated with slow applications just stop using them.  Poorly performing applications require more machines to run them, compared to optimized applications.
 
-Developers often take guesses at where they think the slow code is in an application, or use crude timing tools to collect data on performance.  But there's no need to guess or use crude tools!  JavaScript environments for the browser and Node.js include CPU profiling tools which can identify which parts of your JavaScript code are slow.  This provides crucial insight on where you can speed them up.  In this talk you'll find out what CPU profiling tools are, what tools are available, and show a brief demo of how they are used.
+In order to fix poor performance problems, you first have to identify them.  For many programming environments, this involves using specialized tools and environments and sometimes experts, to analyze the application.  For JavaScript, we are fortunate to have CPU profiling tools baked right into the JavaScript runtimes, allowing every developer to do performance analysis.
+
+In this talk we'll go over profiling tools available for Node.js and the browser.  We'll show a brief demo of how these tools can be used to find the slow code in an application, at both development time and in production.
