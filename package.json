@@ -1,11 +1,13 @@
 {
-	"private":			true,
-  "name":         "slides",
-  "version":      "0.0.0",
-  "description":  "slides",
-  "license":      "Apache-2.0",
-  "devDependencies": {
-  },
-  "scripts": {
-	}
+ "private": true,
+ "name": "slides",
+ "version": "0.0.0",
+ "description": "slides",
+ "license": "Apache-2.0",
+ "devDependencies": {
+  "mdx-deck": "^2.3.2"
+ },
+ "scripts": {
+  "2019/05-profiling-node": "mdx-deck 2019/05-profiling-node/deck.mdx"
+ }
 }

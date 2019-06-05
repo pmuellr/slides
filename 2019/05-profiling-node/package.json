@@ -1,0 +1,16 @@
+{
+  "name": "slides",
+  "version": "1.0.0",
+  "description": "slides in this dir",
+  "author": "pmuellr",
+  "scripts": {
+    "cake": "cake",
+    "watch": "cake watch"
+  },
+  "dependencies": {
+    "coffee-script": "1.10.x"
+  },
+  "devDependencies": {
+    "cakex": "0.1.x"
+  }
+}
