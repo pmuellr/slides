@@ -59,7 +59,7 @@ buildIndex = ->
   index.to "index.html"
   chmod "-w", "index.html"
 
-  exec "demos/run-highight.sh"
+  # exec "demos/run-highight.sh"
 
 #-------------------------------------------------------------------------------
 processEmbeds = (slides) ->

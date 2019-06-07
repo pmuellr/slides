@@ -1,7 +1,7 @@
 introduction to profiling Node.js applications
 ================================================================================
 
-The V8 JavaScript engine used in Node.js contains two super-useful instrumentation facilities - CPU profiling and heap snapshots.  CPU profiles show you where your program is spending it's time, on a per-function basis.  Heap snapshots show you where your program is spending it's memory, on a per-object basis.
+The V8 JavaScript engine used in Node.js contains two super-useful instrumentation facilities - CPU profiling and heap snapshots.  CPU profiles show you where your program is spending it's time, on a per-function basis.  Heap snapshots show you where your program is spending it's memory, on a per-class basis.
 
 Using these tools can shine some light into the otherwise black box that is the Node.js runtime, when investigating slow code or high memory use.
 

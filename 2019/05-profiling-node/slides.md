@@ -57,6 +57,18 @@ principal software engineer at [Elastic](https://elastic.co)<br>
 
 * **<u>memory</u>** with V8's heap snapshots
 
+--------------------------------------------------------------------------------
+
+## using the tools
+
+* start your app with the Node.js `--inspect` option
+* open URL `chrome://inspect/` in Chrome
+* click the **inspect** link under **Remote Target**
+
+--------------------------------------------------------------------------------
+
+<img width="100%" src="images/chrome-inspect.png">
+
 //!embed: layout.md
 ================================================================================
 
@@ -69,13 +81,11 @@ class: center, middle
 
 ## what does V8's CPU profiler do?
 
-* trigger profiler on / off
-
-* when on, at regular intervals, V8 will capture current stack trace, with
+* **start profiler**: at regular intervals, V8 will capture current stack trace, with
   time stamp, and source file / line numbers
 
-* when turned off, profiler will aggregate the information, and produce a JSON
-  data structure for analysis tools
+* **stop profiler**: profiler will aggregate the stack trace information,
+  and produce a JSON data structure for analysis tools
 
 --------------------------------------------------------------------------------
 
