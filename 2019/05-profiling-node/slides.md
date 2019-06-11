@@ -6,6 +6,8 @@ Patrick Mueller
 [`muellerware.org`](http://muellerware.org)<br>
 principal software engineer at [Elastic](https://elastic.co)<br>
 
+2019-06-11
+
 <div class="smaller"><div class="smaller"><div class="smaller">
 <a href="http://pmuellr.github.io/slides/2019/05-profiling-node">
          http://pmuellr.github.io/slides/2019/05-profiling-node
@@ -53,16 +55,20 @@ principal software engineer at [Elastic](https://elastic.co)<br>
 
 ## what kind of profiling for Node.js?
 
-* **<u>performance</u>** with V8's CPU profiler
+**<u>performance</u>** with V8's CPU profiler
 
-* **<u>memory</u>** with V8's heap snapshots
+**<u>memory</u>** with V8's heap snapshots
+
+Debugging built into V8, accessed by Chrome Dev Tools.
 
 --------------------------------------------------------------------------------
 
 ## using the tools
 
 * start your app with the Node.js `--inspect` option
-* open URL `chrome://inspect/` in Chrome
+
+* open URL [`chrome://inspect/`](chrome://inspect/) in Chrome
+
 * click the **inspect** link under **Remote Target**
 
 --------------------------------------------------------------------------------
@@ -89,39 +95,21 @@ class: center, middle
 
 --------------------------------------------------------------------------------
 
-## understanding CPU profiling
+## what does Chrome DevTools show?
+
+* timeline of stacks of functions executed
+
+* sort by aggregated function execution time
 
 * intro: [Google Developers: Speed Up JavaScript Execution](https://developers.google.com/web/tools/chrome-devtools/profile/rendering-tools/js-execution?hl=en)
 
-* provides times spent executing functions:
-
-  * **<u>self time</u>** - time to run the function, **not** including any functions that it called
-
-  * **<u>total time</u>** - time to run the function, including any functions that it called
-
 --------------------------------------------------------------------------------
 
-**time-line from Chrome Dev Tools**
+## demo: profiling `cpu-hawg`
 
-<img width="100%" src="images/cpu-profile-cdt-timeline.png">
+`node --inspect` [`cpu-hawg.js`][cpu-hawg.js]
 
---------------------------------------------------------------------------------
-
-**table from Chrome Dev Tools**
-
-<img width="100%" src="images/cpu-profile-cdt-table.png">
-
---------------------------------------------------------------------------------
-
-**flame graph from N|Solid**
-
-<img width="100%" src="images/cpu-profile-nsolid-flamegraph.png">
-
---------------------------------------------------------------------------------
-
-**sunburst from N|Solid**
-
-<img width="100%" src="images/cpu-profile-nsolid-sunburst.png">
+[cpu-hawg.js]: https://pmuellr.github.io/slides/2019/05-profiling-node/demos/cpu-hawg.js
 
 //!embed: layout.md
 ================================================================================
@@ -142,23 +130,23 @@ class: center, middle
 
 --------------------------------------------------------------------------------
 
-## understanding heap snapshots
+## what does Chrome DevTools show?
+
+* count / size of objects grouped by **class**
+
+* compare old and new heapshots to show object diff counts
+
+* follow object references, both directions
 
 * intro: [Google Developers: Viewing Heap Snapshots](https://developers.google.com/web/tools/chrome-devtools/profile/memory-problems/heap-snapshots)
 
-* object sizes/counts, grouped by constructor
-
-  * **<u>shallow size</u>** - the size of memory held by an object itself
-
-  * **<u>retained size</u>** - the size of memory that can be freed once an object is deleted
-
-
 --------------------------------------------------------------------------------
 
-**heapmap from Chrome Dev Tools**
+## demo: profiling `mem-hawg`
 
-<img width="100%" src="images/mem-profile-cdt-refs.png">
+`node --inspect` [`mem-hawg.js`][mem-hawg.js]
 
+[mem-hawg.js]: https://pmuellr.github.io/slides/2019/05-profiling-node/demos/mem-hawg.js
 
 --------------------------------------------------------------------------------
 
@@ -176,74 +164,30 @@ class: center, middle
 
 class: center, middle
 
-# using the tools
+# other tools
 
 --------------------------------------------------------------------------------
 
 ## profiling tools
 
-* [node --inspect](https://nodejs.org/dist/latest-v6.x/docs/api/debugger.html#debugger_v8_inspector_integration_for_node_js)
-
 * [NodeSource N|Solid](https://nodesource.com/products/nsolid)
 
-  * generates CPU profiles and heap snapshots that can be further analyzed
-    by CDT (and the UI for `node --inspect`)
+  * enhanced Node runtime and console with profiling tools and visualizers
+
+* [NearForm Clinic.js](https://clinicjs.org/)
+
+  * command-line cpu profiling tools and visualizers 
 
 --------------------------------------------------------------------------------
 
-## demo app
+## hacking CPU profiles
 
-expecting faster response time - **what's slowing down this app?**
+https://pmuellr.github.io/no-pro/
 
-this app seems to be leaking memory - **what objects are leaking?**
+* alt-visualizer for v8 cpu profile files
 
-* [source for the express-demo](demos/express-demo.js.html)
+* group functions by package and module
 
-* see the instructions in [demos/README.md](demos/README.md)
-
-
-//!embed: layout.md
-================================================================================
-
-class: center, middle
-
-# demo time!
-
-
-//!embed: layout.md
-================================================================================
-
-class: center, middle
-
-# profiling tips
-
-//!embed: layout.md profiling tips
-================================================================================
-
-
-## profiling performance
-
-* look for **width** in trace visualizations; height only shows stack
-  trace which may not have any perf consequences
-
-* for N|Solid, "script" profiling a web server: start profile, run load tester,
-  stop profile
-
-* use node/v8 option `--no-use-inlining` to turn off function inlining; stack
-  traces may make more sense (but no inlining!)
-
-
---------------------------------------------------------------------------------
-
-## profiling memory
-
-* easiest way to find a memory leak:
-  * take a heap snapshot; run load tester; take another heap snapshot;
-    diff in Chrome Dev Tools
-
-* 'tag' objects you think might be leaking w/easy to find class:
-
-  `req.__tag = new TagRequest()`
 
 //!embed: layout.md
 ================================================================================

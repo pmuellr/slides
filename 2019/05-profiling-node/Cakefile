@@ -10,7 +10,7 @@ path = require "path"
 task "watch", "watch for source file changes, build", -> taskWatch()
 task "build", "run a build",                          -> taskBuild()
 
-WatchSpec = "*.md snippets/*.js demos/express-demo/*.js"
+WatchSpec = "*.md *.css"
 
 #-------------------------------------------------------------------------------
 mkdir "-p", "tmp"
