@@ -6,7 +6,7 @@ Patrick Mueller
 [`muellerware.org`](http://muellerware.org)<br>
 principal software engineer at [Elastic](https://elastic.co)<br>
 
-2019-06-11
+May 2019
 
 <div class="smaller"><div class="smaller"><div class="smaller">
 <a href="http://pmuellr.github.io/slides/2019/05-profiling-node">
