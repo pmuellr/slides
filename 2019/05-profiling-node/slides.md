@@ -13,15 +13,13 @@ principal software engineer at [Elastic](https://elastic.co)<br>
          http://pmuellr.github.io/slides/2019/05-profiling-node
 </a>
 <br>
-<a href="http://pmuellr.github.io/slides/2019/05-profiling-node/slides.pdf">
-         http://pmuellr.github.io/slides/2019/05-profiling-node/slides.pdf
-</a>
-<br>
 <a href="http://pmuellr.github.io/slides/">
          http://pmuellr.github.io/slides/
 </a>
 (all of Patrick's slides)
 </div></div></div>
+
+
 
 //!embed: toolbar.md
 
@@ -75,6 +73,8 @@ Debugging built into V8, accessed by Chrome Dev Tools.
 
 <img width="100%" src="images/chrome-inspect.png">
 
+
+
 //!embed: layout.md
 ================================================================================
 
@@ -109,7 +109,15 @@ class: center, middle
 
 `node --inspect` [`cpu-hawg.js`][cpu-hawg.js]
 
-[cpu-hawg.js]: https://pmuellr.github.io/slides/2019/05-profiling-node/demos/cpu-hawg.js
+[cpu-hawg.js]: https://github.com/pmuellr/slides/blob/gh-pages/2019/05-profiling-node/demos/cpu-hawg.js
+
+--------------------------------------------------------------------------------
+
+## for a "real life" profile ...
+
+    node --inspect-brk `which npm` outdated
+
+
 
 //!embed: layout.md
 ================================================================================
@@ -146,17 +154,8 @@ class: center, middle
 
 `node --inspect` [`mem-hawg.js`][mem-hawg.js]
 
-[mem-hawg.js]: https://pmuellr.github.io/slides/2019/05-profiling-node/demos/mem-hawg.js
+[mem-hawg.js]: https://github.com/pmuellr/slides/blob/gh-pages/2019/05-profiling-node/demos/mem-hawg.js
 
---------------------------------------------------------------------------------
-
-## what kind of output can you get?
-
-* large JSON file - could be 100's of MB; figure 2x allocated heap
-
-* can "diff" snapshots to help identify leaks
-
-* can drill into or out from references in Chrome Dev Tools; references / referenced by
 
 
 //!embed: layout.md
